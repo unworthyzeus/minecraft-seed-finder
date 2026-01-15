@@ -14,6 +14,10 @@ export default function Header({ onSubmitClick }) {
                 </Link>
 
                 <nav className="nav">
+                    <Link href="/algorithms" className="nav-link">
+                        <span className="desktop-only">Algorithms</span>
+                        <span className="mobile-only">Algos</span>
+                    </Link>
                     <a
                         href="https://minecraftathome.com"
                         target="_blank"
@@ -39,4 +43,6 @@ export default function Header({ onSubmitClick }) {
         </header>
     );
 }
+
+
 
