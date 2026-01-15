@@ -27,8 +27,8 @@ const VERSION_OPTIONS = [
   { value: '1.16', label: '1.16' },
   { value: '1.15', label: '1.15' },
   { value: '1.14', label: '1.14' },
-  { value: '1.13', label: '1.13 (Aquatic)' },
-  { value: '1.12', label: '1.12 (Color)' },
+  { value: '1.13', label: '1.13' },
+  { value: '1.12', label: '1.12' },
   { value: '1.8', label: '1.8 - 1.11' },
   { value: 'beta', label: 'Beta' },
   { value: 'alpha', label: 'Alpha' }

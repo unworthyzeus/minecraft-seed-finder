@@ -1,5 +1,2075 @@
 [
   {
+    "id": "sr-8398967436125155523-vine",
+    "seed": "8398967436125155523",
+    "title": "Speedrun Practice: vine",
+    "description": "Verified speedrunning practice seed 'vine'. Optimized for specific categories or splitting. Coordinates: X=-201.5, Z=229.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -201.5,
+      "y": 70,
+      "z": 229.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#8398967436125155523"
+  },
+  {
+    "id": "sr-clock-2984198431426858954",
+    "seed": "clock",
+    "title": "Speedrun Practice: 2984198431426858954",
+    "description": "Verified speedrunning practice seed '2984198431426858954'. Optimized for specific categories or splitting. Coordinates: X=198.5, Z=26.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 198.5,
+      "y": 70,
+      "z": 26.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#clock"
+  },
+  {
+    "id": "sr-3008120363440286748-6",
+    "seed": "3008120363440286748",
+    "title": "Speedrun Practice: 6",
+    "description": "Verified speedrunning practice seed '6'. Optimized for specific categories or splitting. Coordinates: X=177.5, Z=63.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 177.5,
+      "y": 70,
+      "z": 63.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#3008120363440286748"
+  },
+  {
+    "id": "sr-7665560473511906728-treasure",
+    "seed": "7665560473511906728",
+    "title": "Speedrun Practice: treasure",
+    "description": "Verified speedrunning practice seed 'treasure'. Optimized for specific categories or splitting. Coordinates: X=90.5, Z=218.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 90.5,
+      "y": 70,
+      "z": 218.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#7665560473511906728"
+  },
+  {
+    "id": "sr-8321263106959328693-gus",
+    "seed": "8321263106959328693",
+    "title": "Speedrun Practice: gus",
+    "description": "Verified speedrunning practice seed 'gus'. Optimized for specific categories or splitting. Coordinates: X=214.5, Z=-5.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 214.5,
+      "y": 70,
+      "z": -5.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#8321263106959328693"
+  },
+  {
+    "id": "sr-2725564299383192900-opabinia",
+    "seed": "2725564299383192900",
+    "title": "Speedrun Practice: opabinia",
+    "description": "Verified speedrunning practice seed 'opabinia'. Optimized for specific categories or splitting. Coordinates: X=166.5, Z=185.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 166.5,
+      "y": 70,
+      "z": 185.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#2725564299383192900"
+  },
+  {
+    "id": "sr-2386856914173618039-cactus",
+    "seed": "2386856914173618039",
+    "title": "Speedrun Practice: cactus",
+    "description": "Verified speedrunning practice seed 'cactus'. Optimized for specific categories or splitting. Coordinates: X=3.5, Z=11.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 3.5,
+      "y": 70,
+      "z": 11.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#2386856914173618039"
+  },
+  {
+    "id": "sr--5497970088398231105-chelzgravel",
+    "seed": "-5497970088398231105",
+    "title": "Speedrun Practice: chelz gravel",
+    "description": "Verified speedrunning practice seed 'chelz_gravel'. Optimized for specific categories or splitting. Coordinates: X=-248.5, Z=-231.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -248.5,
+      "y": 70,
+      "z": -231.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-5497970088398231105"
+  },
+  {
+    "id": "sr-8530758151102046474-pumpkin",
+    "seed": "8530758151102046474",
+    "title": "Speedrun Practice: pumpkin",
+    "description": "Verified speedrunning practice seed 'pumpkin'. Optimized for specific categories or splitting. Coordinates: X=250.5, Z=266.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 250.5,
+      "y": 70,
+      "z": 266.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#8530758151102046474"
+  },
+  {
+    "id": "sr--6941637350845782998-magma",
+    "seed": "-6941637350845782998",
+    "title": "Speedrun Practice: magma",
+    "description": "Verified speedrunning practice seed 'magma'. Optimized for specific categories or splitting. Coordinates: X=134.5, Z=-249.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 134.5,
+      "y": 70,
+      "z": -249.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-6941637350845782998"
+  },
+  {
+    "id": "sr--3294725893620991126-gravel",
+    "seed": "-3294725893620991126",
+    "title": "Speedrun Practice: gravel",
+    "description": "Verified speedrunning practice seed 'gravel'. Optimized for specific categories or splitting. Coordinates: X=161.5, Z=194.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 161.5,
+      "y": 70,
+      "z": 194.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-3294725893620991126"
+  },
+  {
+    "id": "sr-2483313382402348964-taiga",
+    "seed": "2483313382402348964",
+    "title": "Speedrun Practice: taiga",
+    "description": "Verified speedrunning practice seed 'taiga'. Optimized for specific categories or splitting. Coordinates: X=-233.5, Z=249.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -233.5,
+      "y": 70,
+      "z": 249.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#2483313382402348964"
+  },
+  {
+    "id": "sr--4530634556500121041-dolphin",
+    "seed": "-4530634556500121041",
+    "title": "Speedrun Practice: dolphin",
+    "description": "Verified speedrunning practice seed 'dolphin'. Optimized for specific categories or splitting. Coordinates: X=174.5, Z=202.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 174.5,
+      "y": 70,
+      "z": 202.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-4530634556500121041"
+  },
+  {
+    "id": "sr--978983300365063633-dolphinsister",
+    "seed": "-978983300365063633",
+    "title": "Speedrun Practice: dolphin sister",
+    "description": "Verified speedrunning practice seed 'dolphin_sister'. Optimized for specific categories or splitting. Coordinates: X=210.5, Z=181.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 210.5,
+      "y": 70,
+      "z": 181.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-978983300365063633"
+  },
+  {
+    "id": "sr-2972230112942642114-tobiasz",
+    "seed": "2972230112942642114",
+    "title": "Speedrun Practice: tobiasz",
+    "description": "Verified speedrunning practice seed 'tobiasz'. Optimized for specific categories or splitting. Coordinates: X=146.5, Z=219.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 146.5,
+      "y": 70,
+      "z": 219.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#2972230112942642114"
+  },
+  {
+    "id": "sr-9009759197830545823-funkyface",
+    "seed": "9009759197830545823",
+    "title": "Speedrun Practice: funkyface",
+    "description": "Verified speedrunning practice seed 'funkyface'. Optimized for specific categories or splitting. Coordinates: X=150.5, Z=42.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 150.5,
+      "y": 70,
+      "z": 42.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#9009759197830545823"
+  },
+  {
+    "id": "sr-8269587948157252548-mountain",
+    "seed": "8269587948157252548",
+    "title": "Speedrun Practice: mountain",
+    "description": "Verified speedrunning practice seed 'mountain'. Optimized for specific categories or splitting. Coordinates: X=195.5, Z=-181.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 195.5,
+      "y": 70,
+      "z": -181.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#8269587948157252548"
+  },
+  {
+    "id": "sr-7700502827262374562-netherless",
+    "seed": "7700502827262374562",
+    "title": "Speedrun Practice: netherless",
+    "description": "Verified speedrunning practice seed 'netherless'. Optimized for specific categories or splitting. Coordinates: X=234.5, Z=-127.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 234.5,
+      "y": 70,
+      "z": -127.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#7700502827262374562"
+  },
+  {
+    "id": "sr--4810268054211229692-rng",
+    "seed": "-4810268054211229692",
+    "title": "Speedrun Practice: rng",
+    "description": "Verified speedrunning practice seed 'rng'. Optimized for specific categories or splitting. Coordinates: X=-153.5, Z=234.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -153.5,
+      "y": 70,
+      "z": 234.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-4810268054211229692"
+  },
+  {
+    "id": "sr--3303644427928198075-fletchersister",
+    "seed": "-3303644427928198075",
+    "title": "Speedrun Practice: fletcher sister",
+    "description": "Verified speedrunning practice seed 'fletcher_sister'. Optimized for specific categories or splitting. Coordinates: X=-248.5, Z=106.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -248.5,
+      "y": 70,
+      "z": 106.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-3303644427928198075"
+  },
+  {
+    "id": "sr-2613428371297940758-arch",
+    "seed": "2613428371297940758",
+    "title": "Speedrun Practice: arch",
+    "description": "Verified speedrunning practice seed 'arch'. Optimized for specific categories or splitting. Coordinates: X=-154.5, Z=-217.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -154.5,
+      "y": 70,
+      "z": -217.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#2613428371297940758"
+  },
+  {
+    "id": "sr-2478133068685386821-fletcher",
+    "seed": "2478133068685386821",
+    "title": "Speedrun Practice: fletcher",
+    "description": "Verified speedrunning practice seed 'fletcher'. Optimized for specific categories or splitting. Coordinates: X=-248.5, Z=106.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -248.5,
+      "y": 70,
+      "z": 106.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#2478133068685386821"
+  },
+  {
+    "id": "sr--3004846708572042774-3",
+    "seed": "-3004846708572042774",
+    "title": "Speedrun Practice: 3",
+    "description": "Verified speedrunning practice seed '3'. Optimized for specific categories or splitting. Coordinates: X=-262.5, Z=-233.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -262.5,
+      "y": 70,
+      "z": -233.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-3004846708572042774"
+  },
+  {
+    "id": "sr-6701506236203633716-nether112",
+    "seed": "6701506236203633716",
+    "title": "Speedrun Practice: nether 1 12",
+    "description": "Verified speedrunning practice seed 'nether_1_12'. Optimized for specific categories or splitting. Coordinates: X=-185.5, Z=214.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -185.5,
+      "y": 70,
+      "z": 214.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#6701506236203633716"
+  },
+  {
+    "id": "sr--2655591615036867964-plateau",
+    "seed": "-2655591615036867964",
+    "title": "Speedrun Practice: plateau",
+    "description": "Verified speedrunning practice seed 'plateau'. Optimized for specific categories or splitting. Coordinates: X=-173.5, Z=1512.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -173.5,
+      "y": 70,
+      "z": 1512.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-2655591615036867964"
+  },
+  {
+    "id": "sr-225874918561344128-temple",
+    "seed": "225874918561344128",
+    "title": "Speedrun Practice: temple",
+    "description": "Verified speedrunning practice seed 'temple'. Optimized for specific categories or splitting. Coordinates: X=-418.5, Z=-455.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -418.5,
+      "y": 70,
+      "z": -455.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#225874918561344128"
+  },
+  {
+    "id": "sr--2595072006442097346-paper",
+    "seed": "-2595072006442097346",
+    "title": "Speedrun Practice: paper",
+    "description": "Verified speedrunning practice seed 'paper'. Optimized for specific categories or splitting. Coordinates: X=-222.5, Z=-249.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -222.5,
+      "y": 70,
+      "z": -249.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-2595072006442097346"
+  },
+  {
+    "id": "sr-4929216164286115443-snow",
+    "seed": "4929216164286115443",
+    "title": "Speedrun Practice: snow",
+    "description": "Verified speedrunning practice seed 'snow'. Optimized for specific categories or splitting. Coordinates: X=214.5, Z=265.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 214.5,
+      "y": 70,
+      "z": 265.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#4929216164286115443"
+  },
+  {
+    "id": "sr-3370181845584452629-nether17",
+    "seed": "3370181845584452629",
+    "title": "Speedrun Practice: nether 1 7",
+    "description": "Verified speedrunning practice seed 'nether_1_7'. Optimized for specific categories or splitting. Coordinates: X=668.5, Z=581.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 668.5,
+      "y": 70,
+      "z": 581.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#3370181845584452629"
+  },
+  {
+    "id": "sr--4656319252538146326-trading17",
+    "seed": "-4656319252538146326",
+    "title": "Speedrun Practice: trading 1 7",
+    "description": "Verified speedrunning practice seed 'trading_1_7'. Optimized for specific categories or splitting. Coordinates: X=-801.5, Z=182.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -801.5,
+      "y": 70,
+      "z": 182.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-4656319252538146326"
+  },
+  {
+    "id": "sr--2242547518357798464-taro",
+    "seed": "-2242547518357798464",
+    "title": "Speedrun Practice: taro",
+    "description": "Verified speedrunning practice seed 'taro'. Optimized for specific categories or splitting. Coordinates: X=-149.5, Z=265.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -149.5,
+      "y": 70,
+      "z": 265.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-2242547518357798464"
+  },
+  {
+    "id": "sr--2063810908146531904-tarosister",
+    "seed": "-2063810908146531904",
+    "title": "Speedrun Practice: taro sister",
+    "description": "Verified speedrunning practice seed 'taro_sister'. Optimized for specific categories or splitting. Coordinates: X=-186.5, Z=257.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -186.5,
+      "y": 70,
+      "z": 257.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-2063810908146531904"
+  },
+  {
+    "id": "sr-4973628407607760032-oneshot",
+    "seed": "4973628407607760032",
+    "title": "Speedrun Practice: oneshot",
+    "description": "Verified speedrunning practice seed 'oneshot'. Optimized for specific categories or splitting. Coordinates: X=-1525.5, Z=117.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -1525.5,
+      "y": 70,
+      "z": 117.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#4973628407607760032"
+  },
+  {
+    "id": "sr-7451967327856961532-745aa116",
+    "seed": "7451967327856961532",
+    "title": "Speedrun Practice: 745 aa 1 16",
+    "description": "Verified speedrunning practice seed '745_aa_1_16'. Optimized for specific categories or splitting. Coordinates: X=186.5, Z=58.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 186.5,
+      "y": 70,
+      "z": 58.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#7451967327856961532"
+  },
+  {
+    "id": "sr--6871890991634740961-neg687aa116",
+    "seed": "-6871890991634740961",
+    "title": "Speedrun Practice: neg687 aa 1 16",
+    "description": "Verified speedrunning practice seed 'neg687_aa_1_16'. Optimized for specific categories or splitting. Coordinates: X=198.5, Z=214.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 198.5,
+      "y": 70,
+      "z": 214.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-6871890991634740961"
+  },
+  {
+    "id": "sr--830990328040051953-neg830aa116",
+    "seed": "-830990328040051953",
+    "title": "Speedrun Practice: neg830 aa 1 16",
+    "description": "Verified speedrunning practice seed 'neg830_aa_1_16'. Optimized for specific categories or splitting. Coordinates: X=-239.5, Z=102.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -239.5,
+      "y": 70,
+      "z": 102.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-830990328040051953"
+  },
+  {
+    "id": "sr--7905972321798721259-allbosses116",
+    "seed": "-7905972321798721259",
+    "title": "Speedrun Practice: all bosses 1 16",
+    "description": "Verified speedrunning practice seed 'all_bosses_1_16'. Optimized for specific categories or splitting. Coordinates: X=56.5, Z=26.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 56.5,
+      "y": 70,
+      "z": 26.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-7905972321798721259"
+  },
+  {
+    "id": "sr-1494632126587127636-killwither116",
+    "seed": "1494632126587127636",
+    "title": "Speedrun Practice: kill wither 1 16",
+    "description": "Verified speedrunning practice seed 'kill_wither_1_16'. Optimized for specific categories or splitting. Coordinates: X=-101.5, Z=-21.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -101.5,
+      "y": 70,
+      "z": -21.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#1494632126587127636"
+  },
+  {
+    "id": "sr-4587358211148225048-killelder18",
+    "seed": "4587358211148225048",
+    "title": "Speedrun Practice: kill elder 1 8",
+    "description": "Verified speedrunning practice seed 'kill_elder_1_8'. Optimized for specific categories or splitting. Coordinates: X=234.5, Z=265.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 234.5,
+      "y": 70,
+      "z": 265.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#4587358211148225048"
+  },
+  {
+    "id": "sr-6408059320155324846-hotv",
+    "seed": "6408059320155324846",
+    "title": "Speedrun Practice: hotv",
+    "description": "Verified speedrunning practice seed 'hotv'. Optimized for specific categories or splitting. Coordinates: X=5.5, Z=20.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 5.5,
+      "y": 70,
+      "z": 20.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#6408059320155324846"
+  },
+  {
+    "id": "sr-3168991511258463298-covermeindebrisws",
+    "seed": "3168991511258463298",
+    "title": "Speedrun Practice: cover me in debris ws",
+    "description": "Verified speedrunning practice seed 'cover_me_in_debris_ws'. Optimized for specific categories or splitting. Coordinates: X=254.5, Z=230.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 254.5,
+      "y": 70,
+      "z": 230.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#3168991511258463298"
+  },
+  {
+    "id": "sr-8420042809290944251-arbalisticws",
+    "seed": "8420042809290944251",
+    "title": "Speedrun Practice: arbalistic ws",
+    "description": "Verified speedrunning practice seed 'arbalistic_ws'. Optimized for specific categories or splitting. Coordinates: X=-2.5, Z=3.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -2.5,
+      "y": 70,
+      "z": 3.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#8420042809290944251"
+  },
+  {
+    "id": "sr--535148371893574972-arbalisticns",
+    "seed": "-535148371893574972",
+    "title": "Speedrun Practice: arbalistic ns",
+    "description": "Verified speedrunning practice seed 'arbalistic_ns'. Optimized for specific categories or splitting. Coordinates: X=38.5, Z=166.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 38.5,
+      "y": 70,
+      "z": 166.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-535148371893574972"
+  },
+  {
+    "id": "sr-6439142767941183967-obtainemeraldns",
+    "seed": "6439142767941183967",
+    "title": "Speedrun Practice: obtain emerald ns",
+    "description": "Verified speedrunning practice seed 'obtain_emerald_ns'. Optimized for specific categories or splitting. Coordinates: X=-89.5, Z=135.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -89.5,
+      "y": 70,
+      "z": 135.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#6439142767941183967"
+  },
+  {
+    "id": "sr-6439142767941183967-obtaincakews",
+    "seed": "6439142767941183967",
+    "title": "Speedrun Practice: obtain cake ws",
+    "description": "Verified speedrunning practice seed 'obtain_cake_ws'. Optimized for specific categories or splitting. Coordinates: X=262.5, Z=233.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 262.5,
+      "y": 70,
+      "z": 233.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#6439142767941183967"
+  },
+  {
+    "id": "sr--4807110755222819253-obtaingapplews",
+    "seed": "-4807110755222819253",
+    "title": "Speedrun Practice: obtain gapple ws",
+    "description": "Verified speedrunning practice seed 'obtain_gapple_ws'. Optimized for specific categories or splitting. Coordinates: X=9.5, Z=0.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 9.5,
+      "y": 70,
+      "z": 0.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-4807110755222819253"
+  },
+  {
+    "id": "sr-690885192190970588-obtainnetheritews",
+    "seed": "690885192190970588",
+    "title": "Speedrun Practice: obtain netherite ws",
+    "description": "Verified speedrunning practice seed 'obtain_netherite_ws'. Optimized for specific categories or splitting. Coordinates: X=142.5, Z=127.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 142.5,
+      "y": 70,
+      "z": 127.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#690885192190970588"
+  },
+  {
+    "id": "sr-786479241537693722-obtainnetheritens",
+    "seed": "786479241537693722",
+    "title": "Speedrun Practice: obtain netherite ns",
+    "description": "Verified speedrunning practice seed 'obtain_netherite_ns'. Optimized for specific categories or splitting. Coordinates: X=-73.5, Z=189.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -73.5,
+      "y": 70,
+      "z": 189.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#786479241537693722"
+  },
+  {
+    "id": "sr--2748940185887660577-allswords116ws",
+    "seed": "-2748940185887660577",
+    "title": "Speedrun Practice: all swords 1 16 ws",
+    "description": "Verified speedrunning practice seed 'all_swords_1_16_ws'. Optimized for specific categories or splitting. Coordinates: X=189.5, Z=145.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 189.5,
+      "y": 70,
+      "z": 145.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-2748940185887660577"
+  },
+  {
+    "id": "sr-4156515194287553230-allswords115ws",
+    "seed": "4156515194287553230",
+    "title": "Speedrun Practice: all swords 1 15 ws",
+    "description": "Verified speedrunning practice seed 'all_swords_1_15_ws'. Optimized for specific categories or splitting. Coordinates: X=-6.5, Z=-6.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -6.5,
+      "y": 70,
+      "z": -6.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#4156515194287553230"
+  },
+  {
+    "id": "sr-5828502342761681120-alllogs116",
+    "seed": "5828502342761681120",
+    "title": "Speedrun Practice: all logs 1 16",
+    "description": "Verified speedrunning practice seed 'all_logs_1_16'. Optimized for specific categories or splitting. Coordinates: X=138.5, Z=128.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 138.5,
+      "y": 70,
+      "z": 128.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#5828502342761681120"
+  },
+  {
+    "id": "sr-47245998718-alllogs112TODO",
+    "seed": "47245998718",
+    "title": "Speedrun Practice: all logs 1 12TODO",
+    "description": "Verified speedrunning practice seed 'all_logs_1_12TODO'. Optimized for specific categories or splitting. Coordinates: X=0.5, Z=0.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 0.5,
+      "y": 70,
+      "z": 0.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#47245998718"
+  },
+  {
+    "id": "sr-4573688-alllogs16",
+    "seed": "4573688",
+    "title": "Speedrun Practice: all logs 1 6",
+    "description": "Verified speedrunning practice seed 'all_logs_1_6'. Optimized for specific categories or splitting. Coordinates: X=232.5, Z=248.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 232.5,
+      "y": 70,
+      "z": 248.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#4573688"
+  },
+  {
+    "id": "sr--3415233903329522928-allwool116",
+    "seed": "-3415233903329522928",
+    "title": "Speedrun Practice: all wool 1 16",
+    "description": "Verified speedrunning practice seed 'all_wool_1_16'. Optimized for specific categories or splitting. Coordinates: X=163.5, Z=240.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 163.5,
+      "y": 70,
+      "z": 240.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-3415233903329522928"
+  },
+  {
+    "id": "sr-54606145631608012-allminerals117ws",
+    "seed": "54606145631608012",
+    "title": "Speedrun Practice: all minerals 1 17 ws",
+    "description": "Verified speedrunning practice seed 'all_minerals_1_17_ws'. Optimized for specific categories or splitting. Coordinates: X=57.5, Z=-54.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 57.5,
+      "y": 70,
+      "z": -54.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#54606145631608012"
+  },
+  {
+    "id": "sr--3803571360203318096-allminerals116ws",
+    "seed": "-3803571360203318096",
+    "title": "Speedrun Practice: all minerals 1 16 ws",
+    "description": "Verified speedrunning practice seed 'all_minerals_1_16_ws'. Optimized for specific categories or splitting. Coordinates: X=201.5, Z=201.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 201.5,
+      "y": 70,
+      "z": 201.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-3803571360203318096"
+  },
+  {
+    "id": "sr-5541461476425786817-allminerals117ns",
+    "seed": "5541461476425786817",
+    "title": "Speedrun Practice: all minerals 1 17 ns",
+    "description": "Verified speedrunning practice seed 'all_minerals_1_17_ns'. Optimized for specific categories or splitting. Coordinates: X=-265.5, Z=-5.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -265.5,
+      "y": 70,
+      "z": -5.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#5541461476425786817"
+  },
+  {
+    "id": "sr-8110393859253728495-allminerals116ns",
+    "seed": "8110393859253728495",
+    "title": "Speedrun Practice: all minerals 1 16 ns",
+    "description": "Verified speedrunning practice seed 'all_minerals_1_16_ns'. Optimized for specific categories or splitting. Coordinates: X=19.5, Z=70.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 19.5,
+      "y": 70,
+      "z": 70.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#8110393859253728495"
+  },
+  {
+    "id": "sr-431501279300795312-fullia15lvlsns",
+    "seed": "431501279300795312",
+    "title": "Speedrun Practice: full ia 15 lvls ns",
+    "description": "Verified speedrunning practice seed 'full_ia_15_lvls_ns'. Optimized for specific categories or splitting. Coordinates: X=4.5, Z=23.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 4.5,
+      "y": 70,
+      "z": 23.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#431501279300795312"
+  },
+  {
+    "id": "sr-8182492998798903943-allworkstations",
+    "seed": "8182492998798903943",
+    "title": "Speedrun Practice: all workstations",
+    "description": "Verified speedrunning practice seed 'all_workstations'. Optimized for specific categories or splitting. Coordinates: X=6.5, Z=6.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 6.5,
+      "y": 70,
+      "z": 6.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#8182492998798903943"
+  },
+  {
+    "id": "sr-1400000003692092926-fullinventoryws",
+    "seed": "1400000003692092926",
+    "title": "Speedrun Practice: full inventory ws",
+    "description": "Verified speedrunning practice seed 'full_inventory_ws'. Optimized for specific categories or splitting. Coordinates: X=70.5, Z=6.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 70.5,
+      "y": 70,
+      "z": 6.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#1400000003692092926"
+  },
+  {
+    "id": "sr-3377699728905408-solw",
+    "seed": "3377699728905408",
+    "title": "Speedrun Practice: solw",
+    "description": "Verified speedrunning practice seed 'solw'. Optimized for specific categories or splitting. Coordinates: X=-5.5, Z=27.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -5.5,
+      "y": 70,
+      "z": 27.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#3377699728905408"
+  },
+  {
+    "id": "sr--1992444730679956045-allportals17",
+    "seed": "-1992444730679956045",
+    "title": "Speedrun Practice: all portals 1 7",
+    "description": "Verified speedrunning practice seed 'all_portals_1_7'. Optimized for specific categories or splitting. Coordinates: X=-257.5, Z=-130.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -257.5,
+      "y": 70,
+      "z": -130.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-1992444730679956045"
+  },
+  {
+    "id": "sr-9177210140674232695-pride",
+    "seed": "9177210140674232695",
+    "title": "Speedrun Practice: pride",
+    "description": "Verified speedrunning practice seed 'pride'. Optimized for specific categories or splitting. Coordinates: X=-9.5, Z=6.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -9.5,
+      "y": 70,
+      "z": 6.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#9177210140674232695"
+  },
+  {
+    "id": "sr-1157928194347627721-high",
+    "seed": "1157928194347627721",
+    "title": "Speedrun Practice: high",
+    "description": "Verified speedrunning practice seed 'high'. Optimized for specific categories or splitting. Coordinates: X=-246.5, Z=-133.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -246.5,
+      "y": 70,
+      "z": -133.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#1157928194347627721"
+  },
+  {
+    "id": "sr-2817479300692647315-fishtankws",
+    "seed": "2817479300692647315",
+    "title": "Speedrun Practice: fishtank ws",
+    "description": "Verified speedrunning practice seed 'fishtank_ws'. Optimized for specific categories or splitting. Coordinates: X=262.5, Z=108.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 262.5,
+      "y": 70,
+      "z": 108.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#2817479300692647315"
+  },
+  {
+    "id": "sr--1632797017466083450-fishtankns",
+    "seed": "-1632797017466083450",
+    "title": "Speedrun Practice: fishtank ns",
+    "description": "Verified speedrunning practice seed 'fishtank_ns'. Optimized for specific categories or splitting. Coordinates: X=234.5, Z=-91.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 234.5,
+      "y": 70,
+      "z": -91.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-1632797017466083450"
+  },
+  {
+    "id": "sr--576742227278694724-cni116",
+    "seed": "-576742227278694724",
+    "title": "Speedrun Practice: cni 1 16",
+    "description": "Verified speedrunning practice seed 'cni_1_16'. Optimized for specific categories or splitting. Coordinates: X=10.5, Z=36.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 10.5,
+      "y": 70,
+      "z": 36.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-576742227278694724"
+  },
+  {
+    "id": "sr-1154047404513693247-cni115",
+    "seed": "1154047404513693247",
+    "title": "Speedrun Practice: cni 1 15",
+    "description": "Verified speedrunning practice seed 'cni_1_15'. Optimized for specific categories or splitting. Coordinates: X=118.5, Z=6.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 118.5,
+      "y": 70,
+      "z": 6.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#1154047404513693247"
+  },
+  {
+    "id": "sr-1108912127130472088-breakbeenest",
+    "seed": "1108912127130472088",
+    "title": "Speedrun Practice: break beenest",
+    "description": "Verified speedrunning practice seed 'break_beenest'. Optimized for specific categories or splitting. Coordinates: X=2.5, Z=5.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 2.5,
+      "y": 70,
+      "z": 5.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#1108912127130472088"
+  },
+  {
+    "id": "sr-102954058-allbuckets116",
+    "seed": "102954058",
+    "title": "Speedrun Practice: all buckets 1 16",
+    "description": "Verified speedrunning practice seed 'all_buckets_1_16'. Optimized for specific categories or splitting. Coordinates: X=2.5, Z=19.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 2.5,
+      "y": 70,
+      "z": 19.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#102954058"
+  },
+  {
+    "id": "sr--9100271882721235188-halfdeath",
+    "seed": "-9100271882721235188",
+    "title": "Speedrun Practice: half death",
+    "description": "Verified speedrunning practice seed 'half_death'. Optimized for specific categories or splitting. Coordinates: X=-47.5, Z=86.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": -47.5,
+      "y": 70,
+      "z": 86.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-9100271882721235188"
+  },
+  {
+    "id": "sr-4432958299266772709-low",
+    "seed": "4432958299266772709",
+    "title": "Speedrun Practice: low",
+    "description": "Verified speedrunning practice seed 'low'. Optimized for specific categories or splitting. Coordinates: X=219.5, Z=234.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 219.5,
+      "y": 70,
+      "z": 234.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#4432958299266772709"
+  },
+  {
+    "id": "sr-4463711588556628022-postmortalws",
+    "seed": "4463711588556628022",
+    "title": "Speedrun Practice: postmortal ws",
+    "description": "Verified speedrunning practice seed 'postmortal_ws'. Optimized for specific categories or splitting. Coordinates: X=260.5, Z=239.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 260.5,
+      "y": 70,
+      "z": 239.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#4463711588556628022"
+  },
+  {
+    "id": "sr-7456272133675286545-zombiedoctorws",
+    "seed": "7456272133675286545",
+    "title": "Speedrun Practice: zombie doctor ws",
+    "description": "Verified speedrunning practice seed 'zombie_doctor_ws'. Optimized for specific categories or splitting. Coordinates: X=6.5, Z=8.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 6.5,
+      "y": 70,
+      "z": 8.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#7456272133675286545"
+  },
+  {
+    "id": "sr-169090077096112903-bullseyews",
+    "seed": "169090077096112903",
+    "title": "Speedrun Practice: bullseye ws",
+    "description": "Verified speedrunning practice seed 'bullseye_ws'. Optimized for specific categories or splitting. Coordinates: X=232.5, Z=92.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 232.5,
+      "y": 70,
+      "z": 92.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#169090077096112903"
+  },
+  {
+    "id": "sr-118608982799-superflat",
+    "seed": "118608982799",
+    "title": "Speedrun Practice: superflat",
+    "description": "Verified speedrunning practice seed 'superflat'. Optimized for specific categories or splitting. Coordinates: X=166.5, Z=-217.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 166.5,
+      "y": 70,
+      "z": -217.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#118608982799"
+  },
+  {
+    "id": "sr--4240963473791542457-quater117",
+    "seed": "-4240963473791542457",
+    "title": "Speedrun Practice: quater 1 17",
+    "description": "Verified speedrunning practice seed 'quater_1_17'. Optimized for specific categories or splitting. Coordinates: X=5.5, Z=-40.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 5.5,
+      "y": 70,
+      "z": -40.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-4240963473791542457"
+  },
+  {
+    "id": "sr-7662896072622215607-quater116",
+    "seed": "7662896072622215607",
+    "title": "Speedrun Practice: quater 1 16",
+    "description": "Verified speedrunning practice seed 'quater_1_16'. Optimized for specific categories or splitting. Coordinates: X=208.5, Z=88.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 208.5,
+      "y": 70,
+      "z": 88.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#7662896072622215607"
+  },
+  {
+    "id": "sr-21134004-quater115",
+    "seed": "21134004",
+    "title": "Speedrun Practice: quater 1 15",
+    "description": "Verified speedrunning practice seed 'quater_1_15'. Optimized for specific categories or splitting. Coordinates: X=11.5, Z=-2.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 11.5,
+      "y": 70,
+      "z": -2.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#21134004"
+  },
+  {
+    "id": "sr-77035255560112728-mojangbanner116",
+    "seed": "77035255560112728",
+    "title": "Speedrun Practice: mojang banner 1 16",
+    "description": "Verified speedrunning practice seed 'mojang_banner_1_16'. Optimized for specific categories or splitting. Coordinates: X=76.5, Z=-0.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 76.5,
+      "y": 70,
+      "z": -0.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#77035255560112728"
+  },
+  {
+    "id": "sr-166299054058960-superflatmacws",
+    "seed": "166299054058960",
+    "title": "Speedrun Practice: superflat mac ws",
+    "description": "Verified speedrunning practice seed 'superflat_mac_ws'. Optimized for specific categories or splitting. Coordinates: X=134.5, Z=93.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 134.5,
+      "y": 70,
+      "z": 93.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#166299054058960"
+  },
+  {
+    "id": "sr-15061867208-allnametags",
+    "seed": "15061867208",
+    "title": "Speedrun Practice: all nametags",
+    "description": "Verified speedrunning practice seed 'all_nametags'. Optimized for specific categories or splitting. Coordinates: X=138.5, Z=106.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 138.5,
+      "y": 70,
+      "z": 106.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#15061867208"
+  },
+  {
+    "id": "sr-3835014000747209056-aether",
+    "seed": "3835014000747209056",
+    "title": "Speedrun Practice: aether",
+    "description": "Verified speedrunning practice seed 'aether'. Optimized for specific categories or splitting. Coordinates: X=258.5, Z=241.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 258.5,
+      "y": 70,
+      "z": 241.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#3835014000747209056"
+  },
+  {
+    "id": "sr--5306084785972576106-allarthropods17TODO",
+    "seed": "-5306084785972576106",
+    "title": "Speedrun Practice: all arthropods 1 7TODO",
+    "description": "Verified speedrunning practice seed 'all_arthropods_1_7TODO'. Optimized for specific categories or splitting. Coordinates: X=483.5, Z=207.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 483.5,
+      "y": 70,
+      "z": 207.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-5306084785972576106"
+  },
+  {
+    "id": "sr--4258434922640609292-saddlemaster",
+    "seed": "-4258434922640609292",
+    "title": "Speedrun Practice: saddle master",
+    "description": "Verified speedrunning practice seed 'saddle_master'. Optimized for specific categories or splitting. Coordinates: X=201.5, Z=153.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 201.5,
+      "y": 70,
+      "z": 153.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-4258434922640609292"
+  },
+  {
+    "id": "sr-1268514678677-herobrinews",
+    "seed": "1268514678677",
+    "title": "Speedrun Practice: herobrine ws",
+    "description": "Verified speedrunning practice seed 'herobrine_ws'. Optimized for specific categories or splitting. Coordinates: X=10.5, Z=50.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 10.5,
+      "y": 70,
+      "z": 50.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#1268514678677"
+  },
+  {
+    "id": "sr-5345-herobrinens",
+    "seed": "5345",
+    "title": "Speedrun Practice: herobrine ns",
+    "description": "Verified speedrunning practice seed 'herobrine_ns'. Optimized for specific categories or splitting. Coordinates: X=12.5, Z=1.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 12.5,
+      "y": 70,
+      "z": 1.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#5345"
+  },
+  {
+    "id": "sr--111831294263439921-pogloot116",
+    "seed": "-111831294263439921",
+    "title": "Speedrun Practice: pogloot 1 16",
+    "description": "Verified speedrunning practice seed 'pogloot_1_16'. Optimized for specific categories or splitting. Coordinates: X=5.5, Z=214.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 5.5,
+      "y": 70,
+      "z": 214.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-111831294263439921"
+  },
+  {
+    "id": "sr--6376304316718564286-stackofflint",
+    "seed": "-6376304316718564286",
+    "title": "Speedrun Practice: stack of flint",
+    "description": "Verified speedrunning practice seed 'stack_of_flint'. Optimized for specific categories or splitting. Coordinates: X=5.5, Z=214.5.",
+    "category": "speedrun",
+    "discoveredBy": "Speedrun Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.16+",
+      "bedrock": null
+    },
+    "rating": 4.5,
+    "confidence": 1,
+    "isGenerated": false,
+    "coordinates": {
+      "x": 5.5,
+      "y": 70,
+      "z": 214.5
+    },
+    "imageUrl": "/images/seeds/placeholder_speedrun.jpg",
+    "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-6376304316718564286"
+  },
+  {
     "id": "ssg-1",
     "seed": "-6876956224386768041",
     "title": "12-Eye Portal (1188m) + Plains Village",

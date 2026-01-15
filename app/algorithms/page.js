@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Header from '../../components/Header';
+import VisualSeedCracker from '../../components/VisualSeedCracker';
 import SubmitModal from '../../components/SubmitModal';
 
 export default function AlgorithmsPage() {
@@ -111,6 +112,8 @@ P(22) ≈ (1/4096)¹⁹ ≈ 1.8 × 10⁻⁶⁹`}</pre>
             </p>
           </section>
 
+
+
           <section className="algo-section">
             <div className="section-header">
               <h2>🎲 The Linear Congruential Generator</h2>
@@ -129,10 +132,39 @@ P(22) ≈ (1/4096)¹⁹ ≈ 1.8 × 10⁻⁶⁹`}</pre>
             </div>
 
             <p>
-              <strong>Reverse Engineering:</strong> Because this formula is reversible, tools like
+              <strong>Reverse Engineering Demo:</strong> Try our interactive visualizer below to understand
+              how tools brute-force the lower 48 bits of a seed based on structure coordinates.
+            </p>
+
+            <VisualSeedCracker />
+
+            <p>
+              <strong>Real-World Tools:</strong> Because this formula is reversible, tools like
               <a href="https://github.com/19MisterX98/SeedcrackerX" target="_blank" className="text-link">SeedCrackerX</a> can
               take a sequence of observed events (dungeon floor patterns, emerald ore locations)
               and mathematically solve for the `world_seed`.
+            </p>
+          </section>
+
+          <section className="algo-section">
+            <div className="section-header">
+              <h2>⚡ Speedrun Verification</h2>
+              <span className="tag rare">High Optimization</span>
+            </div>
+
+            <p>
+              Speedrunners use "Filtered Seeds" (FSG) to practice specific strategies.
+              These seeds are pre-generated to ensure a specific subset of conditions:
+            </p>
+            <ul>
+              <li><strong>Bastion + Fortress:</strong> Within 128 blocks in Nether.</li>
+              <li><strong>Blind Travel:</strong> Stronghold located exactly at calculated angles.</li>
+              <li><strong>Village Entry:</strong> Starting with beds and food.</li>
+            </ul>
+
+            <p style={{ marginTop: '16px' }}>
+              We have now integrated verified seeds from the <strong>Minecraft Speedrunning Community</strong>
+              into our database, allowing you to browse optimal practice worlds.
             </p>
           </section>
 
