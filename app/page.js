@@ -30,6 +30,7 @@ const VERSION_OPTIONS = [
   { value: '1.13', label: '1.13' },
   { value: '1.12', label: '1.12' },
   { value: '1.8', label: '1.8 - 1.11' },
+  { value: '1.0', label: '1.0 - 1.7' },
   { value: 'beta', label: 'Beta' },
   { value: 'alpha', label: 'Alpha' }
 ];
@@ -78,10 +79,26 @@ export default function Home() {
       results = results.filter(seed => {
         const jv = (seed.version.java || '').toLowerCase();
         const bv = (seed.version.bedrock || '').toLowerCase();
+        const combined = jv + ' ' + bv;
+
+        // Helper to check range
+        const checkRange = (min, max) => {
+          const matches = combined.match(/1\.(\d+)/g);
+          if (!matches) return false;
+          return matches.some(v => {
+            const minor = parseInt(v.split('.')[1]);
+            return minor >= min && minor <= max;
+          });
+        };
 
         if (versionFilter === '1.8') {
-          // Matches 1.8, 1.9, 1.10, 1.11
-          return jv.includes('1.8') || jv.includes('1.9') || jv.includes('1.10') || jv.includes('1.11');
+          // Matches 1.8 - 1.11
+          return checkRange(8, 11);
+        }
+
+        if (versionFilter === '1.0') {
+          // Matches 1.0 - 1.7
+          return checkRange(0, 7);
         }
 
         if (versionFilter === 'beta') return jv.includes('beta');
@@ -129,11 +146,31 @@ export default function Home() {
     } else if (sortBy === 'date') {
       results.sort((a, b) => new Date(b.discoveredDate) - new Date(a.discoveredDate));
     } else if (sortBy === 'rarity') {
-      results.sort((a, b) => {
-        const catA = CATEGORIES[a.category];
-        const catB = CATEGORIES[b.category];
-        return (catB?.rarity || 0) - (catA?.rarity || 0);
+      results.sort((a, b) => (CATEGORIES[b.category]?.rarity || 0) - (CATEGORIES[a.category]?.rarity || 0));
+    }
+
+    // "Smart Mix" Interleaving - Apply to the "All" view to ensure diversity
+    if (!activeCategory && results.length > 0) {
+      const grouped = {};
+      results.forEach(s => {
+        if (!grouped[s.category]) grouped[s.category] = [];
+        grouped[s.category].push(s);
       });
+
+      const mixed = [];
+      const keys = Object.keys(grouped).sort((a, b) =>
+        (CATEGORIES[b]?.rarity || 0) - (CATEGORIES[a]?.rarity || 0)
+      );
+
+      let maxLen = 0;
+      keys.forEach(k => maxLen = Math.max(maxLen, grouped[k].length));
+
+      for (let i = 0; i < maxLen; i++) {
+        keys.forEach(k => {
+          if (grouped[k][i]) mixed.push(grouped[k][i]);
+        });
+      }
+      results = mixed;
     }
 
     return results;
@@ -292,7 +329,7 @@ export default function Home() {
                     style={activeCategory === category.id ? { background: category.color, borderColor: category.color } : {}}
                   >
                     <span className="category-icon">{category.icon}</span>
-                    {category.name.split(' ')[0]} ({count})
+                    {category.name} ({count})
                   </button>
                 );
               })}

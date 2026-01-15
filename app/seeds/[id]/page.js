@@ -172,6 +172,21 @@ export default function SeedDetailPage() {
             <section className="seed-detail-section">
                 <h2>Explore This Seed</h2>
                 <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                    {seed.sourceUrl && (
+                        <a
+                            href={seed.sourceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="external-link"
+                            style={{
+                                borderColor: 'var(--accent-primary)',
+                                color: 'var(--accent-primary)',
+                                background: 'rgba(var(--accent-primary-rgb), 0.05)'
+                            }}
+                        >
+                            🔗 View Original Source
+                        </a>
+                    )}
                     {seed.chunkbaseUrl && (
                         <a
                             href={seed.chunkbaseUrl}
