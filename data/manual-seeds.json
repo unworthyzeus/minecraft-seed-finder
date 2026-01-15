@@ -373,7 +373,7 @@
         },
         {
             "seed": "-1985920037",
-            "title": "Ruined Portal inside Bastion",
+            "title": "Ruined Portal in Bastion",
             "category": "nether_anomaly",
             "discoveredBy": "u/NetherExplorer",
             "discoveredDate": "2020-07-25",
@@ -403,7 +403,7 @@
                 "z": 0
             },
             "confidence": 0.9,
-            "description": "Pink sheep at spawn plus a mineshaft intersecting a massive geode at Y=10."
+            "description": "Pink sheep at spawn plus a mineshaft intersecting a massive geode at Y=10. A pink sheep sighting here is confirmed."
         },
         {
             "seed": "2942736505878736687",
@@ -472,6 +472,193 @@
             },
             "confidence": 1.0,
             "description": "Three blacksmiths in a hilly plains village."
+        },
+        {
+            "seed": "292951336304303847",
+            "title": "Stronghold Library Spawn",
+            "category": "stronghold_spawn",
+            "discoveredBy": "Bedrock Community",
+            "discoveredDate": "2022-01-01",
+            "version": {
+                "bedrock": "1.18+"
+            },
+            "coordinates": {
+                "x": -158,
+                "y": 24,
+                "z": -815
+            },
+            "confidence": 1.0,
+            "description": "Spawn very close to a stronghold with a library."
+        },
+        {
+            "seed": "3929110367124987343",
+            "title": "Village Island Stronghold",
+            "category": "stronghold_spawn",
+            "discoveredBy": "u/JavaFinds",
+            "discoveredDate": "2022-08-15",
+            "version": {
+                "java": "1.19.2"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 64,
+                "z": 0
+            },
+            "confidence": 1.0,
+            "description": "Spawn on an island village with a stronghold directly underneath."
+        },
+        {
+            "seed": "1941425964607657726",
+            "title": "Modified Jungle Edge Spawn",
+            "category": "rare_biome",
+            "discoveredBy": "u/BiomeHunter",
+            "discoveredDate": "2021-03-10",
+            "version": {
+                "java": "1.16+"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 64,
+                "z": 0
+            },
+            "confidence": 1.0,
+            "description": "Direct spawn in the rarest biome, Modified Jungle Edge, with badlands nearby."
+        },
+        {
+            "seed": "-2557962673266493087",
+            "title": "Rare Jungle Edge",
+            "category": "rare_biome",
+            "discoveredBy": "u/BiomeHunter",
+            "discoveredDate": "2020-05-15",
+            "version": {
+                "java": "1.16.5"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 64,
+                "z": 0
+            },
+            "confidence": 1.0,
+            "description": "Classic Modified Jungle Edge spawn."
+        },
+        {
+            "seed": "-2799238775580122484",
+            "title": "Large Zombie Village Spawn",
+            "category": "village_anomaly",
+            "discoveredBy": "u/VillageSeeker",
+            "discoveredDate": "2021-07-20",
+            "version": {
+                "java": "1.17"
+            },
+            "coordinates": {
+                "x": 40,
+                "y": 64,
+                "z": 230
+            },
+            "confidence": 1.0,
+            "description": "Large abandoned zombie village right at spawn."
+        },
+        {
+            "seed": "-4778566849805546526",
+            "title": "Double Zombie Village",
+            "category": "village_anomaly",
+            "discoveredBy": "u/VillageSeeker",
+            "discoveredDate": "2020-12-05",
+            "version": {
+                "java": "1.16+"
+            },
+            "coordinates": {
+                "x": -328,
+                "y": 64,
+                "z": -408
+            },
+            "confidence": 1.0,
+            "description": "Two zombie villages near spawn."
+        },
+        {
+            "seed": "326657730",
+            "title": "Exposed Spawner at Spawn",
+            "category": "spawner_anomaly",
+            "discoveredBy": "u/SpawnerWatch",
+            "discoveredDate": "2022-09-01",
+            "version": {
+                "bedrock": "1.19+"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 70,
+                "z": 0
+            },
+            "confidence": 1.0,
+            "description": "Incredibly rare exposed zombie spawner right at the spawn point."
+        },
+        {
+            "seed": "1915631036",
+            "title": "Eroded Badlands Spawners",
+            "category": "spawner_anomaly",
+            "discoveredBy": "u/SpawnerWatch",
+            "discoveredDate": "2021-11-15",
+            "version": {
+                "bedrock": "1.17+"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 70,
+                "z": 0
+            },
+            "confidence": 1.0,
+            "description": "Two exposed mob spawners in an eroded badlands biome at spawn."
+        },
+        {
+            "seed": "-9142863513851137753",
+            "title": "Island Shipwreck Spawn",
+            "category": "spawn_oddity",
+            "discoveredBy": "u/ShipwreckHunter",
+            "discoveredDate": "2023-02-20",
+            "version": {
+                "java": "1.19+"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 64,
+                "z": 0
+            },
+            "confidence": 1.0,
+            "description": "Spawn on a tiny island with a shipwreck."
+        },
+        {
+            "seed": "-244885508",
+            "title": "Landlocked Shipwreck",
+            "category": "spawn_oddity",
+            "discoveredBy": "u/ShipwreckHunter",
+            "discoveredDate": "2022-04-10",
+            "version": {
+                "bedrock": "1.18+"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 70,
+                "z": 0
+            },
+            "confidence": 1.0,
+            "description": "Full shipwreck generated on dry land at spawn."
+        },
+        {
+            "seed": "1068310821",
+            "title": "Multiple Shipwrecks Island",
+            "category": "spawn_oddity",
+            "discoveredBy": "u/ShipwreckHunter",
+            "discoveredDate": "2021-08-05",
+            "version": {
+                "bedrock": "1.17+"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 64,
+                "z": 0
+            },
+            "confidence": 1.0,
+            "description": "Island spawn with multiple exposed shipwrecks and geodes."
         }
     ]
 }
