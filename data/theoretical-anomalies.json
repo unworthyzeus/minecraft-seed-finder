@@ -1,0 +1,459 @@
+[
+  {
+    "id": "th-void-end",
+    "seed": "140346562199561",
+    "title": "The Island-less End",
+    "description": "A glitched seed where the central End Island fails to generate, making the dimension an empty void. Extremely rare generation error.",
+    "category": "end_anomaly",
+    "discoveredBy": "Andrew / Rovant",
+    "discoveredDate": "2024-10-15",
+    "version": {
+      "java": "1.21.8"
+    },
+    "coordinates": {
+      "x": 0,
+      "y": 64,
+      "z": 0
+    },
+    "confidence": 1,
+    "probability": "1 in 10¹²"
+  },
+  {
+    "id": "th-trial-stronghold",
+    "seed": "1244423416321524917",
+    "title": "The Trial Stronghold",
+    "description": "A rare intersection where a Stronghold and a Trial Chamber overlap, including a 4-eye pre-filled End Portal.",
+    "category": "structure_combo",
+    "discoveredBy": "KeimaJirou",
+    "discoveredDate": "2024-11-02",
+    "version": {
+      "java": "1.21.2+"
+    },
+    "coordinates": {
+      "x": 1088,
+      "y": -24,
+      "z": 1157
+    },
+    "confidence": 1,
+    "probability": "1 in 10¹²"
+  },
+  {
+    "id": "th-diamond-44",
+    "seed": "40525935656",
+    "title": "The 44 Diamond Vein",
+    "description": "Contains the largest known single connected vein of 44 Diamond Ores, significantly exceeding normal generation limits.",
+    "category": "fossil_diamonds",
+    "discoveredBy": "scriptline-studios",
+    "discoveredDate": "2024-08-20",
+    "version": {
+      "java": "1.21"
+    },
+    "coordinates": {
+      "x": -13718752,
+      "y": -40,
+      "z": -22261824
+    },
+    "confidence": 1,
+    "probability": "1 in 10¹²"
+  },
+  {
+    "id": "th-skyscraper-cactus",
+    "seed": "4238121544243673",
+    "title": "The Skyscraper Cactus",
+    "description": "Features the tallest recorded naturally occurring cactus, reaching 22 blocks high. Mathematically impossible in most seeds.",
+    "category": "tall_cactus",
+    "discoveredBy": "Community",
+    "discoveredDate": "2023-05-12",
+    "version": {
+      "java": "1.14.4"
+    },
+    "coordinates": {
+      "x": 93,
+      "y": 88,
+      "z": 120
+    },
+    "confidence": 1,
+    "probability": "1 in 10¹⁸"
+  },
+  {
+    "id": "th-repeating-canyons",
+    "seed": "1669320484",
+    "title": "Repeating Canyons",
+    "description": "A 'cursed' seed on Bedrock where world features like canyons repeat infinitely in a glitchy pattern across the world.",
+    "category": "rare_biome",
+    "discoveredBy": "Minecraft Wiki",
+    "discoveredDate": "2022-03-01",
+    "version": {
+      "bedrock": "1.18+"
+    },
+    "coordinates": {
+      "x": -1265,
+      "y": 64,
+      "z": 0
+    },
+    "confidence": 1,
+    "probability": "1 in 10¹²"
+  },
+  {
+    "id": "th-triple-spawn",
+    "seed": "65434353559200",
+    "title": "Triple Structure Spawn",
+    "description": "Features a Village, Ancient City, and Mineshaft all clustered together directly at the spawn point.",
+    "category": "structure_combo",
+    "discoveredBy": "Pitcch",
+    "discoveredDate": "2024-09-10",
+    "version": {
+      "java": "1.21",
+      "bedrock": "1.21"
+    },
+    "coordinates": {
+      "x": 50,
+      "y": 70,
+      "z": -49
+    },
+    "confidence": 1,
+    "probability": "1 in 10⁹"
+  },
+  {
+    "id": "th-village-ancient-city",
+    "seed": "750035071192534575",
+    "title": "Village inside Ancient City",
+    "description": "An extremely rare generation where a village intersects with an Ancient City in the Deep Dark.",
+    "category": "structure_combo",
+    "discoveredBy": "Dylan DC14 & Dam Duck",
+    "discoveredDate": "2024-11-15",
+    "version": {
+      "java": "1.21"
+    },
+    "coordinates": {
+      "x": 0,
+      "y": -30,
+      "z": 0
+    },
+    "confidence": 1,
+    "probability": "1 in 10¹²"
+  },
+  {
+    "id": "th-trial-stronghold-12eye",
+    "seed": "1084670432138096516",
+    "title": "Trial Chamber Stronghold",
+    "description": "A 1.21 anomaly featuring a Trial Chamber intersecting a Stronghold with a naturally filled 12-eye portal.",
+    "category": "end_portal_12eye",
+    "discoveredBy": "Rovant Community",
+    "discoveredDate": "2024-12-01",
+    "version": {
+      "java": "1.21.10"
+    },
+    "coordinates": {
+      "x": 1684,
+      "y": -20,
+      "z": -10686
+    },
+    "confidence": 1,
+    "probability": "1 in 10¹²"
+  },
+  {
+    "id": "th-monument-mansion",
+    "seed": "-3689227763345213365",
+    "title": "Monument Mansion",
+    "description": "A Woodland Mansion and Ocean Monument generated in the exact same location.",
+    "category": "structure_combo",
+    "discoveredBy": "Nomis",
+    "discoveredDate": "2024-12-05",
+    "version": {
+      "bedrock": "1.21.114"
+    },
+    "coordinates": {
+      "x": -1851,
+      "y": 64,
+      "z": 1527
+    },
+    "confidence": 1,
+    "probability": "1 in 10¹⁵"
+  },
+  {
+    "id": "th-smallest-12eye",
+    "seed": "6716565378157451232",
+    "title": "Smallest 12-Eye Stronghold",
+    "description": "The smallest recorded stronghold containing a naturally lit 12-eye portal.",
+    "category": "end_portal_12eye",
+    "discoveredBy": "Minecraft@Home",
+    "discoveredDate": "2024-12-10",
+    "version": {
+      "java": "1.21.10"
+    },
+    "coordinates": {
+      "x": -2387,
+      "y": 10,
+      "z": -172
+    },
+    "confidence": 1,
+    "probability": "1 in 10¹²"
+  },
+  {
+    "id": "th-biggest-cave",
+    "seed": "-6883778639048716267",
+    "title": "The Biggest Cave",
+    "description": "A massive cave chamber discovered through seed simulation, reaching record-breaking volumes.",
+    "category": "rare_biome",
+    "discoveredBy": "M33Galaxy",
+    "discoveredDate": "2025-01-05",
+    "version": {
+      "java": "1.21.10"
+    },
+    "coordinates": {
+      "x": 16737,
+      "y": 26,
+      "z": 17952
+    },
+    "confidence": 1,
+    "probability": "1 in 10¹²"
+  },
+  {
+    "id": "th-lit-portal",
+    "seed": "5259922889820962915",
+    "title": "Naturally Lit Nether Portal",
+    "description": "A Ruined Portal that generates already lit due to adjacent lava flowing into it during world gen.",
+    "category": "ruined_portal",
+    "discoveredBy": "Community",
+    "discoveredDate": "2025-01-10",
+    "version": {
+      "java": "1.21.9"
+    },
+    "coordinates": {
+      "x": 0,
+      "y": 64,
+      "z": 0
+    },
+    "confidence": 1,
+    "probability": "1 in 10⁶"
+  },
+  {
+    "id": "th-sunlit-house",
+    "seed": "2037437248376927066",
+    "title": "Sunlit Cave House",
+    "description": "An underground village house that generates in a cave but with an opening to the surface, appearing 'sunlit' underground.",
+    "category": "village_anomaly",
+    "discoveredBy": "Bedrock Community",
+    "discoveredDate": "2025-01-12",
+    "version": {
+      "bedrock": "1.21.114"
+    },
+    "coordinates": {
+      "x": 136,
+      "y": 64,
+      "z": -184
+    },
+    "confidence": 1,
+    "probability": "1 in 10⁸"
+  },
+  {
+    "id": "th-12eye-bedrock",
+    "seed": "2374522933531607421",
+    "title": "12-Eye Activated End Portal (Bedrock)",
+    "description": "A natural End Portal with all 12 Eyes of Ender already placed. The current 'rarity king' for Bedrock 1.21.",
+    "category": "end_portal_12eye",
+    "discoveredBy": "Skippy 6 / Rovant",
+    "discoveredDate": "2024-12-20",
+    "version": {
+      "bedrock": "1.21"
+    },
+    "coordinates": {
+      "x": -748,
+      "y": -35,
+      "z": -748
+    },
+    "confidence": 1,
+    "probability": "1 in 10¹²"
+  },
+  {
+    "id": "th-half-bed",
+    "seed": "-4101413809228812675",
+    "title": "Natural Half-Bed",
+    "description": "A generation glitch on a chunk border that results in a naturally existing half-bed.",
+    "category": "spawn_oddity",
+    "discoveredBy": "Community",
+    "discoveredDate": "2024-11-10",
+    "version": {
+      "bedrock": "1.20+"
+    },
+    "coordinates": {
+      "x": -10,
+      "y": 64,
+      "z": -10
+    },
+    "confidence": 1,
+    "probability": "1 in 10⁹"
+  },
+  {
+    "id": "th-triple-spawner",
+    "seed": "881743669612",
+    "title": "Triple Dungeon Spawner",
+    "description": "Three different mob spawners generating within the same active radius for an infinite farm.",
+    "category": "spawner_anomaly",
+    "discoveredBy": "Community",
+    "discoveredDate": "2024-05-15",
+    "version": {
+      "bedrock": "1.21"
+    },
+    "coordinates": {
+      "x": -10,
+      "y": -45,
+      "z": 150
+    },
+    "confidence": 1,
+    "probability": "1 in 10⁷"
+  },
+  {
+    "id": "th-ancient-stronghold",
+    "seed": "-289803102",
+    "title": "Ancient City Stronghold",
+    "description": "A massive Ancient City generating directly into the walls of a Stronghold portal room.",
+    "category": "structure_combo",
+    "discoveredBy": "Community",
+    "discoveredDate": "2024-08-05",
+    "version": {
+      "java": "1.21"
+    },
+    "coordinates": {
+      "x": -1200,
+      "y": -40,
+      "z": 200
+    },
+    "confidence": 1,
+    "probability": "1 in 10⁶"
+  },
+  {
+    "id": "th-bedrock-temple",
+    "seed": "-1317544521",
+    "title": "Bedrock Level Desert Temple",
+    "description": "A desert temple that generates at Y: -60, sitting directly on the bedrock floor.",
+    "category": "village_anomaly",
+    "discoveredBy": "Community",
+    "discoveredDate": "2024-03-22",
+    "version": {
+      "bedrock": "1.21"
+    },
+    "coordinates": {
+      "x": 0,
+      "y": -60,
+      "z": 0
+    },
+    "confidence": 1,
+    "probability": "1 in 10⁶"
+  },
+  {
+    "id": "th-ocean-mansion",
+    "seed": "438541814",
+    "title": "Ocean-Born Woodland Mansion",
+    "description": "A massive mansion generating in the middle of a deep ocean with no land supports.",
+    "category": "structure_combo",
+    "discoveredBy": "Community",
+    "discoveredDate": "2024-02-14",
+    "version": {
+      "java": "1.21"
+    },
+    "coordinates": {
+      "x": -800,
+      "y": 70,
+      "z": 1200
+    },
+    "confidence": 1,
+    "probability": "1 in 10⁵"
+  },
+  {
+    "id": "th-forbidden-seed",
+    "seed": "1070383808",
+    "title": "The Forbidden Seed",
+    "description": "An 'impossible' seed that triggers a fatal world generation crash on specific Bedrock versions.",
+    "category": "spawn_oddity",
+    "discoveredBy": "Community",
+    "discoveredDate": "2022-01-01",
+    "version": {
+      "bedrock": "Legacy"
+    },
+    "coordinates": {
+      "x": 0,
+      "y": 64,
+      "z": 0
+    },
+    "confidence": 1,
+    "probability": "Unique"
+  },
+  {
+    "id": "th-mountain-range",
+    "seed": "-3208573132717804473",
+    "title": "The 12,000 Block Mountain Range",
+    "description": "The longest contiguous mountain range ever discovered, stretching over 12km.",
+    "category": "rare_biome",
+    "discoveredBy": "Community",
+    "discoveredDate": "2024-11-20",
+    "version": {
+      "java": "1.21"
+    },
+    "coordinates": {
+      "x": 0,
+      "y": 120,
+      "z": 0
+    },
+    "confidence": 1,
+    "probability": "1 in 10⁹"
+  },
+  {
+    "id": "th-mangrove-village",
+    "seed": "7422776610836481897",
+    "title": "Mangrove Surrounded Village",
+    "description": "A rare 1.21 discovery where a village is completely enclosed within a massive, high-density mangrove swamp.",
+    "category": "rare_biome",
+    "discoveredBy": "Community",
+    "discoveredDate": "2025-01-15",
+    "version": {
+      "java": "1.21"
+    },
+    "coordinates": {
+      "x": -150,
+      "y": 64,
+      "z": 150
+    },
+    "confidence": 1,
+    "probability": "1 in 10⁶"
+  },
+  {
+    "id": "th-abandoned-4",
+    "seed": "-6126605273",
+    "title": "Quadruple Abandoned Villages",
+    "description": "A legendary anomaly where four abandoned (zombie) villages generate within a 360-block radius of each other.",
+    "category": "village_anomaly",
+    "discoveredBy": "Zenith",
+    "discoveredDate": "2021-02-10",
+    "version": {
+      "java": "1.16.4"
+    },
+    "coordinates": {
+      "x": 100,
+      "y": 64,
+      "z": 200
+    },
+    "confidence": 1,
+    "probability": "1 in 10⁹"
+  },
+  {
+    "id": "th-record-cactus",
+    "seed": "149123313",
+    "title": "The 22-Block Tall Cactus",
+    "description": "The historic record-holding seed for the tallest naturally occurring cactus (22 blocks).",
+    "category": "tall_cactus",
+    "discoveredBy": "Community",
+    "discoveredDate": "2019-10-05",
+    "version": {
+      "java": "1.14.4"
+    },
+    "coordinates": {
+      "x": 4,
+      "y": 66,
+      "z": 4
+    },
+    "confidence": 1,
+    "probability": "1 in 10¹⁸"
+  }
+]

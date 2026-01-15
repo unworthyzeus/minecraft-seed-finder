@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback } from 'react';
 import { SEEDS_DATABASE, searchSeeds, filterSeeds, getDatabaseStats } from '@/lib/seeds-database';
-import { CATEGORIES, VERSIONS, getConfidenceLevel, CONFIDENCE_LEVELS } from '@/lib/categories';
+import { CATEGORIES, VERSIONS, getConfidenceLevel, CONFIDENCE_LEVELS, parseProbability } from '@/lib/categories';
 import Header from '@/components/Header';
 import SeedCard from '@/components/SeedCard';
 import SubmitModal from '@/components/SubmitModal';
@@ -146,11 +146,20 @@ export default function Home() {
     } else if (sortBy === 'date') {
       results.sort((a, b) => new Date(b.discoveredDate) - new Date(a.discoveredDate));
     } else if (sortBy === 'rarity') {
-      results.sort((a, b) => (CATEGORIES[b.category]?.rarity || 0) - (CATEGORIES[a.category]?.rarity || 0));
+      results.sort((a, b) => {
+        const rarityA = CATEGORIES[a.category]?.rarity || 0;
+        const rarityB = CATEGORIES[b.category]?.rarity || 0;
+
+        if (rarityA !== rarityB) return rarityB - rarityA;
+
+        // Secondary sort by specific probability if rarity is same
+        return parseProbability(a.probability) - parseProbability(b.probability);
+      });
     }
 
     // "Smart Mix" Interleaving - Apply to the "All" view to ensure diversity
-    if (!activeCategory && results.length > 0) {
+    // Only apply when the default sort (confidence) is active
+    if (!activeCategory && sortBy === 'confidence' && results.length > 0) {
       const grouped = {};
       results.forEach(s => {
         if (!grouped[s.category]) grouped[s.category] = [];
