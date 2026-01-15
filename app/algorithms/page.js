@@ -139,7 +139,7 @@ P(22) ≈ (1/4096)¹⁹ ≈ 1.8 × 10⁻⁶⁹`}</pre>
             <VisualSeedCracker />
 
             <p>
-              <strong>Real-World Tools:</strong> Because this formula is reversible, tools like
+              <strong>Real-World Tools:</strong> Because this formula is reversible, tools like 
               <a href="https://github.com/19MisterX98/SeedcrackerX" target="_blank" className="text-link">SeedCrackerX</a> can
               take a sequence of observed events (dungeon floor patterns, emerald ore locations)
               and mathematically solve for the `world_seed`.
