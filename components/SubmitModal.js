@@ -163,9 +163,15 @@ ${formData.description}
                             <span>🐙</span> Open GitHub Issue
                         </button>
                         <a
-                            href={`mailto:unworthyzeus543@gmail.com?subject=${encodeURIComponent(`Seed Submission: ${formData.seed}`)}&body=${encodeURIComponent(generateBody())}`}
+                            href={`mailto:unworthyzeus543@gmail.com?subject=${encodeURIComponent(`Seed: ${formData.seed}`)}&body=${encodeURIComponent(generateBody())}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="submit-action-btn email-btn"
                             style={{ textDecoration: 'none' }}
+                            onClick={(e) => {
+                                // Fallback/Feedback
+                                setTimeout(() => alert('If your email client didn\'t open, please use the "Copy Text" button instead.'), 500);
+                            }}
                         >
                             <span>📧</span> via Email
                         </a>
@@ -175,7 +181,7 @@ ${formData.description}
                             onClick={handleCopy}
                         >
                             <span>📋</span> Copy Text
-                        </button>   
+                        </button>
                     </div>
                 </form>
             </div>
