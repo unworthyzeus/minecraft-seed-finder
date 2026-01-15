@@ -55,11 +55,7 @@ ${formData.description}
         onClose();
     };
 
-    const handleCopy = () => {
-        const body = generateBody();
-        navigator.clipboard.writeText(body);
-        alert('Submission copied to clipboard! You can now paste it in Discord or via Email.');
-    };
+
 
     // Sort categories for the dropdown
     const sortedCategories = Object.entries(CATEGORIES)
@@ -178,10 +174,19 @@ ${formData.description}
                         <button
                             type="button"
                             className="submit-action-btn copy-btn"
-                            onClick={handleCopy}
+                            onClick={() => {
+                                const body = generateBody();
+                                navigator.clipboard.writeText(body);
+                                alert('Submission copied! Please send it to: unworthyzeus543@gmail.com');
+                            }}
                         >
                             <span>📋</span> Copy Text
                         </button>
+                    </div>
+
+                    <div style={{ marginTop: '16px', textAlign: 'center', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                        <p>Or send manually to:</p>
+                        <p style={{ color: 'var(--gold-yellow)', userSelect: 'all' }}>unworthyzeus543@gmail.com</p>
                     </div>
                 </form>
             </div>
