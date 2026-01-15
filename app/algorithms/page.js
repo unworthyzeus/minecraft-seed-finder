@@ -1,12 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import Header from '../../components/Header';
+import SubmitModal from '../../components/SubmitModal';
 
 export default function AlgorithmsPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <>
-      <Header />
+      <Header onSubmitClick={() => setIsModalOpen(true)} />
+      <SubmitModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <main className="algorithms-page">
         <div className="container">
           <Link href="/" className="back-link">

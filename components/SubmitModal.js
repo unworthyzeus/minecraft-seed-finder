@@ -1,20 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { CATEGORIES } from '@/lib/categories';
+import { CATEGORIES } from '../lib/categories';
 
-export default function SubmitModal({ onClose, onSuccess }) {
+export default function SubmitModal({ isOpen, onClose }) {
+    if (!isOpen) return null;
+
     const [formData, setFormData] = useState({
         seed: '',
-        title: '',
         category: '',
         edition: 'java',
         versionNumber: '',
         coordinates: { x: '', y: '', z: '' },
-        description: '',
-        discoveredBy: ''
+        description: ''
     });
-    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -31,85 +30,57 @@ export default function SubmitModal({ onClose, onSuccess }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setIsSubmitting(true);
 
-        // Simulate API call / save to localStorage
-        setTimeout(() => {
-            const submissions = JSON.parse(localStorage.getItem('seed_submissions') || '[]');
+        // Create the issue body
+        const categoryName = CATEGORIES[formData.category]?.name || formData.category;
 
-            const category = CATEGORIES[formData.category];
+        const body = `
+### New Seed Submission
 
-            submissions.push({
-                id: `user-${Date.now()}`,
-                seed: formData.seed,
-                title: formData.title,
-                category: formData.category,
-                version: {
-                    java: formData.edition === 'java' || formData.edition === 'both' ? formData.versionNumber : null,
-                    bedrock: formData.edition === 'bedrock' || formData.edition === 'both' ? formData.versionNumber : null
-                },
-                probability: category?.probability || 'Unknown',
-                confidence: 0.25, // User submitted starts low
-                coordinates: formData.coordinates.x ? {
-                    x: parseInt(formData.coordinates.x),
-                    y: parseInt(formData.coordinates.y),
-                    z: parseInt(formData.coordinates.z)
-                } : null,
-                description: formData.description,
-                discoveredBy: formData.discoveredBy || 'Anonymous',
-                discoveredDate: new Date().toISOString().split('T')[0],
-                isGenerated: false,
-                isUserSubmitted: true,
-                submittedAt: new Date().toISOString()
-            });
+**Seed:** \`${formData.seed}\`
+**Category:** ${categoryName}
+**Edition:** ${formData.edition === 'java' ? 'Java' : formData.edition === 'bedrock' ? 'Bedrock' : 'Both'}
+**Version:** ${formData.versionNumber}
+**Coordinates:** X:${formData.coordinates.x || '?'} Y:${formData.coordinates.y || '?'} Z:${formData.coordinates.z || '?'}
 
-            localStorage.setItem('seed_submissions', JSON.stringify(submissions));
-            setIsSubmitting(false);
-            onSuccess?.();
-        }, 800);
+**Description:**
+${formData.description}
+
+*Submitted via SeedFinder Web*
+    `.trim();
+
+        // Open GitHub new issue page (GitHub's URL limit is ~2000 chars, usually fine)
+        const url = `https://github.com/unworthyzeus/minecraft-seed-finder/issues/new?title=Seed: ${encodeURIComponent(formData.seed)}&body=${encodeURIComponent(body)}`;
+        window.open(url, '_blank');
+
+        onClose();
     };
 
-    // Get categories sorted by name
-    const sortedCategories = Object.values(CATEGORIES).sort((a, b) =>
-        a.name.localeCompare(b.name)
-    );
+    // Sort categories for the dropdown
+    const sortedCategories = Object.entries(CATEGORIES)
+        .map(([id, data]) => ({ id, ...data }))
+        .sort((a, b) => a.name.localeCompare(b.name));
 
     return (
         <div className="modal-overlay" onClick={onClose}>
-            <div className="modal" onClick={e => e.stopPropagation()}>
-                <h2>🌟 Submit a Discovery</h2>
-                <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
-                    Found a rare seed? Share it with the community! Submissions start as &quot;Unverified&quot;
-                    until confirmed by others.
-                </p>
+            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                <button className="close-btn" onClick={onClose} aria-label="Close">×</button>
+
+                <h2>Submit a Discovery</h2>
+                <p>Found something rare? Submit it for review!</p>
+                <p className="subtext">This will draft a GitHub Issue for the community to verify.</p>
 
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label className="form-label">Seed Number *</label>
+                        <label className="form-label">Seed ID *</label>
                         <input
                             type="text"
                             name="seed"
                             className="form-input"
-                            placeholder="e.g., 2040984539113960933 or -4530634556500121041"
+                            required
+                            placeholder="-123456789"
                             value={formData.seed}
                             onChange={handleChange}
-                            required
-                            pattern="^-?\d+$"
-                            title="Enter a valid seed number (positive or negative integer)"
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label className="form-label">Title *</label>
-                        <input
-                            type="text"
-                            name="title"
-                            className="form-input"
-                            placeholder="e.g., 12-Eye Portal Near Village"
-                            value={formData.title}
-                            onChange={handleChange}
-                            required
-                            maxLength={100}
                         />
                     </div>
 
@@ -125,142 +96,202 @@ export default function SubmitModal({ onClose, onSuccess }) {
                             <option value="">Select a category...</option>
                             {sortedCategories.map(cat => (
                                 <option key={cat.id} value={cat.id}>
-                                    {cat.icon} {cat.name} ({cat.probability})
+                                    {cat.icon} {cat.name}
                                 </option>
                             ))}
                         </select>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                        <div className="form-group">
+                    <div className="form-row">
+                        <div className="form-group half">
                             <label className="form-label">Edition *</label>
                             <select
                                 name="edition"
                                 className="form-select"
                                 value={formData.edition}
                                 onChange={handleChange}
-                                required
                             >
-                                <option value="java">☕ Java Edition</option>
-                                <option value="bedrock">🪨 Bedrock Edition</option>
-                                <option value="both">Both Editions</option>
+                                <option value="java">Java Edition</option>
+                                <option value="bedrock">Bedrock</option>
+                                <option value="both">Both</option>
                             </select>
                         </div>
 
-                        <div className="form-group">
+                        <div className="form-group half">
                             <label className="form-label">Version *</label>
                             <input
                                 type="text"
                                 name="versionNumber"
                                 className="form-input"
-                                placeholder="e.g., 1.21+ or 1.20.4"
+                                placeholder="e.g. 1.21"
+                                required
                                 value={formData.versionNumber}
                                 onChange={handleChange}
-                                required
                             />
                         </div>
                     </div>
 
                     <div className="form-group">
-                        <label className="form-label">Coordinates (optional but recommended)</label>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
-                            <input
-                                type="number"
-                                name="coord_x"
-                                className="form-input"
-                                placeholder="X"
-                                value={formData.coordinates.x}
-                                onChange={handleChange}
-                            />
-                            <input
-                                type="number"
-                                name="coord_y"
-                                className="form-input"
-                                placeholder="Y"
-                                value={formData.coordinates.y}
-                                onChange={handleChange}
-                            />
-                            <input
-                                type="number"
-                                name="coord_z"
-                                className="form-input"
-                                placeholder="Z"
-                                value={formData.coordinates.z}
-                                onChange={handleChange}
-                            />
+                        <label className="form-label">Coordinates (Optional)</label>
+                        <div className="coord-row">
+                            <input type="number" name="coord_x" placeholder="X" className="form-input" value={formData.coordinates.x} onChange={handleChange} />
+                            <input type="number" name="coord_y" placeholder="Y" className="form-input" value={formData.coordinates.y} onChange={handleChange} />
+                            <input type="number" name="coord_z" placeholder="Z" className="form-input" value={formData.coordinates.z} onChange={handleChange} />
                         </div>
-                        <small style={{ color: 'var(--text-muted)', marginTop: '4px', display: 'block' }}>
-                            Coordinates of the rare feature (e.g., End Portal, tall cactus)
-                        </small>
                     </div>
 
                     <div className="form-group">
-                        <label className="form-label">Description *</label>
+                        <label className="form-label">Description (Why is it rare?)</label>
                         <textarea
                             name="description"
                             className="form-textarea"
-                            placeholder="Describe what makes this seed special. Include details like distance from spawn, nearby structures, etc."
+                            rows="3"
+                            required
+                            placeholder="Desribe the find..."
                             value={formData.description}
                             onChange={handleChange}
-                            required
-                            maxLength={500}
-                        />
-                        <small style={{ color: 'var(--text-muted)', marginTop: '4px', display: 'block' }}>
-                            {formData.description.length}/500 characters
-                        </small>
+                        ></textarea>
                     </div>
 
-                    <div className="form-group">
-                        <label className="form-label">Your Name / Handle</label>
-                        <input
-                            type="text"
-                            name="discoveredBy"
-                            className="form-input"
-                            placeholder="Optional - for credit (e.g., your Reddit/Discord username)"
-                            value={formData.discoveredBy}
-                            onChange={handleChange}
-                            maxLength={50}
-                        />
-                    </div>
-
-                    <div style={{
-                        padding: '16px',
-                        background: 'rgba(74, 222, 128, 0.1)',
-                        borderRadius: '12px',
-                        marginBottom: '20px',
-                        fontSize: '0.9rem',
-                        color: 'var(--text-secondary)'
-                    }}>
-                        <strong style={{ color: 'var(--accent-emerald)' }}>📋 Submission Guidelines:</strong>
-                        <ul style={{ marginTop: '8px', paddingLeft: '20px' }}>
-                            <li>Seeds are reviewed and verified by the community</li>
-                            <li>Initial confidence is set to ~25% until verified</li>
-                            <li>Provide accurate coordinates for faster verification</li>
-                            <li>Include version information for reproducibility</li>
-                        </ul>
-                    </div>
-
-                    <div style={{ display: 'flex', gap: '12px', marginTop: '24px' }}>
-                        <button
-                            type="button"
-                            className="submit-btn"
-                            style={{ background: 'var(--bg-secondary)', flex: 1 }}
-                            onClick={onClose}
-                            disabled={isSubmitting}
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            type="submit"
-                            className="submit-btn"
-                            style={{ flex: 1 }}
-                            disabled={isSubmitting}
-                        >
-                            {isSubmitting ? '⏳ Submitting...' : '✓ Submit Discovery'}
-                        </button>
-                    </div>
+                    <button type="submit" className="submit-action-btn">
+                        Compose GitHub Issue
+                    </button>
                 </form>
             </div>
+
+            <style jsx>{`
+        .modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.7);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 1000;
+          backdrop-filter: blur(4px);
+        }
+        
+        .modal-content {
+          background: var(--obsidian);
+          border: 4px solid var(--border-color);
+          padding: 24px;
+          max-width: 500px;
+          width: 90%;
+          max-height: 90vh;
+          overflow-y: auto;
+          position: relative;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        
+        .close-btn {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          background: none;
+          border: none;
+          color: var(--text-secondary);
+          font-size: 2rem;
+          line-height: 0.5;
+          cursor: pointer;
+          padding: 8px;
+        }
+        
+        .close-btn:hover {
+          color: #FF5555;
+        }
+        
+        h2 {
+          color: var(--gold-yellow);
+          font-family: 'Press Start 2P', cursive;
+          font-size: 1.1rem;
+          margin-bottom: 8px;
+          padding-right: 32px;
+        }
+        
+        p {
+          color: var(--text-primary);
+          margin-bottom: 4px;
+          font-size: 0.9rem;
+        }
+
+        .subtext {
+          font-size: 0.8rem;
+          color: var(--text-secondary);
+          margin-bottom: 20px;
+          font-style: italic;
+        }
+        
+        .form-group {
+          margin-bottom: 16px;
+        }
+        
+        .form-row {
+          display: flex;
+          gap: 16px;
+        }
+        
+        .half {
+          width: 50%;
+        }
+
+        .coord-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 8px;
+        }
+        
+        .form-label {
+          display: block;
+          margin-bottom: 8px;
+          color: var(--emerald-green);
+          font-family: 'Press Start 2P', cursive;
+          font-size: 0.7rem;
+        }
+        
+        .form-input, .form-select, .form-textarea {
+          width: 100%;
+          padding: 10px;
+          background: #111;
+          border: 2px solid var(--dark-grass);
+          color: white;
+          font-family: 'VT323', monospace;
+          font-size: 1.1rem;
+          border-radius: 0;
+        }
+        
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+          outline: none;
+          border-color: var(--earth-brown);
+        }
+        
+        .submit-action-btn {
+          width: 100%;
+          padding: 12px;
+          background: var(--grass-green);
+          border: 2px solid var(--dark-grass);
+          color: white;
+          font-family: 'Press Start 2P', cursive;
+          cursor: pointer;
+          margin-top: 8px;
+          box-shadow: 0 4px 0 var(--dark-grass); /* 3D effect */
+          transition: all 0.1s;
+          text-shadow: 1px 1px 0 #000;
+        }
+        
+        .submit-action-btn:active {
+          transform: translateY(4px);
+          box-shadow: none;
+        }
+
+        @media (max-width: 600px) {
+          .modal-content {
+            padding: 16px;
+          }
+        }
+      `}</style>
         </div>
     );
 }
