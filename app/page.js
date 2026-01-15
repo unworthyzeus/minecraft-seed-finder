@@ -146,16 +146,19 @@ export default function Home() {
     } else if (sortBy === 'date') {
       results.sort((a, b) => new Date(b.discoveredDate) - new Date(a.discoveredDate));
     } else if (sortBy === 'rarity') {
-      results.sort((a, b) => {
-        const rarityA = CATEGORIES[a.category]?.rarity || 0;
-        const rarityB = CATEGORIES[b.category]?.rarity || 0;
+      const getSeedRarityValue = (seed) => {
+        // 1. Try specific probability first
+        const p = parseProbability(seed.probability);
+        // If we have a valid specific probability > 100 (1 in 100+), use it. 
+        // We ignore low probabilities to let category defaults handle "common" things if they are better defined.
+        if (p && p > 100 && p !== Infinity) return p;
 
-        if (rarityA !== rarityB) return rarityB - rarityA;
+        // 2. Fallback to category rarity (treated as log10 scale)
+        const catRarity = CATEGORIES[seed.category]?.rarity || 0;
+        return Math.pow(10, catRarity);
+      };
 
-        // Secondary sort by specific probability if rarity is same
-        // Larger probability value (X in 1 in X) means rarer, so it should be first
-        return parseProbability(b.probability) - parseProbability(a.probability);
-      });
+      results.sort((a, b) => getSeedRarityValue(b) - getSeedRarityValue(a));
     }
 
     // "Smart Mix" Interleaving - Apply to the "All" view to ensure diversity

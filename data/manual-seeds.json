@@ -62,7 +62,8 @@
         "y": 64,
         "z": -3750655
       },
-      "confidence": 1
+      "confidence": 1,
+      "probability": "1 in 10¹⁸"
     },
     {
       "seed": "-940140316501436349",
@@ -126,7 +127,8 @@
         "y": -27,
         "z": 1156
       },
-      "confidence": 1
+      "confidence": 1,
+      "probability": "1 in 10¹²"
     },
     {
       "seed": "-4530634556500121041",
@@ -142,7 +144,8 @@
         "y": -35,
         "z": -684
       },
-      "confidence": 1
+      "confidence": 1,
+      "probability": "1 in 10¹²"
     },
     {
       "seed": "8091867987493326313",
@@ -206,7 +209,8 @@
         "y": 64,
         "z": 784
       },
-      "confidence": 1
+      "confidence": 1,
+      "probability": "1 in 1.6×10⁸"
     },
     {
       "seed": "1146756768899166968",
@@ -369,6 +373,7 @@
         "z": 50
       },
       "confidence": 1,
+      "probability": "4-block: Rare",
       "description": "Verified natural 4-block tall sugarcane. Some claims of 5 blocks exist but are unverified."
     },
     {
