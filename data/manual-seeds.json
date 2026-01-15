@@ -3,7 +3,7 @@
         {
             "seed": "3257840388504953787",
             "title": "The Pack.png World",
-            "description": "The legendary world used for the default Minecraft server icon (pack.png). Verified by the Minecraft@Home team after 8 months of searching.",
+            "description": "The legendary world used for the default Minecraft server icon (pack.png). Verified by the Minecraft@Home team.",
             "category": "historic",
             "discoveredBy": "Minecraft@Home",
             "discoveredDate": "2020-09-05",
@@ -22,7 +22,7 @@
         {
             "seed": "2151901553968352745",
             "title": "Original Title Screen",
-            "description": "The blurred panorama world seen on the Minecraft title screen from Beta 1.8 to 1.13. Discovered by the Minecraft@Home team.",
+            "description": "The blurred panorama world seen on the Minecraft title screen from Beta 1.8 to 1.13.",
             "category": "historic",
             "discoveredBy": "Minecraft@Home",
             "discoveredDate": "2020-07-18",
@@ -41,7 +41,7 @@
         {
             "seed": "478868574082066804",
             "title": "Herobrine Creepypasta",
-            "description": "The world used in the original Herobrine creepypasta image. Verified by the Minecraft@Home team.",
+            "description": "The world used in the original Herobrine creepypasta image.",
             "category": "historic",
             "discoveredBy": "Minecraft@Home",
             "discoveredDate": "2021-01-16",
@@ -60,7 +60,7 @@
         {
             "seed": "11343195073417814",
             "title": "Tallest Naturally Generated Cactus",
-            "description": "22-block tall cactus found in a normal world. The tallest verified natural cactus.",
+            "description": "22-block tall cactus found in a normal world.",
             "category": "tall_cactus",
             "discoveredBy": "Minecraft@Home",
             "discoveredDate": "2020-12-01",
@@ -79,7 +79,7 @@
         {
             "seed": "-940140316501436349",
             "title": "Diamond Ore in Fossil",
-            "description": "A fossil generated deep underground where bone blocks replaced diamond ore, resulting in diamonds embedded in the fossil.",
+            "description": "A rare fossil containing diamond ore instead of bone blocks.",
             "category": "fossil_diamonds",
             "discoveredBy": "Reddit Community",
             "discoveredDate": "2023-01-01",
@@ -96,23 +96,42 @@
             "probability": "~0.002%"
         },
         {
-            "seed": "10001754",
-            "title": "Surface Diamond Fossil",
-            "description": "An exposed fossil containing diamonds near spawn, often called the 'Wonderland' seed.",
-            "category": "fossil_diamonds",
+            "seed": "2356155",
+            "title": "Mushroom + Ice Spikes",
+            "description": "Spawn next to rare Mushroom Fields and Ice Spikes biomes. A winter wonderland start.",
+            "category": "mushroom_spawn",
             "discoveredBy": "Community",
-            "discoveredDate": "2022-01-01",
+            "discoveredDate": "2021-06-01",
             "version": {
-                "java": null,
-                "bedrock": "1.18+"
+                "java": "1.16.5",
+                "bedrock": "Similar"
             },
             "coordinates": {
-                "x": 100,
-                "y": 100,
-                "z": 100
+                "x": 0,
+                "y": 70,
+                "z": 0
             },
-            "confidence": 0.9,
-            "probability": "Unknown"
+            "confidence": 1.0,
+            "probability": "Rare"
+        },
+        {
+            "seed": "600000222763165",
+            "title": "Jungle & Badlands Spawn",
+            "description": "Excellent start with Jungle, Badlands (Mesa), and Ice Spikes nearby.",
+            "category": "jungle_temple",
+            "discoveredBy": "Community",
+            "discoveredDate": "2020-05-01",
+            "version": {
+                "java": "1.14.4",
+                "bedrock": null
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 70,
+                "z": 0
+            },
+            "confidence": 1.0,
+            "probability": "Rare"
         }
     ]
 }
