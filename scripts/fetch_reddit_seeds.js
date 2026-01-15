@@ -145,9 +145,10 @@ function extractSeed(title, selftext) {
         const val = explicitMatch[1];
         if (val.length > 3 && !['is', 'the', 'for', 'are', 'was', 'and', 'wit', 'look', 'java', 'seed'].includes(val.toLowerCase())) return val;
     }
-    const numericMatch = text.match(/(?<!v)(?<!\.)\b(-?\d{8,30})\b(?!\.)/);
+    // Updated numeric matches to correctly handle potential leading negative sign
+    const numericMatch = text.match(/(?<!v)(?<!\.)(?<!\w)(-?\d{8,30})\b(?!\.)/);
     if (numericMatch) return numericMatch[1];
-    const shortNegMatch = text.match(/\b(-?\d{4,15})\b/);
+    const shortNegMatch = text.match(/(?<!\w)(-?\d{4,15})\b/);
     if (shortNegMatch && text.includes(shortNegMatch[0])) return shortNegMatch[1];
     return null;
 }
