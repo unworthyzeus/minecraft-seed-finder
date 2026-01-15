@@ -28,13 +28,10 @@ export default function SubmitModal({ isOpen, onClose }) {
         }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const generateBody = () => {
+        const categoryName = CATEGORIES[formData.category]?.name || formData.category || 'Unknown';
 
-        // Create the issue body
-        const categoryName = CATEGORIES[formData.category]?.name || formData.category;
-
-        const body = `
+        return `
 ### New Seed Submission
 
 **Seed:** \`${formData.seed}\`
@@ -48,12 +45,26 @@ ${formData.description}
 
 *Submitted via SeedFinder Web*
     `.trim();
+    };
 
-        // Open GitHub new issue page (GitHub's URL limit is ~2000 chars, usually fine)
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const body = generateBody();
         const url = `https://github.com/unworthyzeus/minecraft-seed-finder/issues/new?title=Seed: ${encodeURIComponent(formData.seed)}&body=${encodeURIComponent(body)}`;
         window.open(url, '_blank');
-
         onClose();
+    };
+
+    const handleEmail = () => {
+        const body = generateBody();
+        const subject = `Seed Submission: ${formData.seed}`;
+        window.location.href = `mailto:unworthyzeus543@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    };
+
+    const handleCopy = () => {
+        const body = generateBody();
+        navigator.clipboard.writeText(body);
+        alert('Submission copied to clipboard! You can now paste it in Discord or via Email.');
     };
 
     // Sort categories for the dropdown
@@ -153,9 +164,25 @@ ${formData.description}
                         ></textarea>
                     </div>
 
-                    <button type="submit" className="submit-action-btn">
-                        Compose GitHub Issue
-                    </button>
+                    <div className="button-group">
+                        <button type="submit" className="submit-action-btn github-btn">
+                            <span>🐙</span> Open GitHub Issue
+                        </button>
+                        <button
+                            type="button"
+                            className="submit-action-btn email-btn"
+                            onClick={handleEmail}
+                        >
+                            <span>📧</span> via Email
+                        </button>
+                        <button
+                            type="button"
+                            className="submit-action-btn copy-btn"
+                            onClick={handleCopy}
+                        >
+                            <span>📋</span> Copy Text
+                        </button>
+                    </div>
                 </form>
             </div>
 
@@ -267,24 +294,39 @@ ${formData.description}
           border-color: var(--earth-brown);
         }
         
+        .button-group {
+          display: grid;
+          gap: 12px;
+          margin-top: 20px;
+        }
+
         .submit-action-btn {
           width: 100%;
           padding: 12px;
-          background: var(--grass-green);
-          border: 2px solid var(--dark-grass);
+          border: 3px solid rgba(0,0,0,0.2);
           color: white;
           font-family: 'Press Start 2P', cursive;
           cursor: pointer;
-          margin-top: 8px;
-          box-shadow: 0 4px 0 var(--dark-grass); /* 3D effect */
+          box-shadow: 0 4px 0 rgba(0,0,0,0.4);
           transition: all 0.1s;
           text-shadow: 1px 1px 0 #000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          font-size: 0.8rem;
         }
         
         .submit-action-btn:active {
           transform: translateY(4px);
           box-shadow: none;
         }
+        
+        .github-btn { background: #2b3137; border-color: #24292e; }
+        .email-btn { background: #3b82f6; border-color: #2563eb; }
+        .copy-btn { background: #10b981; border-color: #059669; }
+        
+        .submit-action-btn:hover { filter: brightness(1.1); }
 
         @media (max-width: 600px) {
           .modal-content {

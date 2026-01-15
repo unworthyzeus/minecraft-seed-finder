@@ -20,13 +20,18 @@ const EDITION_OPTIONS = [
 const VERSION_OPTIONS = [
   { value: 'all', label: 'All Versions' },
   { value: '1.21', label: '1.21+' },
-  { value: '1.20', label: '1.20.x' },
-  { value: '1.19', label: '1.19.x' },
-  { value: '1.18', label: '1.18.x' },
-  { value: '1.17', label: '1.17.x' },
-  { value: '1.16', label: '1.16.x' },
-  { value: '1.14', label: '1.14.x' },
-  { value: 'legacy', label: 'Legacy (Pre-1.14)' }
+  { value: '1.20', label: '1.20' },
+  { value: '1.19', label: '1.19' },
+  { value: '1.18', label: '1.18' },
+  { value: '1.17', label: '1.17' },
+  { value: '1.16', label: '1.16' },
+  { value: '1.15', label: '1.15' },
+  { value: '1.14', label: '1.14' },
+  { value: '1.13', label: '1.13 (Aquatic)' },
+  { value: '1.12', label: '1.12 (Color)' },
+  { value: '1.8', label: '1.8 - 1.11' },
+  { value: 'beta', label: 'Beta' },
+  { value: 'alpha', label: 'Alpha' }
 ];
 
 export default function Home() {
@@ -70,18 +75,20 @@ export default function Home() {
 
     // Apply version filter
     if (versionFilter !== 'all') {
-      if (versionFilter === 'legacy') {
-        results = results.filter(seed => {
-          const jv = seed.version.java?.toLowerCase() || '';
-          return jv.includes('alpha') || jv.includes('beta') || jv.includes('1.12') || jv.includes('1.13');
-        });
-      } else {
-        results = results.filter(seed => {
-          const jv = seed.version.java || '';
-          const bv = seed.version.bedrock || '';
-          return jv.includes(versionFilter) || bv.includes(versionFilter);
-        });
-      }
+      results = results.filter(seed => {
+        const jv = (seed.version.java || '').toLowerCase();
+        const bv = (seed.version.bedrock || '').toLowerCase();
+
+        if (versionFilter === '1.8') {
+          // Matches 1.8, 1.9, 1.10, 1.11
+          return jv.includes('1.8') || jv.includes('1.9') || jv.includes('1.10') || jv.includes('1.11');
+        }
+
+        if (versionFilter === 'beta') return jv.includes('beta');
+        if (versionFilter === 'alpha') return jv.includes('alpha');
+
+        return jv.includes(versionFilter) || bv.includes(versionFilter);
+      });
     }
 
     // Apply confidence filter
@@ -408,15 +415,10 @@ export default function Home() {
       </main>
 
       {/* Submit Modal */}
-      {showSubmitModal && (
-        <SubmitModal
-          onClose={() => setShowSubmitModal(false)}
-          onSuccess={() => {
-            setShowSubmitModal(false);
-            showToast('✓ Discovery submitted for review!');
-          }}
-        />
-      )}
+      <SubmitModal
+        isOpen={showSubmitModal}
+        onClose={() => setShowSubmitModal(false)}
+      />
 
       {/* Toast */}
       {toast && <div className="toast">{toast}</div>}
