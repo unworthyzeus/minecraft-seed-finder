@@ -203,6 +203,21 @@ int zOffset = (seed >> 8) & 0xF; // random 0-15`}</pre>
               then brute-force the upper bits to find a biome match (Swamp).
             </p>
           </section>
+
+          <section className="algo-section">
+            <div className="section-header">
+              <h2>🤝 Credits & Research</h2>
+            </div>
+            <p>
+              Much of the data and research presented here is powered by the incredible work of the
+              <a href="https://github.com/minecrafthome" target="_blank" className="text-link"> Minecraft@Home </a>
+              team and the <strong>Minecraft Speedrunning Community</strong>.
+            </p>
+            <p>
+              Their distributed computing projects have discovered the tallest cactus, the Pack.png seed,
+              the Title Screen seed, and many other historic worlds. Support their research on GitHub!
+            </p>
+          </section>
         </div>
       </main>
 

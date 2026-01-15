@@ -2070,6 +2070,132 @@
     "chunkbaseUrl": "https://www.chunkbase.com/apps/seed-map#-6376304316718564286"
   },
   {
+    "id": "man-3257840388504953787-historic",
+    "seed": "3257840388504953787",
+    "title": "The Pack.png World",
+    "description": "The legendary world used for the default Minecraft server icon (pack.png). Verified by the Minecraft@Home team after 8 months of searching.",
+    "category": "historic",
+    "discoveredBy": "Minecraft@Home",
+    "discoveredDate": "2020-09-05",
+    "version": {
+      "java": "Alpha 1.2.2",
+      "bedrock": null
+    },
+    "coordinates": {
+      "x": 116,
+      "y": 70,
+      "z": -31
+    },
+    "confidence": 1,
+    "probability": "Unique",
+    "isGenerated": false
+  },
+  {
+    "id": "man-2151901553968352745-historic",
+    "seed": "2151901553968352745",
+    "title": "Original Title Screen",
+    "description": "The blurred panorama world seen on the Minecraft title screen from Beta 1.8 to 1.13. Discovered by the Minecraft@Home team.",
+    "category": "historic",
+    "discoveredBy": "Minecraft@Home",
+    "discoveredDate": "2020-07-18",
+    "version": {
+      "java": "Beta 1.7.3",
+      "bedrock": null
+    },
+    "coordinates": {
+      "x": 61,
+      "y": 75,
+      "z": -68
+    },
+    "confidence": 1,
+    "probability": "Unique",
+    "isGenerated": false
+  },
+  {
+    "id": "man-478868574082066804-historic",
+    "seed": "478868574082066804",
+    "title": "Herobrine Creepypasta",
+    "description": "The world used in the original Herobrine creepypasta image. Verified by the Minecraft@Home team.",
+    "category": "historic",
+    "discoveredBy": "Minecraft@Home",
+    "discoveredDate": "2021-01-16",
+    "version": {
+      "java": "Alpha 1.0.16_02",
+      "bedrock": null
+    },
+    "coordinates": {
+      "x": 5,
+      "y": 71,
+      "z": -298
+    },
+    "confidence": 1,
+    "probability": "Unique",
+    "isGenerated": false
+  },
+  {
+    "id": "man-11343195073417814-tallcactus",
+    "seed": "11343195073417814",
+    "title": "Tallest Naturally Generated Cactus",
+    "description": "22-block tall cactus found in a normal world. The tallest verified natural cactus.",
+    "category": "tall_cactus",
+    "discoveredBy": "Minecraft@Home",
+    "discoveredDate": "2020-12-01",
+    "version": {
+      "java": "1.14.4",
+      "bedrock": null
+    },
+    "coordinates": {
+      "x": 14955936,
+      "y": 64,
+      "z": -3750655
+    },
+    "confidence": 1,
+    "probability": "~1 in 10¹⁸",
+    "isGenerated": false
+  },
+  {
+    "id": "man--940140316501436349-fossildiamonds",
+    "seed": "-940140316501436349",
+    "title": "Diamond Ore in Fossil",
+    "description": "A fossil generated deep underground where bone blocks replaced diamond ore, resulting in diamonds embedded in the fossil.",
+    "category": "fossil_diamonds",
+    "discoveredBy": "Reddit Community",
+    "discoveredDate": "2023-01-01",
+    "version": {
+      "java": "1.19.73",
+      "bedrock": null
+    },
+    "coordinates": {
+      "x": 355,
+      "y": -43,
+      "z": 325
+    },
+    "confidence": 1,
+    "probability": "~0.002%",
+    "isGenerated": false
+  },
+  {
+    "id": "man-10001754-fossildiamonds",
+    "seed": "10001754",
+    "title": "Surface Diamond Fossil",
+    "description": "An exposed fossil containing diamonds near spawn, often called the 'Wonderland' seed.",
+    "category": "fossil_diamonds",
+    "discoveredBy": "Community",
+    "discoveredDate": "2022-01-01",
+    "version": {
+      "java": null,
+      "bedrock": "1.18+"
+    },
+    "coordinates": {
+      "x": 100,
+      "y": 100,
+      "z": 100
+    },
+    "confidence": 0.9,
+    "probability": "Unknown",
+    "isGenerated": false
+  },
+  {
     "id": "ssg-1",
     "seed": "-6876956224386768041",
     "title": "12-Eye Portal (1188m) + Plains Village",
