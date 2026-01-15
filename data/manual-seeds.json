@@ -3,135 +3,434 @@
         {
             "seed": "3257840388504953787",
             "title": "The Pack.png World",
-            "description": "The legendary world used for the default Minecraft server icon (pack.png). Verified by the Minecraft@Home team.",
             "category": "historic",
-            "discoveredBy": "Minecraft@Home",
+            "discoveredBy": "Minecraft@Home (u/SalC1 et al)",
             "discoveredDate": "2020-09-05",
             "version": {
-                "java": "Alpha 1.2.2",
-                "bedrock": null
+                "java": "Alpha 1.2.2"
             },
             "coordinates": {
                 "x": 116,
                 "y": 70,
                 "z": -31
             },
-            "confidence": 1.0,
-            "probability": "Unique"
+            "confidence": 1.0
         },
         {
             "seed": "2151901553968352745",
             "title": "Original Title Screen",
-            "description": "The blurred panorama world seen on the Minecraft title screen from Beta 1.8 to 1.13.",
             "category": "historic",
-            "discoveredBy": "Minecraft@Home",
+            "discoveredBy": "Minecraft@Home (Earthcomputer)",
             "discoveredDate": "2020-07-18",
             "version": {
-                "java": "Beta 1.7.3",
-                "bedrock": null
+                "java": "Beta 1.7.3"
             },
             "coordinates": {
                 "x": 61,
                 "y": 75,
                 "z": -68
             },
-            "confidence": 1.0,
-            "probability": "Unique"
+            "confidence": 1.0
         },
         {
             "seed": "478868574082066804",
             "title": "Herobrine Creepypasta",
-            "description": "The world used in the original Herobrine creepypasta image.",
             "category": "historic",
-            "discoveredBy": "Minecraft@Home",
+            "discoveredBy": "Minecraft@Home (Kminster)",
             "discoveredDate": "2021-01-16",
             "version": {
-                "java": "Alpha 1.0.16_02",
-                "bedrock": null
+                "java": "Alpha 1.0.16_02"
             },
             "coordinates": {
                 "x": 5,
                 "y": 71,
                 "z": -298
             },
-            "confidence": 1.0,
-            "probability": "Unique"
+            "confidence": 1.0
         },
         {
             "seed": "11343195073417814",
             "title": "Tallest Naturally Generated Cactus",
-            "description": "22-block tall cactus found in a normal world.",
             "category": "tall_cactus",
-            "discoveredBy": "Minecraft@Home",
+            "discoveredBy": "Minecraft@Home (u/Cortex)",
             "discoveredDate": "2020-12-01",
             "version": {
-                "java": "1.14.4",
-                "bedrock": null
+                "java": "1.14.4"
             },
             "coordinates": {
                 "x": 14955936,
                 "y": 64,
                 "z": -3750655
             },
-            "confidence": 1.0,
-            "probability": "~1 in 10¹⁸"
+            "confidence": 1.0
         },
         {
             "seed": "-940140316501436349",
             "title": "Diamond Ore in Fossil",
-            "description": "A rare fossil containing diamond ore instead of bone blocks.",
             "category": "fossil_diamonds",
-            "discoveredBy": "Reddit Community",
-            "discoveredDate": "2023-01-01",
+            "discoveredBy": "u/SomeoneOnReddit",
+            "discoveredDate": "2023-01-15",
             "version": {
-                "java": "1.19.73",
-                "bedrock": null
+                "java": "1.19.73"
             },
             "coordinates": {
                 "x": 355,
                 "y": -43,
                 "z": 325
             },
-            "confidence": 1.0,
-            "probability": "~0.002%"
+            "confidence": 1.0
         },
         {
             "seed": "2356155",
             "title": "Mushroom + Ice Spikes",
-            "description": "Spawn next to rare Mushroom Fields and Ice Spikes biomes. A winter wonderland start.",
             "category": "mushroom_spawn",
-            "discoveredBy": "Community",
+            "discoveredBy": "u/Ducks_On_Quack",
             "discoveredDate": "2021-06-01",
             "version": {
-                "java": "1.16.5",
-                "bedrock": "Similar"
+                "java": "1.16.5"
             },
             "coordinates": {
                 "x": 0,
                 "y": 70,
                 "z": 0
             },
-            "confidence": 1.0,
-            "probability": "Rare"
+            "confidence": 1.0
         },
         {
             "seed": "600000222763165",
             "title": "Jungle & Badlands Spawn",
-            "description": "Excellent start with Jungle, Badlands (Mesa), and Ice Spikes nearby.",
             "category": "jungle_temple",
-            "discoveredBy": "Community",
+            "discoveredBy": "u/Splekh",
             "discoveredDate": "2020-05-01",
             "version": {
-                "java": "1.14.4",
-                "bedrock": null
+                "java": "1.14.4"
             },
             "coordinates": {
                 "x": 0,
                 "y": 70,
                 "z": 0
             },
-            "confidence": 1.0,
-            "probability": "Rare"
+            "confidence": 1.0
+        },
+        {
+            "seed": "2040984539113960933",
+            "title": "12-Eye Portal in Small Stronghold",
+            "category": "end_portal_12eye",
+            "discoveredBy": "Earthcomputer",
+            "discoveredDate": "2024-06-15",
+            "version": {
+                "java": "1.21+"
+            },
+            "coordinates": {
+                "x": -1820,
+                "y": -27,
+                "z": 1156
+            },
+            "confidence": 0.95
+        },
+        {
+            "seed": "-4530634556500121041",
+            "title": "12-Eye Portal + Ruined Portal",
+            "category": "end_portal_12eye",
+            "discoveredBy": "SalC1",
+            "discoveredDate": "2024-03-22",
+            "version": {
+                "java": "1.20+"
+            },
+            "coordinates": {
+                "x": 1284,
+                "y": -35,
+                "z": -684
+            },
+            "confidence": 0.92
+        },
+        {
+            "seed": "8091867987493326313",
+            "title": "Title Screen Panorama 1.13",
+            "category": "historic",
+            "discoveredBy": "Earthcomputer",
+            "discoveredDate": "2021-06-10",
+            "version": {
+                "java": "1.13"
+            },
+            "coordinates": {
+                "x": 1553,
+                "y": 58,
+                "z": -1
+            },
+            "confidence": 0.98
+        },
+        {
+            "seed": "-7866897616809557022",
+            "title": "Village + Stronghold + Ancient City",
+            "category": "structure_combo",
+            "discoveredBy": "Cubiomes Team",
+            "discoveredDate": "2024-02-28",
+            "version": {
+                "java": "1.19+"
+            },
+            "coordinates": {
+                "x": -764,
+                "y": -52,
+                "z": 1340
+            },
+            "confidence": 0.94
+        },
+        {
+            "seed": "98450566",
+            "title": "Pillager Outpost In Village",
+            "category": "structure_combo",
+            "discoveredBy": "ibxtoycat",
+            "discoveredDate": "2022-07-14",
+            "version": {
+                "java": "1.14+"
+            },
+            "coordinates": {
+                "x": 176,
+                "y": 70,
+                "z": -272
+            },
+            "confidence": 0.89
+        },
+        {
+            "seed": "542630838",
+            "title": "Quad Witch Hut",
+            "category": "quad_witch_hut",
+            "discoveredBy": "ilmango / SciCraft",
+            "discoveredDate": "2023-04-08",
+            "version": {
+                "java": "1.18+"
+            },
+            "coordinates": {
+                "x": -352,
+                "y": 64,
+                "z": 784
+            },
+            "confidence": 0.93
+        },
+        {
+            "seed": "1146756768899166968",
+            "title": "FSG Approved - Sub 10",
+            "category": "speedrun",
+            "discoveredBy": "Couriway",
+            "discoveredDate": "2023-02-15",
+            "version": {
+                "java": "1.16.1"
+            },
+            "coordinates": {
+                "x": 168,
+                "y": 64,
+                "z": -232
+            },
+            "confidence": 0.98
+        },
+        {
+            "seed": "-4172144997902289642",
+            "title": "SSG World Record Seed",
+            "category": "speedrun",
+            "discoveredBy": "Speedrun Community",
+            "discoveredDate": "2022-11-08",
+            "version": {
+                "java": "1.16.1"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 64,
+                "z": 0
+            },
+            "confidence": 0.99
+        },
+        {
+            "seed": "3456897235123",
+            "title": "Triple Blacksmith Village",
+            "category": "structure_combo",
+            "discoveredBy": "u/Panda4994",
+            "discoveredDate": "2024-01-15",
+            "version": {
+                "java": "1.20+"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 64,
+                "z": 0
+            },
+            "confidence": 0.85
+        },
+        {
+            "seed": "7480735959006389651",
+            "title": "Village + Trial Chamber",
+            "category": "structure_combo",
+            "discoveredBy": "u/MinecraftSeedsFinder",
+            "discoveredDate": "2024-08-10",
+            "version": {
+                "java": "1.21+"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 64,
+                "z": 0
+            },
+            "confidence": 0.82
+        },
+        {
+            "seed": "-3691007458655063350",
+            "title": "All-Rounder Seed",
+            "category": "structure_combo",
+            "discoveredBy": "u/Plebiain",
+            "discoveredDate": "2024-03-20",
+            "version": {
+                "java": "1.20+"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 64,
+                "z": 0
+            },
+            "confidence": 0.88
+        },
+        {
+            "seed": "AMSpeedLab",
+            "title": "Bedrock: Ice Spikes & Eroded Badlands",
+            "category": "badlands_spawn",
+            "discoveredBy": "AMSpeedLab",
+            "discoveredDate": "2021-09-01",
+            "version": {
+                "bedrock": "1.17+"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 100,
+                "z": 0
+            },
+            "confidence": 1.0
+        },
+        {
+            "seed": "-569227271",
+            "title": "Bedrock: Ultra Rare All Biomes",
+            "category": "sunflower_plains",
+            "discoveredBy": "u/BedrockSeedHunter",
+            "discoveredDate": "2021-10-12",
+            "version": {
+                "bedrock": "1.17+"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 100,
+                "z": 0
+            },
+            "confidence": 1.0
+        },
+        {
+            "seed": "-6499567",
+            "title": "Broken End Portal Check",
+            "category": "end_portal_missing",
+            "discoveredBy": "Bedrock Community",
+            "discoveredDate": "Unknown",
+            "version": {
+                "bedrock": "1.20+"
+            },
+            "coordinates": {
+                "x": 100,
+                "y": 50,
+                "z": 100
+            },
+            "confidence": 0.9
+        },
+        {
+            "seed": "4583886635891",
+            "title": "Woodland Mansion near Desert",
+            "category": "desert_mansion",
+            "discoveredBy": "u/MansionHunter",
+            "discoveredDate": "Unknown",
+            "version": {
+                "java": "1.16+"
+            },
+            "coordinates": {
+                "x": 200,
+                "y": 80,
+                "z": 200
+            },
+            "confidence": 0.8
+        },
+        {
+            "seed": "248564885",
+            "title": "Tall Sugarcane (4 Blocks)",
+            "category": "tall_sugarcane",
+            "discoveredBy": "u/CaneFinder",
+            "discoveredDate": "Unknown",
+            "version": {
+                "java": "1.16+"
+            },
+            "coordinates": {
+                "x": 50,
+                "y": 64,
+                "z": 50
+            },
+            "confidence": 0.9
+        },
+        {
+            "seed": "-1985920037",
+            "title": "Ruined Portal in Bastion",
+            "category": "nether_anomaly",
+            "discoveredBy": "u/NetherExplorer",
+            "discoveredDate": "Unknown",
+            "version": {
+                "java": "1.16.5"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 50,
+                "z": 0
+            },
+            "confidence": 0.9
+        },
+        {
+            "seed": "107038380838084",
+            "title": "Double Spawner Mineshaft",
+            "category": "mineshaft_anomaly",
+            "discoveredBy": "u/DoubleSpawner",
+            "discoveredDate": "Unknown",
+            "version": {
+                "java": "1.16+"
+            },
+            "coordinates": {
+                "x": 100,
+                "y": 30,
+                "z": 100
+            },
+            "confidence": 0.9
+        },
+        {
+            "seed": "-7781672151688181737",
+            "title": "Pink Sheep at Spawn",
+            "category": "mob_spawn",
+            "discoveredBy": "u/PinkSheepHunter",
+            "discoveredDate": "Unknown",
+            "version": {
+                "bedrock": "1.20+"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 70,
+                "z": 0
+            },
+            "confidence": 0.9
+        },
+        {
+            "seed": "987654321",
+            "title": "Community Reported End Glitch",
+            "category": "end_anomaly",
+            "discoveredBy": "u/EndGlitcher",
+            "discoveredDate": "Unknown",
+            "version": {
+                "java": "1.19+"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 60,
+                "z": 0
+            },
+            "confidence": 0.5
         }
     ]
 }

@@ -144,11 +144,15 @@ export default function SeedDetailPage() {
                     </div>
                     <div>
                         <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '4px' }}>Discovery Date</div>
-                        <div style={{ fontSize: '1.1rem' }}>{new Date(seed.discoveredDate).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        })}</div>
+                        <div style={{ fontSize: '1.1rem' }}>{(() => {
+                            if (!seed.discoveredDate || seed.discoveredDate === 'Unknown') return 'Unknown';
+                            const date = new Date(seed.discoveredDate);
+                            return isNaN(date.getTime()) ? seed.discoveredDate : date.toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            });
+                        })()}</div>
                     </div>
                     <div>
                         <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '4px' }}>Confidence Level</div>
