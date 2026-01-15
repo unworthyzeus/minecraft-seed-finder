@@ -55,12 +55,6 @@ ${formData.description}
         onClose();
     };
 
-    const handleEmail = () => {
-        const body = generateBody();
-        const subject = `Seed Submission: ${formData.seed}`;
-        window.location.href = `mailto:unworthyzeus543@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    };
-
     const handleCopy = () => {
         const body = generateBody();
         navigator.clipboard.writeText(body);
@@ -168,20 +162,20 @@ ${formData.description}
                         <button type="submit" className="submit-action-btn github-btn">
                             <span>🐙</span> Open GitHub Issue
                         </button>
-                        <button
-                            type="button"
+                        <a
+                            href={`mailto:unworthyzeus543@gmail.com?subject=${encodeURIComponent(`Seed Submission: ${formData.seed}`)}&body=${encodeURIComponent(generateBody())}`}
                             className="submit-action-btn email-btn"
-                            onClick={handleEmail}
+                            style={{ textDecoration: 'none' }}
                         >
                             <span>📧</span> via Email
-                        </button>
+                        </a>
                         <button
                             type="button"
                             className="submit-action-btn copy-btn"
                             onClick={handleCopy}
                         >
                             <span>📋</span> Copy Text
-                        </button>
+                        </button>   
                     </div>
                 </form>
             </div>
