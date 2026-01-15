@@ -44,7 +44,8 @@ export default function Home() {
 
   const stats = useMemo(() => getDatabaseStats(), []);
 
-  const filteredSeeds = useMemo(() => {
+  // Pre-filter seeds (before category) - used for dynamic category counts
+  const preCategoryFilteredSeeds = useMemo(() => {
     let results = [...SEEDS_DATABASE];
 
     // Apply search
@@ -56,11 +57,6 @@ export default function Home() {
         seed.description.toLowerCase().includes(lowerQuery) ||
         seed.discoveredBy.toLowerCase().includes(lowerQuery)
       );
-    }
-
-    // Apply category filter
-    if (activeCategory) {
-      results = results.filter(seed => seed.category === activeCategory);
     }
 
     // Apply edition filter
@@ -80,7 +76,6 @@ export default function Home() {
           return jv.includes('alpha') || jv.includes('beta') || jv.includes('1.12') || jv.includes('1.13');
         });
       } else {
-        // Specific version like 1.21, 1.20, etc.
         results = results.filter(seed => {
           const jv = seed.version.java || '';
           const bv = seed.version.bedrock || '';
@@ -101,6 +96,26 @@ export default function Home() {
       results = results.filter(seed => !seed.isGenerated);
     }
 
+    return results;
+  }, [searchQuery, editionFilter, versionFilter, confidenceFilter, showGeneratedOnly]);
+
+  // Calculate category counts based on pre-filtered seeds
+  const categoryCounts = useMemo(() => {
+    const counts = {};
+    preCategoryFilteredSeeds.forEach(seed => {
+      counts[seed.category] = (counts[seed.category] || 0) + 1;
+    });
+    return counts;
+  }, [preCategoryFilteredSeeds]);
+
+  const filteredSeeds = useMemo(() => {
+    let results = [...preCategoryFilteredSeeds];
+
+    // Apply category filter
+    if (activeCategory) {
+      results = results.filter(seed => seed.category === activeCategory);
+    }
+
     // Sort
     if (sortBy === 'confidence') {
       results.sort((a, b) => b.confidence - a.confidence);
@@ -115,7 +130,7 @@ export default function Home() {
     }
 
     return results;
-  }, [searchQuery, activeCategory, editionFilter, versionFilter, confidenceFilter, showGeneratedOnly, sortBy]);
+  }, [preCategoryFilteredSeeds, activeCategory, sortBy]);
 
   // Pagination
   const totalPages = Math.ceil(filteredSeeds.length / SEEDS_PER_PAGE);
@@ -258,10 +273,10 @@ export default function Home() {
                 onClick={() => handleFilterChange(setActiveCategory)(null)}
               >
                 <span className="category-icon">✨</span>
-                All ({stats.total.toLocaleString()})
+                All ({preCategoryFilteredSeeds.length.toLocaleString()})
               </button>
               {displayedCategories.map(category => {
-                const count = stats.byCategory[category.id] || 0;
+                const count = categoryCounts[category.id] || 0;
                 return (
                   <button
                     key={category.id}

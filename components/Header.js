@@ -18,24 +18,25 @@ export default function Header({ onSubmitClick }) {
                         href="https://minecraftathome.com"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="nav-link"
+                        className="nav-link desktop-only"
                     >
-                        Minecraft At Home
+                        MC@H
                     </a>
                     <a
                         href="https://www.chunkbase.com"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="nav-link"
+                        className="nav-link desktop-only"
                     >
                         Chunkbase
                     </a>
                     <button className="submit-btn" onClick={onSubmitClick}>
-                        <span>➕</span>
-                        Submit Discovery
+                        <span className="desktop-only">➕ Submit</span>
+                        <span className="mobile-only">➕</span>
                     </button>
                 </nav>
             </div>
         </header>
     );
 }
+
