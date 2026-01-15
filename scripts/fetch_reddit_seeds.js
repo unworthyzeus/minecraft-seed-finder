@@ -323,7 +323,7 @@ async function scrape() {
                     discoveredBy: `u/${p.author}`,
                     discoveredDate: new Date(p.created_utc * 1000).toISOString().split('T')[0],
                     version: extractedVersion,
-                    confidence: p.score > 20 ? 0.9 : 0.8,
+                    confidence: 0.9,
                     isGenerated: false,
                     sourceUrl: `https://www.reddit.com${p.permalink}`
                 };

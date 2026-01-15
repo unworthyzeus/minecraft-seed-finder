@@ -271,7 +271,8 @@ export default function Home() {
                   className="filter-select"
                 >
                   <option value="0">Any Confidence</option>
-                  <option value="0.9">Verified (90%+)</option>
+                  <option value="1.0">Verified (100% Expert)</option>
+                  <option value="0.9">Community Reported (90%)</option>
                   <option value="0.7">Likely (70%+)</option>
                   <option value="0.5">Plausible (50%+)</option>
                   <option value="0.3">Unverified (30%+)</option>
@@ -354,11 +355,11 @@ export default function Home() {
             </div>
             <div className="stat-item">
               <div className="stat-value">{stats.verified}</div>
-              <div className="stat-label">Human Verified</div>
+              <div className="stat-label">Expert Verified</div>
             </div>
             <div className="stat-item">
-              <div className="stat-value">{stats.categories}</div>
-              <div className="stat-label">Categories</div>
+              <div className="stat-value">{stats.community.toLocaleString()}</div>
+              <div className="stat-label">Community Seeds</div>
             </div>
             <div className="stat-item">
               <div className="stat-value">{filteredSeeds.length.toLocaleString()}</div>
@@ -440,10 +441,10 @@ export default function Home() {
         <footer className="footer">
           <p>
             Inspired by <a href="https://minecraftathome.com" target="_blank" rel="noopener noreferrer">Minecraft At Home</a>
-            {' '}• {stats.verified} verified seeds + {stats.generated.toLocaleString()} generated discoveries
+            {' '}• {stats.verified} expert-verified seeds + {stats.community.toLocaleString()} community-reported discoveries
           </p>
           <p style={{ marginTop: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-            Generated seeds are algorithmically created and may not be verified. Always test seeds yourself.
+            Community seeds are scraped from public forums and may not be fully verified. Always test seeds yourself.
           </p>
           <p style={{ marginTop: '12px', fontSize: '0.9rem' }}>
             Built with ❤️ for the Minecraft community
