@@ -4,402 +4,328 @@ import Link from 'next/link';
 import Header from '../../components/Header';
 
 export default function AlgorithmsPage() {
-    return (
-        <>
-            <Header />
-            <main className="algorithms-page">
-                <div className="container">
-                    <Link href="/" className="back-link">
-                        ← Back to Seeds
-                    </Link>
+  return (
+    <>
+      <Header />
+      <main className="algorithms-page">
+        <div className="container">
+          <Link href="/" className="back-link">
+            ← Back to Seeds
+          </Link>
 
-                    <h1>Seed Discovery Algorithms</h1>
-                    <p className="intro">
-                        How are rare Minecraft seeds discovered? This page explains the math,
-                        algorithms, and code behind finding phenomena like 12-eye End Portals,
-                        tall cacti, and impossible structure combinations.
-                    </p>
+          <h1 className="page-title">Seed Discovery Algorithms</h1>
+          <p className="intro">
+            A deep dive into the mathematics, RNG implementations, and reverse-engineering
+            techniques used to discover the rarest Minecraft seeds in existence.
+          </p>
 
-                    <section className="algo-section">
-                        <h2>🎯 12-Eye End Portal</h2>
-                        <div className="probability-box">
-                            <span className="prob-label">Probability:</span>
-                            <span className="prob-value">1 in 10¹² (1 trillion)</span>
-                        </div>
+          <section className="algo-section">
+            <div className="section-header">
+              <h2>🌌 12-Eye End Portal</h2>
+              <span className="tag rare">1 in 1 trillion</span>
+            </div>
 
-                        <h3>The Math</h3>
-                        <p>
-                            Each End Portal frame has a <strong>10% chance</strong> (1/10) of generating
-                            with an Eye of Ender already placed. A complete portal has 12 frames.
-                        </p>
+            <p>
+              An End Portal frame consists of 12 blocks. Each block has a <strong>10% independent chance</strong>
+              of generating with an Eye of Ender already filled. A "12-eye" portal is one where
+              all 12 frames generate with eyes, activating the portal instantly.
+            </p>
 
-                        <div className="code-block">
-                            <pre>{`// Probability calculation
-P(12 eyes) = (1/10)^12 
-           = 1/1,000,000,000,000
-           = 0.0000000001%
+            <h3>The Mathematics</h3>
+            <div className="math-box">
+              <p>
+                The probability $P$ of a specific frame having an eye is $0.1$.
+                Since all 12 frames are determined independently by the chunk RNG:
+              </p>
+              <code className="math-formula">
+                P(12 eyes) = (1/10)¹² = 10⁻¹²
+              </code>
+              <p>
+                This means <strong>1 in 1,000,000,000,000</strong> portals (one trillion) will be fully lit.
+                With roughly 128 strongholds per world (in modern versions), you'd need to generate
+                about <strong>7.8 billion worlds</strong> to find just one.
+              </p>
+            </div>
 
-// In code terms:
-for each frame in portal.frames:
-    if random() < 0.1:  // 10% chance
-        frame.hasEye = true`}</pre>
-                        </div>
+            <h3>RNG Implementation (Java)</h3>
+            <p>
+              The game uses the chunk's random seed to determine decoration placement.
+              Here is the decompiled logic responsible for eye generation:
+            </p>
 
-                        <h3>How They're Found</h3>
-                        <p>
-                            Projects like <strong>Minecraft@Home</strong> use distributed computing to
-                            check billions of seeds. The process:
-                        </p>
-                        <ol>
-                            <li>Generate world seed</li>
-                            <li>Locate stronghold position using structure seed algorithm</li>
-                            <li>Check End Portal frames using the decoration RNG</li>
-                            <li>If 12 eyes found, record and verify</li>
-                        </ol>
-
-                        <div className="code-block">
-                            <pre>{`// Cubiomes approach (C pseudocode)
-uint64_t seed;
-for (seed = 0; seed < (1ULL << 48); seed++) {
-    // Get stronghold position
-    StrongholdIter sh;
-    initFirstStronghold(&sh, mc, seed);
-    
-    // Check portal eyes
-    int eyes = getEndPortalEyes(mc, seed, sh.pos);
-    if (eyes == 12) {
-        printf("Found 12-eye: %lld\\n", seed);
+            <div className="code-block">
+              <div className="code-header">EndPortalFrameBlock.java</div>
+              <pre>{`public BlockState getStateForPlacement(BlockPlaceContext context) {
+    // ...
+    boolean hasEye = false;
+    if (Config.configuredStructures) {
+        // Use the Chunk RNG, initialized with world seed + chunk coords
+        Random random = new Random();
+        random.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L + worldSeed + 10387312L);
+        
+        // precise 10% chance check
+        if (random.nextFloat() < 0.1F) {
+            hasEye = true;
+        }
     }
+    return this.getDefaultState().with(HAS_EYE, hasEye);
 }`}</pre>
-                        </div>
-                    </section>
+            </div>
+          </section>
 
-                    <section className="algo-section">
-                        <h2>🌵 Tall Cacti (Kaktwoos Project)</h2>
-                        <div className="probability-box">
-                            <span className="prob-label">22-Block Cactus:</span>
-                            <span className="prob-value">~1 in 10¹⁸ (quintillion)</span>
-                        </div>
+          <section className="algo-section">
+            <div className="section-header">
+              <h2>🌵 Infinite Cactus Stacking</h2>
+              <span className="tag legendary">~1 in 10¹⁸</span>
+            </div>
 
-                        <h3>The Math</h3>
-                        <p>
-                            Cacti generate in deserts with a base height of 1-3 blocks. However, the
-                            world generator can stack cacti due to chunk decoration order. Each additional
-                            block has roughly a 1/4096 chance of generating.
-                        </p>
+            <p>
+              Cacti normally grow 1-3 blocks high. However, during world generation,
+              if a new cactus block attempts to generate on top of an existing one,
+              it simply adds to the height. This can chain recursively due to
+              <span className="highlight">chunk population order</span>.
+            </p>
 
-                        <div className="code-block">
-                            <pre>{`// Cactus height probability
-P(height = n) ≈ (1/4096)^(n-3) for n > 3
+            <h3>The recursive formula</h3>
+            <p>
+              Each extra block of height requires a successful RNG roll <strong>and</strong>
+              a specific chunk generation order. The probability drops exponentially.
+            </p>
 
-// 22-block cactus:
-P(22) ≈ (1/4096)^19
-      ≈ 1 in 10^68 (per location)
+            <div className="code-block">
+              <pre>{`// Simplified probability model per block above 3
+P(h) ≈ P(h-1) * (1 / 4096)
 
-// But with billions of desert chunks...
-Expected_seeds_checked ≈ 10^18 for one discovery`}</pre>
-                        </div>
+// For a 22-block cactus (World Record):
+P(22) ≈ (1/4096)¹⁹ ≈ 1.8 × 10⁻⁶⁹`}</pre>
+            </div>
 
-                        <h3>How They're Found</h3>
-                        <p>
-                            The <strong>Kaktwoos Project</strong> uses GPU-accelerated search across trillions
-                            of seeds, checking desert biomes for tall cacti formations.
-                        </p>
-                    </section>
+            <p>
+              The <strong>Kaktwoos Project</strong> utilized distributed GPU brute-forcing
+              to check trillions of seeds specifically optimizing for this rare recursive call.
+            </p>
+          </section>
 
-                    <section className="algo-section">
-                        <h2>🏗️ Structure Placement Algorithm</h2>
+          <section className="algo-section">
+            <div className="section-header">
+              <h2>🎲 The Linear Congruential Generator</h2>
+              <span className="tag tech">Core Mechanic</span>
+            </div>
 
-                        <h3>The Math</h3>
-                        <p>
-                            Minecraft divides the world into regions (typically 32x32 chunks). Each structure
-                            type has one generation attempt per region, with the position determined by the
-                            <strong>structure seed</strong>.
-                        </p>
+            <p>
+              At the heart of Minecraft's seed generation is Java's `java.util.Random`.
+              It is not "truly" random, but a deterministic mathematical sequence.
+              If you know the internal state (seed), you know every future number.
+            </p>
 
-                        <div className="code-block">
-                            <pre>{`// Structure position calculation
-function getStructurePos(structType, seed, regionX, regionZ) {
-    // Structure seed = lower 48 bits of world seed
-    structSeed = seed & 0xFFFFFFFFFFFF;
-    
-    // Mix with region coordinates
-    positionSeed = structSeed ^ (regionX * SALT_X);
-    positionSeed ^= (regionZ * SALT_Z);
-    
-    // Get position within region
-    x = nextInt(positionSeed, REGION_SIZE);
-    z = nextInt(positionSeed, REGION_SIZE);
-    
-    return {
-        x: regionX * REGION_SIZE * 16 + x * 16,
-        z: regionZ * REGION_SIZE * 16 + z * 16
-    };
-}`}</pre>
-                        </div>
+            <div className="code-block">
+              <div className="code-header">Standard Java LCG Formula</div>
+              <pre>{`next_seed = (current_seed * 0x5DEECE66DL + 0xBL) & ((1L << 48) - 1)`}</pre>
+            </div>
 
-                        <h3>Quad-Witch Huts</h3>
-                        <p>
-                            Four witch huts can spawn close enough for a single AFK spot. This requires
-                            specific lower 20 bits of the seed, limiting the search space to 2^28 seeds.
-                        </p>
+            <p>
+              <strong>Reverse Engineering:</strong> Because this formula is reversible, tools like
+              <a href="https://github.com/19MisterX98/SeedcrackerX" target="_blank" className="text-link">SeedCrackerX</a> can
+              take a sequence of observed events (dungeon floor patterns, emerald ore locations)
+              and mathematically solve for the `world_seed`.
+            </p>
+          </section>
 
-                        <div className="code-block">
-                            <pre>{`// Quad-hut constellation detection
-KNOWN_LOWER_20_BITS = [0x1a2b3, 0x4c5d6, ...]; // Precalculated
+          <section className="algo-section">
+            <div className="section-header">
+              <h2>🏯 Structure Seeding & finding Quad-Huts</h2>
+            </div>
 
-for lower20 in KNOWN_LOWER_20_BITS:
-    for upper28 in range(2^28):
-        seed = (upper28 << 20) | lower20;
-        if isQuadHut(seed):
-            recordSeed(seed);`}</pre>
-                        </div>
-                    </section>
+            <p>
+              Structures don't use the full 64-bit world seed. They often rely on the lower
+              48 bits or even fewer. This generates "Shadow Seeds" - different worlds
+              with identical structure placements.
+            </p>
 
-                    <section className="algo-section">
-                        <h2>🌍 World Generation RNG</h2>
+            <div className="code-block">
+              <div className="code-header">Structure placement logic</div>
+              <pre>{`// Step 1: Divide world into regions (e.g., 16x16 chunks)
+int regionX = chunkX / spacing;
+int regionZ = chunkZ / spacing;
 
-                        <h3>Linear Congruential Generator (LCG)</h3>
-                        <p>
-                            Minecraft uses a 48-bit LCG for random number generation. This is deterministic
-                            and reversible, which is key to seed cracking.
-                        </p>
+// Step 2: Initialize RNG with only the lower 48 bits
+long structSeed = worldSeed & 0xFFFFFFFFFFFFL;
 
-                        <div className="code-block">
-                            <pre>{`// Java's Random implementation (simplified)
-class JavaRandom {
-    seed: int64;
-    
-    // LCG constants
-    MULTIPLIER = 0x5DEECE66D;
-    ADDEND = 0xB;
-    MASK = (1 << 48) - 1;
-    
-    next(bits) {
-        this.seed = (this.seed * MULTIPLIER + ADDEND) & MASK;
-        return this.seed >> (48 - bits);
-    }
-    
-    nextInt(bound) {
-        return this.next(31) % bound;
-    }
-    
-    nextFloat() {
-        return this.next(24) / (1 << 24);
-    }
-}`}</pre>
-                        </div>
+// Step 3: Mix region coordinates to get unique seed per region
+long seed = regionX * 341873128712L + regionZ * 132897987541L + structSeed + uniqueSalt;
 
-                        <h3>Cracking Seeds from Features</h3>
-                        <p>
-                            Given enough world information (structures, biomes, decorations), it's possible
-                            to reverse-engineer the world seed. Tools like <strong>SeedCracker</strong> do this
-                            automatically by collecting data as you explore.
-                        </p>
-                    </section>
+// Step 4: Pick random chunk in region
+int xOffset = (seed & 0xF); // random 0-15
+int zOffset = (seed >> 8) & 0xF; // random 0-15`}</pre>
+            </div>
 
-                    <section className="algo-section">
-                        <h2>📚 Resources & Tools</h2>
+            <p>
+              <strong>Quad-Witch Huts:</strong> To find 4 witch huts close enough to farm,
+              seed hunters limit the search to the lower 20 bits of the seed (checking only
+              1 million possibilities instead of quintillions) to find the perfect region layout,
+              then brute-force the upper bits to find a biome match (Swamp).
+            </p>
+          </section>
+        </div>
+      </main>
 
-                        <div className="resource-grid">
-                            <a href="https://github.com/Cubitect/cubiomes" target="_blank" rel="noopener" className="resource-card">
-                                <h4>Cubiomes</h4>
-                                <p>C library for Minecraft biome generation. Used by most seed-finding tools.</p>
-                            </a>
-
-                            <a href="https://github.com/Cubitect/cubiomes-viewer" target="_blank" rel="noopener" className="resource-card">
-                                <h4>Cubiomes Viewer</h4>
-                                <p>GUI for seed finding with customizable structure conditions.</p>
-                            </a>
-
-                            <a href="https://github.com/KaptainWutax" target="_blank" rel="noopener" className="resource-card">
-                                <h4>KaptainWutax Libraries</h4>
-                                <p>Java libraries for advanced seed manipulation and structure finding.</p>
-                            </a>
-
-                            <a href="https://minecraftathome.com/" target="_blank" rel="noopener" className="resource-card">
-                                <h4>Minecraft@Home</h4>
-                                <p>Distributed computing project that discovered Pack.PNG and many rare seeds.</p>
-                            </a>
-                        </div>
-                    </section>
-
-                    <section className="algo-section">
-                        <h2>🧮 Try It Yourself</h2>
-                        <p>
-                            Want to find rare seeds? Here's how to get started:
-                        </p>
-
-                        <ol className="steps-list">
-                            <li>
-                                <strong>Download Cubiomes Viewer</strong> - Available for Windows, Linux, and macOS
-                            </li>
-                            <li>
-                                <strong>Set up conditions</strong> - Define what structures/biomes you want near spawn
-                            </li>
-                            <li>
-                                <strong>Start searching</strong> - The tool will generate and test seeds automatically
-                            </li>
-                            <li>
-                                <strong>Verify in-game</strong> - Always test promising seeds in actual Minecraft
-                            </li>
-                        </ol>
-
-                        <div className="warning-box">
-                            <strong>Note:</strong> Finding extremely rare phenomena (12-eye portals, 22+ cacti)
-                            requires massive computational resources. These discoveries typically come from
-                            distributed projects running on thousands of computers.
-                        </div>
-                    </section>
-                </div>
-            </main>
-
-            <style jsx>{`
+      <style jsx>{`
         .algorithms-page {
-          padding: 32px 16px 80px;
+          padding: 40px 16px 80px;
+          max-width: 800px;
+          margin: 0 auto;
+        }
+
+        .back-link {
+          display: inline-block;
+          margin-bottom: 24px;
+          color: var(--text-secondary);
+          text-decoration: none;
+          font-family: 'Press Start 2P', cursive;
+          font-size: 0.8rem;
+        }
+        
+        .back-link:hover {
+          color: var(--gold-yellow);
+        }
+        
+        .page-title {
+          font-family: 'Press Start 2P', cursive;
+          color: var(--gold-yellow);
+          font-size: clamp(1.2rem, 4vw, 1.8rem);
+          line-height: 1.4;
+          margin-bottom: 16px;
+          text-shadow: 2px 2px 0 var(--obsidian);
         }
         
         .intro {
-          font-size: 1.2rem;
+          font-size: 1.1rem;
           color: var(--text-secondary);
-          margin-bottom: 32px;
-          max-width: 700px;
-        }
-        
-        h1 {
-          font-family: 'Press Start 2P', cursive;
-          font-size: 1.2rem;
-          color: var(--gold-yellow);
-          margin-bottom: 16px;
           line-height: 1.6;
+          margin-bottom: 48px;
+          border-left: 4px solid var(--emerald-green);
+          padding-left: 16px;
         }
         
         .algo-section {
-          background: var(--bg-card);
-          border: 4px solid var(--border-color);
-          padding: 24px;
+          background: rgba(0,0,0,0.2);
+          border: 2px solid var(--dark-grass);
+          border-radius: 4px;
+          padding: 32px;
+          margin-bottom: 40px;
+        }
+        
+        .section-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          flex-wrap: wrap;
+          gap: 16px;
           margin-bottom: 24px;
         }
         
         .algo-section h2 {
           font-family: 'Press Start 2P', cursive;
-          font-size: 0.9rem;
-          color: var(--emerald-green);
-          margin-bottom: 16px;
+          font-size: 1.1rem;
+          color: var(--diamond-blue);
+          margin: 0;
+          line-height: 1.4;
         }
+        
+        .tag {
+          font-size: 0.8rem;
+          padding: 4px 8px;
+          border: 2px solid;
+          font-family: 'Press Start 2P', cursive;
+        }
+        
+        .tag.rare { color: #FFAA00; border-color: #FFAA00; background: rgba(255,170,0,0.1); }
+        .tag.legendary { color: #FF5555; border-color: #FF5555; background: rgba(255,85,85,0.1); }
+        .tag.tech { color: #AAAAAA; border-color: #AAAAAA; background: rgba(170,170,170,0.1); }
         
         .algo-section h3 {
           color: var(--gold-yellow);
-          margin: 20px 0 12px;
-          font-size: 1.1rem;
+          font-size: 1rem;
+          margin: 32px 0 16px;
+          font-family: 'Press Start 2P', cursive;
         }
         
-        .probability-box {
-          background: var(--obsidian);
-          border: 2px solid var(--emerald-green);
-          padding: 12px 16px;
-          display: inline-flex;
-          gap: 12px;
+        p {
+          color: var(--text-primary);
+          line-height: 1.7;
           margin-bottom: 16px;
         }
         
-        .prob-label {
-          color: var(--text-secondary);
-        }
-        
-        .prob-value {
+        .highlight {
           color: var(--emerald-green);
           font-weight: bold;
         }
         
-        .code-block {
+        .math-box {
           background: var(--obsidian);
-          border: 2px solid var(--border-color);
-          padding: 16px;
-          overflow-x: auto;
+          padding: 20px;
+          border-left: 3px solid var(--gold-yellow);
           margin: 16px 0;
+        }
+        
+        .math-formula {
+          display: block;
+          font-family: 'VT323', monospace;
+          font-size: 1.4rem;
+          color: var(--gold-yellow);
+          margin: 16px 0;
+          text-align: center;
+          background: rgba(255,255,255,0.05);
+          padding: 8px;
+        }
+        
+        .code-block {
+          background: #111;
+          border: 1px solid #333;
+          border-radius: 4px;
+          overflow: hidden;
+          margin: 24px 0;
+        }
+        
+        .code-header {
+          background: #222;
+          padding: 8px 16px;
+          font-size: 0.85rem;
+          color: #888;
+          font-family: monospace;
+          border-bottom: 1px solid #333;
         }
         
         .code-block pre {
           margin: 0;
-          font-family: 'VT323', monospace;
-          font-size: 1rem;
+          padding: 16px;
+          overflow-x: auto;
+          font-family: 'Consolas', 'Monaco', monospace;
+          font-size: 0.9rem;
+          line-height: 1.5;
+          color: #d4d4d4;
+        }
+
+        .text-link {
           color: var(--diamond-blue);
-          white-space: pre-wrap;
-          word-break: break-word;
-        }
-        
-        ol, ul {
-          margin: 16px 0;
-          padding-left: 24px;
-        }
-        
-        li {
-          margin: 8px 0;
-          color: var(--text-secondary);
-        }
-        
-        .resource-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-          gap: 16px;
-          margin-top: 16px;
-        }
-        
-        .resource-card {
-          background: var(--obsidian);
-          border: 3px solid var(--border-color);
-          padding: 16px;
-          transition: all 0.15s;
-          color: var(--text-primary);
-        }
-        
-        .resource-card:hover {
-          border-color: var(--emerald-green);
-          transform: translateY(-2px);
-        }
-        
-        .resource-card h4 {
-          color: var(--gold-yellow);
-          margin-bottom: 8px;
-        }
-        
-        .resource-card p {
-          color: var(--text-secondary);
-          font-size: 0.95rem;
-          margin: 0;
-        }
-        
-        .steps-list li {
-          margin: 12px 0;
-        }
-        
-        .warning-box {
-          background: rgba(252, 219, 74, 0.1);
-          border: 2px solid var(--gold-yellow);
-          padding: 16px;
-          margin-top: 20px;
-          color: var(--text-secondary);
-        }
-        
-        .warning-box strong {
-          color: var(--gold-yellow);
+          text-decoration: underline;
         }
         
         @media (max-width: 600px) {
-          h1 {
-            font-size: 0.9rem;
+          .algo-section {
+            padding: 20px;
           }
           
-          .algo-section h2 {
-            font-size: 0.75rem;
+          .section-header {
+            flex-direction: column;
+            gap: 12px;
           }
           
           .code-block pre {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
           }
         }
       `}</style>
-        </>
-    );
+    </>
+  );
 }

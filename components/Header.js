@@ -8,13 +8,16 @@ export default function Header({ onSubmitClick }) {
             <div className="header-inner">
                 <Link href="/" className="logo">
                     <span className="logo-icon">🌍</span>
-                    <span className="logo-text">
+                    <span className="logo-text desktop-only">
                         Seed<span>Finder</span>
+                    </span>
+                    <span className="logo-text mobile-only">
+                        SF
                     </span>
                 </Link>
 
                 <nav className="nav">
-                    <Link href="/algorithms" className="nav-link">
+                    <Link href="/algorithms" className="nav-link" title="Algorithms">
                         <span className="desktop-only">Algorithms</span>
                         <span className="mobile-only">Algos</span>
                     </Link>
@@ -22,7 +25,8 @@ export default function Header({ onSubmitClick }) {
                         href="https://minecraftathome.com"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="nav-link desktop-only"
+                        className="nav-link"
+                        title="Minecraft@Home"
                     >
                         MC@H
                     </a>
@@ -30,11 +34,13 @@ export default function Header({ onSubmitClick }) {
                         href="https://www.chunkbase.com"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="nav-link desktop-only"
+                        className="nav-link"
+                        title="Chunkbase"
                     >
-                        Chunkbase
+                        <span className="desktop-only">Chunkbase</span>
+                        <span className="mobile-only">CB</span>
                     </a>
-                    <button className="submit-btn" onClick={onSubmitClick}>
+                    <button className="submit-btn" onClick={onSubmitClick} title="Submit Discovery">
                         <span className="desktop-only">➕ Submit</span>
                         <span className="mobile-only">➕</span>
                     </button>
@@ -43,6 +49,7 @@ export default function Header({ onSubmitClick }) {
         </header>
     );
 }
+
 
 
 
