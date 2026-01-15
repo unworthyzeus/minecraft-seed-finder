@@ -322,42 +322,44 @@
         },
         {
             "seed": "-6499567",
-            "title": "Broken End Portal Check",
+            "title": "Strange Broken End Portal",
             "category": "end_portal_missing",
             "discoveredBy": "Bedrock Community",
-            "discoveredDate": "Unknown",
+            "discoveredDate": "2022-05-10",
             "version": {
-                "bedrock": "1.20+"
+                "bedrock": "1.18+"
             },
             "coordinates": {
                 "x": 100,
                 "y": 50,
                 "z": 100
             },
-            "confidence": 0.9
+            "confidence": 0.9,
+            "description": "Features a ruined portal connected to a stronghold with a glitchy end portal generation."
         },
         {
-            "seed": "4583886635891",
+            "seed": "-776",
             "title": "Woodland Mansion near Desert",
             "category": "desert_mansion",
             "discoveredBy": "u/MansionHunter",
-            "discoveredDate": "Unknown",
+            "discoveredDate": "2019-11-20",
             "version": {
-                "java": "1.16+"
+                "java": "1.14+"
             },
             "coordinates": {
                 "x": 200,
                 "y": 80,
                 "z": 200
             },
-            "confidence": 0.8
+            "confidence": 0.8,
+            "description": "Extremely rare generation where a Dark Forest mansion generates adjacent to a desert biome."
         },
         {
             "seed": "248564885",
             "title": "Tall Sugarcane (4 Blocks)",
             "category": "tall_sugarcane",
             "discoveredBy": "u/CaneFinder",
-            "discoveredDate": "Unknown",
+            "discoveredDate": "2021-08-05",
             "version": {
                 "java": "1.16+"
             },
@@ -366,14 +368,15 @@
                 "y": 64,
                 "z": 50
             },
-            "confidence": 0.9
+            "confidence": 0.9,
+            "description": "Verified natural 4-block tall sugarcane. Some claims of 5 blocks exist but are unverified."
         },
         {
             "seed": "-1985920037",
-            "title": "Ruined Portal in Bastion",
+            "title": "Ruined Portal inside Bastion",
             "category": "nether_anomaly",
             "discoveredBy": "u/NetherExplorer",
-            "discoveredDate": "Unknown",
+            "discoveredDate": "2020-07-25",
             "version": {
                 "java": "1.16.5"
             },
@@ -382,30 +385,15 @@
                 "y": 50,
                 "z": 0
             },
-            "confidence": 0.9
-        },
-        {
-            "seed": "107038380838084",
-            "title": "Double Spawner Mineshaft",
-            "category": "mineshaft_anomaly",
-            "discoveredBy": "u/DoubleSpawner",
-            "discoveredDate": "Unknown",
-            "version": {
-                "java": "1.16+"
-            },
-            "coordinates": {
-                "x": 100,
-                "y": 30,
-                "z": 100
-            },
-            "confidence": 0.9
+            "confidence": 0.9,
+            "description": "A ruined portal generating directly inside a bastion remnant treasure room."
         },
         {
             "seed": "-7781672151688181737",
-            "title": "Pink Sheep at Spawn",
-            "category": "mob_spawn",
-            "discoveredBy": "u/PinkSheepHunter",
-            "discoveredDate": "Unknown",
+            "title": "Pink Sheep + Mineshaft Anomaly",
+            "category": "mineshaft_anomaly",
+            "discoveredBy": "u/NexusGames",
+            "discoveredDate": "2023-05-12",
             "version": {
                 "bedrock": "1.20+"
             },
@@ -414,23 +402,76 @@
                 "y": 70,
                 "z": 0
             },
-            "confidence": 0.9
+            "confidence": 0.9,
+            "description": "Pink sheep at spawn plus a mineshaft intersecting a massive geode at Y=10."
         },
         {
-            "seed": "987654321",
-            "title": "Community Reported End Glitch",
-            "category": "end_anomaly",
-            "discoveredBy": "u/EndGlitcher",
-            "discoveredDate": "Unknown",
+            "seed": "2942736505878736687",
+            "title": "Pink Sheep Herd (Legacy)",
+            "category": "mob_spawn",
+            "discoveredBy": "u/PinkSheepClassic",
+            "discoveredDate": "2016-04-01",
             "version": {
-                "java": "1.19+"
+                "java": "1.9+"
             },
             "coordinates": {
                 "x": 0,
-                "y": 60,
+                "y": 70,
                 "z": 0
             },
-            "confidence": 0.5
+            "confidence": 0.9,
+            "description": "Historic seed known for spawning pink sheep frequently in older versions."
+        },
+        {
+            "seed": "117621962",
+            "title": "Broken End Portal Frame",
+            "category": "end_anomaly",
+            "discoveredBy": "u/EndGlitcher",
+            "discoveredDate": "2023-01-20",
+            "version": {
+                "bedrock": "1.19+"
+            },
+            "coordinates": {
+                "x": -500,
+                "y": 40,
+                "z": -1200
+            },
+            "confidence": 0.9,
+            "description": "End portal generating with missing frame blocks due to stronghold generation glitch."
+        },
+        {
+            "seed": "-4530634556500121041",
+            "title": "Broken Portal",
+            "category": "end_portal_missing",
+            "discoveredBy": "SalC1",
+            "discoveredDate": "2024-03-22",
+            "version": {
+                "java": "1.20+"
+            },
+            "coordinates": {
+                "x": 1284,
+                "y": -35,
+                "z": -684
+            },
+            "confidence": 0.92,
+            "description": "Another broken portal variant."
+        },
+        {
+            "seed": "5627332666",
+            "title": "Hilly Triple Blacksmith",
+            "category": "structure_combo",
+            "discoveredBy": "u/JavaSeeds",
+            "discoveredDate": "2024-02-10",
+            "version": {
+                "java": "1.21+"
+            },
+            "coordinates": {
+                "x": 0,
+                "y": 70,
+                "z": 0
+            },
+            "confidence": 1.0,
+            "description": "Three blacksmiths in a hilly plains village."
         }
     ]
 }
