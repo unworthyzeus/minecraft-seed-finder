@@ -153,7 +153,8 @@ export default function Home() {
         if (rarityA !== rarityB) return rarityB - rarityA;
 
         // Secondary sort by specific probability if rarity is same
-        return parseProbability(a.probability) - parseProbability(b.probability);
+        // Larger probability value (X in 1 in X) means rarer, so it should be first
+        return parseProbability(b.probability) - parseProbability(a.probability);
       });
     }
 
