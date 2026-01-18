@@ -139,10 +139,61 @@ P(22) ≈ (1/4096)¹⁹ ≈ 1.8 × 10⁻⁶⁹`}</pre>
             <VisualSeedCracker />
 
             <p>
-              <strong>Real-World Tools:</strong> Because this formula is reversible, tools like 
+              <strong>Real-World Tools:</strong> Because this formula is reversible, tools like
               <a href="https://github.com/19MisterX98/SeedcrackerX" target="_blank" className="text-link">SeedCrackerX</a> can
               take a sequence of observed events (dungeon floor patterns, emerald ore locations)
               and mathematically solve for the `world_seed`.
+            </p>
+          </section>
+
+          <section className="algo-section">
+            <div className="section-header">
+              <h2>🌍 World Generation Explained</h2>
+              <span className="tag tech">The Biome Map</span>
+            </div>
+
+            <p>
+              Minecraft's terrain generation has undergone massive shifts. The most significant change occurred in
+              <strong>Version 1.18 (Caves & Cliffs Part 2)</strong>, which completely replaced the old system.
+            </p>
+
+            <h3>Legacy Generation (Pre-1.18)</h3>
+            <p>
+              Old worlds were generated using a <strong>Layer-Based System</strong>. It worked like image processing:
+            </p>
+            <ul style={{ color: 'var(--text-primary)', lineHeight: '1.7', marginBottom: '16px' }}>
+              <li><strong>Islands:</strong> Start with a noise map defining ocean vs land (1:4096 scale).</li>
+              <li><strong>Zooming:</strong> Scale up the map (Zoom x2) and smooth the edges.</li>
+              <li><strong>Additions:</strong> Sprinkle biomes, rivers, and shores at different zoom levels.</li>
+              <li><strong>Final Polish:</strong> The map is zoomed to 1:4 scale for the final biome lookup.</li>
+            </ul>
+            <p>
+              This is why older maps often have "continental" shapes and predictable climate zones (hot to cold transitions).
+            </p>
+
+            <h3>Modern Generation (1.18+)</h3>
+            <p>
+              Modern Minecraft uses <strong>Multi-Noise Generation</strong>. Instead of layers, the game queries
+              mathematical noise functions for every coordinate (x, y, z) to determine the biome.
+            </p>
+
+            <div className="code-block">
+              <div className="code-header">The 6 Noise Parameters</div>
+              <div style={{ padding: '16px', color: '#d4d4d4', fontSize: '0.9rem' }}>
+                <ul style={{ margin: 0, paddingLeft: '20px' }}>
+                  <li style={{ marginBottom: '8px' }}>🌡️ <strong>Temperature:</strong> Cold (Snow) ↔ Hot (Desert)</li>
+                  <li style={{ marginBottom: '8px' }}>💧 <strong>Humidity:</strong> Dry (Savanna) ↔ Wet (Jungle)</li>
+                  <li style={{ marginBottom: '8px' }}>🏔️ <strong>Continentalness:</strong> Ocean ↔ Coast ↔ Inland ↔ Far Inland</li>
+                  <li style={{ marginBottom: '8px' }}>📉 <strong>Erosion:</strong> Peaks ↔ Flat terrain</li>
+                  <li style={{ marginBottom: '8px' }}>🌀 <strong>Weirdness:</strong> Variant selector (e.g., Shattered Savanna)</li>
+                  <li>📏 <strong>Depth:</strong> Surface vs Underground (for caves)</li>
+                </ul>
+              </div>
+            </div>
+
+            <p>
+              This creates more natural transitions and allows for 3D biomes (e.g., Lush Caves under a Jungle),
+              but makes reverse-engineering much harder as you cannot simply "zoom out" to see the full structure easily.
             </p>
           </section>
 

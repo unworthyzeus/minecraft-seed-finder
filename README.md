@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Minecraft Seed Finder
+
+A comprehensive catalog of rare and legendary Minecraft seeds, featuring an intuitive search interface and accurate seed visualization.
+
+![Minecraft Seed Finder](https://img.shields.io/badge/Minecraft-Seed%20Finder-green?style=for-the-badge)
+
+## Features
+
+- **Search & Filter** - Find seeds by name, category, version, edition, and confidence level
+- **7,950+ Seeds** - Curated database of verified and community-reported seeds
+- **Seed Explorer** - Quick links to Chunkbase for accurate biome and structure mapping
+- **Responsive Design** - Works on desktop and mobile devices
+- **Categories** - Speedrun seeds, rare biomes, structures, historic seeds, and more
+
+## Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org) 14 (App Router)
+- **Styling**: CSS with modern design patterns
+- **Font**: [Geist](https://vercel.com/font) by Vercel
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Credits & Acknowledgments
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Cubiomes
+This project incorporates algorithms and biome data from [Cubiomes](https://github.com/Cubitect/cubiomes), 
+a C library that mimics Minecraft's biome generation.
 
-## Learn More
+```
+MIT License
+Copyright (c) 2020 Cubitect
 
-To learn more about Next.js, take a look at the following resources:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Other Credits
+- **Chunkbase** - For providing accurate seed mapping tools
+- **Minecraft@Home** - Community-distributed computing for seed discovery
+- **r/minecraftseeds** - Community seed submissions
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is open source. The seed database is community-contributed.
+Cubiomes integration is used under the MIT License.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy
+
+Deploy easily with [Vercel](https://vercel.com):
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/minecraft-seed-finder)

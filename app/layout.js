@@ -1,9 +1,13 @@
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: "Minecraft Seed Finder | Discover Rare Seeds",
   description: "Explore and discover rare Minecraft seeds including 12-eye portals, tall cacti, and historic worlds. Inspired by Minecraft At Home distributed computing.",
   keywords: "Minecraft, seeds, 12-eye portal, rare seeds, Minecraft At Home, seed finder",
+  icons: {
+    icon: "/icon.svg",
+  },
   openGraph: {
     title: "Minecraft Seed Finder",
     description: "Discover rare and legendary Minecraft seeds",
@@ -21,6 +25,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         {children}
+        <Analytics />
       </body>
     </html>
   );

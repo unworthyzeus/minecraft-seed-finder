@@ -40,7 +40,8 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [editionFilter, setEditionFilter] = useState('all');
   const [versionFilter, setVersionFilter] = useState('all');
-  const [confidenceFilter, setConfidenceFilter] = useState(0);
+  const [confidenceFilter, setConfidenceFilter] = useState('all');
+  const [coordinatesFilter, setCoordinatesFilter] = useState('all');
   const [showGeneratedOnly, setShowGeneratedOnly] = useState(null);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
   const [toast, setToast] = useState(null);
@@ -54,14 +55,23 @@ export default function Home() {
   const preCategoryFilteredSeeds = useMemo(() => {
     let results = [...SEEDS_DATABASE];
 
+    // Adjust confidence for seeds without coordinates (Cap at 0.7)
+    // "put anything without coordinates to 70% confidence"
+    results = results.map(s => {
+      if (!s.coordinates && s.confidence > 0.7) {
+        return { ...s, confidence: 0.7 };
+      }
+      return s;
+    });
+
     // Apply search
     if (searchQuery) {
       const lowerQuery = searchQuery.toLowerCase();
       results = results.filter(seed =>
-        seed.title.toLowerCase().includes(lowerQuery) ||
-        seed.seed.includes(searchQuery) ||
-        seed.description.toLowerCase().includes(lowerQuery) ||
-        seed.discoveredBy.toLowerCase().includes(lowerQuery)
+        (seed.title || '').toLowerCase().includes(lowerQuery) ||
+        (seed.seed || '').includes(searchQuery) ||
+        (seed.description || '').toLowerCase().includes(lowerQuery) ||
+        (seed.discoveredBy || '').toLowerCase().includes(lowerQuery)
       );
     }
 
@@ -108,9 +118,21 @@ export default function Home() {
       });
     }
 
-    // Apply confidence filter
-    if (confidenceFilter > 0) {
-      results = results.filter(seed => seed.confidence >= confidenceFilter);
+    // Apply confidence filter with exact matching
+    if (confidenceFilter !== 'all') {
+      results = results.filter(seed => {
+        const c = seed.confidence;
+        switch (confidenceFilter) {
+          case 'verified': return c >= 1.0;
+          case 'community': return c >= 0.9 && c < 1.0;
+          case 'verified_or_community': return c >= 0.9;
+          case 'likely': return c >= 0.7 && c < 0.9;
+          case 'plausible': return c >= 0.5 && c < 0.7;
+          case 'unverified': return c >= 0.3 && c < 0.5;
+          case 'low': return c < 0.3;
+          default: return true;
+        }
+      });
     }
 
     // Apply generated/verified filter
@@ -120,8 +142,17 @@ export default function Home() {
       results = results.filter(seed => !seed.isGenerated);
     }
 
+    // Apply coordinates filter
+    if (coordinatesFilter !== 'all') {
+      if (coordinatesFilter === 'yes') {
+        results = results.filter(seed => seed.coordinates);
+      } else if (coordinatesFilter === 'no') {
+        results = results.filter(seed => !seed.coordinates);
+      }
+    }
+
     return results;
-  }, [searchQuery, editionFilter, versionFilter, confidenceFilter, showGeneratedOnly]);
+  }, [searchQuery, editionFilter, versionFilter, confidenceFilter, showGeneratedOnly, coordinatesFilter]);
 
   // Calculate category counts based on pre-filtered seeds
   const categoryCounts = useMemo(() => {
@@ -280,19 +311,20 @@ export default function Home() {
                 <label>Confidence:</label>
                 <select
                   value={confidenceFilter}
-                  onChange={(e) => handleFilterChange(setConfidenceFilter)(parseFloat(e.target.value))}
+                  onChange={(e) => handleFilterChange(setConfidenceFilter)(e.target.value)}
                   className="filter-select"
                 >
-                  <option value="0">Any Confidence</option>
-                  <option value="1.0">Verified (100% Expert)</option>
-                  <option value="0.9">Community Reported (90%)</option>
-                  <option value="0.7">Likely (70%+)</option>
-                  <option value="0.5">Plausible (50%+)</option>
-                  <option value="0.3">Unverified (30%+)</option>
+                  <option value="all">Any Confidence</option>
+                  <option value="verified">Verified Only (100%)</option>
+                  <option value="community">Community Only (90%)</option>
+                  <option value="verified_or_community">Verified + Community (90%+)</option>
+                  <option value="likely">Likely (70-89%)</option>
+                  <option value="plausible">Plausible (50-69%)</option>
+                  <option value="unverified">Unverified (30-49%)</option>
+                  <option value="low">Low Confidence (&lt;30%)</option>
                 </select>
               </div>
 
-              {/* Source Filter */}
               <div className="filter-group">
                 <label>Source:</label>
                 <select
@@ -306,6 +338,20 @@ export default function Home() {
                   <option value="all">All Sources</option>
                   <option value="verified">Human Verified</option>
                   <option value="generated">Generated</option>
+                </select>
+              </div>
+
+              {/* Coordinates Filter */}
+              <div className="filter-group">
+                <label>Coords:</label>
+                <select
+                  value={coordinatesFilter}
+                  onChange={(e) => handleFilterChange(setCoordinatesFilter)(e.target.value)}
+                  className="filter-select"
+                >
+                  <option value="all">All</option>
+                  <option value="yes">Has Coordinates</option>
+                  <option value="no">No Coordinates</option>
                 </select>
               </div>
 
@@ -458,6 +504,10 @@ export default function Home() {
           </p>
           <p style={{ marginTop: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
             Community seeds are scraped from public forums and may not be fully verified. Always test seeds yourself.
+          </p>
+          <p style={{ marginTop: '12px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+            Biome algorithms based on <a href="https://github.com/Cubitect/cubiomes" target="_blank" rel="noopener noreferrer">Cubiomes</a> by Cubitect (MIT License)
+            {' '}• Accurate maps via <a href="https://www.chunkbase.com" target="_blank" rel="noopener noreferrer">Chunkbase</a>
           </p>
           <p style={{ marginTop: '12px', fontSize: '0.9rem' }}>
             Built with ❤️ for the Minecraft community

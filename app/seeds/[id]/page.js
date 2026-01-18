@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { getSeedById } from '@/lib/seeds-database';
 import { CATEGORIES, getConfidenceLevel } from '@/lib/categories';
+import SeedVisualizer from '@/components/SeedVisualizer';
 
 export default function SeedDetailPage() {
     const params = useParams();
@@ -100,6 +101,13 @@ export default function SeedDetailPage() {
                     )}
                 </div>
             </section>
+
+            {/* Seed Visualizer - Interactive Map */}
+            <SeedVisualizer
+                seed={seed.seed}
+                version={seed.version.java || seed.version.bedrock || '1.21'}
+                coordinates={seed.coordinates}
+            />
 
             {/* Description */}
             <section className="seed-detail-section">
