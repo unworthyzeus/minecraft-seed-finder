@@ -1,0 +1,19 @@
+Testing 1000 diverse seeds at (0,0) and far from spawn for 1.12:
+
+Successfully parsed 1000 seeds from expected file.
+=== RESULTS ===
+Origin (0,0): 993/1000 passed (99.3%)
+Far (5000,5000): 998/1000 passed (99.8%)
+
+Some Failed origin tests (first 10):
+  Seed 6017792217432071470: got 156, expected 155
+  Seed 5185684202647421017: got 156, expected 155
+  Seed 2078700225407617429: got 27, expected 156
+  Seed -5849202830957848239: got 27, expected 156
+  Seed -1768649954617182348: got 27, expected 156
+  Seed 5405289081119742093: got 156, expected 155
+  Seed 4555289619738012288: got 27, expected 156
+
+Some Failed far tests (first 10):
+  Seed 120583253621679844: got 156, expected 155
+  Seed 1767699367783743120: got 156, expected 155

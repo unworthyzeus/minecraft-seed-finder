@@ -1,0 +1,8 @@
+Testing 100 seeds at (0,0) and far from spawn for 1.12:
+
+=== RESULTS ===
+Origin (0,0): 99/100 passed (99.0%)
+Far (5000,5000): 8/100 passed (8.0%)
+
+Failed origin tests:
+  Seed 48: got 156, expected 155

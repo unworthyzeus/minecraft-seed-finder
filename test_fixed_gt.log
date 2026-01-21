@@ -1,0 +1,42 @@
+=================================================================
+CUBIOMES GROUND TRUTH VERIFICATION
+Testing JS implementation against C cubiomes library
+=================================================================
+
+VERSION               ORIGIN (0,0)      FAR (5000,5000)   OVERALL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MC 1.21             100.0% ✓          100.0% ✓          100.0% ✓
+MC 1.20             100.0% ✓          100.0% ✓          100.0% ✓
+MC 1.19.2           100.0% ✓          100.0% ✓          100.0% ✓
+MC 1.18             100.0% ✓          100.0% ✓          100.0% ✓
+MC 1.17             100.0% ✓          100.0% ✓          100.0% ✓
+MC 1.12             100.0% ✓          100.0% ✓          100.0% ✓
+MC 1.7              100.0% ✓          100.0% ✓          100.0% ✓
+MC 1.6              100.0% ✓          100.0% ✓          100.0% ✓
+MC 1.2              100.0% ✓          100.0% ✓          100.0% ✓
+MC 1.0              100.0% ✓          100.0% ✓          100.0% ✓
+MC B1.8             100.0% ✓          57.1% ✗           78.6% ✗
+MC B1.7             28.6% ✗           14.3% ✗           21.4% ✗
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TOTAL               94.05%            89.29%            91.67%
+                    79/84             75/84             154/168
+
+
+=== SAMPLE FAILURES (for debugging) ===
+
+
+MC B1.8 (C:2 → JS:2):
+  Far (5000,5000):
+    Seed 1: got 4 (forest), expected 0 (ocean)
+    Seed 100: got 6 (swamp), expected 0 (ocean)
+    Seed 12345: got 0 (ocean), expected 2 (desert)
+
+MC B1.7 (C:1 → JS:1):
+  Origin (0,0):
+    Seed 100: got 5 (taiga), expected 2 (desert)
+    Seed 12345: got 51 (biome_51), expected 2 (desert)
+    Seed 123456789012345: got 0 (ocean), expected 51 (biome_51)
+  Far (5000,5000):
+    Seed 0: got 0 (ocean), expected 4 (forest)
+    Seed 1: got 53 (biome_53), expected 0 (ocean)
+    Seed 100: got 4 (forest), expected 0 (ocean)

@@ -223,6 +223,227 @@ class ModernBiomeGenerator {
 }
 
 // ============================================================================
+// STRUCTURE HELPERS
+// ============================================================================
+
+const STRUCTURE_CONFIG = {
+    spawn: { name: 'World Spawn', color: '#ef4444', size: 24, icon: 'Spawn' },
+    stronghold: { name: 'Stronghold', color: '#7c3aed', size: 20, icon: 'Stronghold' },
+    village: { name: 'Village', color: '#f59e0b', size: 20, icon: 'Village' },
+    mansion: { name: 'Mansion', color: '#c27e2e', size: 24, icon: 'Mansion' },
+    outpost: { name: 'Pillager Outpost', color: '#9f1239', size: 20, icon: 'Outpost' },
+    jungle_temple: { name: 'Jungle Temple', color: '#166534', size: 18, icon: 'Temple' },
+    desert_pyramid: { name: 'Desert Pyramid', color: '#eab308', size: 18, icon: 'Pyramid' },
+    witch_hut: { name: 'Witch Hut', color: '#4a5568', size: 18, icon: 'Hut' },
+    igloo: { name: 'Igloo', color: '#3b82f6', size: 16, icon: 'Igloo' },
+    monument: { name: 'Ocean Monument', color: '#06b6d4', size: 20, icon: 'Monument' },
+    ruined_portal: { name: 'Ruined Portal', color: '#a855f7', size: 16, icon: 'Portal' },
+};
+
+function drawStructureIcon(ctx, type, x, y, size, color) {
+    ctx.fillStyle = color;
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2;
+
+    switch (type) {
+        case 'spawn':
+            ctx.beginPath();
+            ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            // Inner target
+            ctx.beginPath();
+            ctx.arc(x, y, size / 4, 0, Math.PI * 2);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+            break;
+
+        case 'stronghold':
+            // Eye of Ender style
+            ctx.beginPath();
+            ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+            ctx.fillStyle = '#64748b'; // Stone
+            ctx.fill();
+            ctx.stroke();
+            // Eye
+            ctx.beginPath();
+            ctx.ellipse(x, y, size / 4, size / 3, 0, 0, Math.PI * 2);
+            ctx.fillStyle = '#10b981';
+            ctx.fill();
+            // Pupil
+            ctx.beginPath();
+            ctx.arc(x, y, size / 8, 0, Math.PI * 2);
+            ctx.fillStyle = '#000';
+            ctx.fill();
+            break;
+
+        case 'desert_pyramid':
+            ctx.beginPath();
+            ctx.moveTo(x, y - size / 1.5);
+            ctx.lineTo(x + size / 1.5, y + size / 2);
+            ctx.lineTo(x - size / 1.5, y + size / 2);
+            ctx.closePath();
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.stroke();
+            // Blue center
+            ctx.beginPath();
+            ctx.rect(x - size / 6, y, size / 3, size / 3);
+            ctx.fillStyle = '#3b82f6';
+            ctx.fill();
+            break;
+
+        case 'jungle_temple':
+            ctx.fillStyle = '#4d7c0f'; // Mossy green
+            // Bottom tier
+            ctx.fillRect(x - size / 1.5, y, size * 1.3, size / 2);
+            ctx.strokeRect(x - size / 1.5, y, size * 1.3, size / 2);
+            // Top tier
+            ctx.fillRect(x - size / 2, y - size / 2, size, size / 2);
+            ctx.strokeRect(x - size / 2, y - size / 2, size, size / 2);
+            break;
+
+        case 'witch_hut':
+            ctx.fillStyle = '#4a5568';
+            ctx.beginPath();
+            ctx.moveTo(x, y - size / 2);
+            ctx.lineTo(x + size / 2, y);
+            ctx.lineTo(x + size / 2, y + size / 2);
+            ctx.lineTo(x - size / 2, y + size / 2);
+            ctx.lineTo(x - size / 2, y);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            break;
+
+        case 'igloo':
+            ctx.fillStyle = '#bae6fd';
+            ctx.beginPath();
+            ctx.arc(x, y, size / 2, Math.PI, 0); // Dome
+            ctx.lineTo(x + size / 2, y);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            break;
+
+        case 'village':
+            ctx.fillStyle = color;
+            // House Body
+            ctx.fillRect(x - size / 2, y, size, size / 2);
+            ctx.strokeRect(x - size / 2, y, size, size / 2);
+            // Roof
+            ctx.beginPath();
+            ctx.moveTo(x - size / 2 - 2, y);
+            ctx.lineTo(x, y - size / 1.5);
+            ctx.lineTo(x + size / 2 + 2, y);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            break;
+
+        case 'monument':
+            ctx.fillStyle = color;
+            // Prism/Diamond shape
+            ctx.beginPath();
+            ctx.moveTo(x, y - size / 1.5);
+            ctx.lineTo(x + size / 1.5, y);
+            ctx.lineTo(x, y + size / 1.5);
+            ctx.lineTo(x - size / 1.5, y);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            // Inner eye
+            ctx.fillStyle = '#ff9e5e';
+            ctx.beginPath();
+            ctx.arc(x, y, size / 5, 0, Math.PI * 2);
+            ctx.fill();
+            break;
+
+        case 'mansion':
+            ctx.fillStyle = '#78350f'; // Dark wood
+            // Large House
+            ctx.fillRect(x - size / 1.5, y - size / 4, size * 1.3, size);
+            ctx.strokeRect(x - size / 1.5, y - size / 4, size * 1.3, size);
+            // Roof
+            ctx.fillStyle = '#451a03';
+            ctx.beginPath();
+            ctx.moveTo(x - size / 1.5 - 2, y - size / 4);
+            ctx.lineTo(x, y - size);
+            ctx.lineTo(x + size / 1.5 + 2, y - size / 4);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            break;
+
+        case 'ruined_portal':
+            ctx.fillStyle = '#4a044e'; // Obsidian color
+            ctx.beginPath();
+            ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            // Portal Purple
+            ctx.fillStyle = '#d946ef';
+            ctx.beginPath();
+            ctx.arc(x, y, size / 3, 0, Math.PI * 2);
+            ctx.fill();
+            break;
+
+        case 'outpost':
+            ctx.fillStyle = color;
+            // Tower
+            ctx.fillRect(x - size / 4, y - size / 2, size / 2, size);
+            ctx.strokeRect(x - size / 4, y - size / 2, size / 2, size);
+            // Top
+            ctx.fillRect(x - size / 2, y - size / 2, size, size / 3);
+            ctx.strokeRect(x - size / 2, y - size / 2, size, size / 3);
+            // Flag
+            ctx.strokeStyle = '#fff';
+            ctx.beginPath();
+            ctx.moveTo(x, y - size / 2);
+            ctx.lineTo(x + size / 2, y - size);
+            ctx.stroke();
+            break;
+
+        default:
+            // Fallback to circle
+            ctx.beginPath();
+            ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.stroke();
+            break;
+    }
+}
+
+function LegendIcon({ type, color, size }) {
+    const canvasRef = useRef(null);
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const s = 32; // Canvas size
+        canvas.width = s;
+        canvas.height = s;
+        ctx.clearRect(0, 0, s, s);
+
+        // Adjust size for legend (don't let it be too big)
+        const iconSize = Math.min(size || 16, 20);
+        drawStructureIcon(ctx, type, s / 2, s / 2 + 2, iconSize, color);
+    }, [type, color, size]);
+
+    return (
+        <canvas
+            ref={canvasRef}
+            width="32"
+            height="32"
+            style={{ width: '20px', height: '20px', display: 'inline-block' }}
+        />
+    );
+}
+
+
+// ============================================================================
 // STRUCTURE GENERATION
 // ============================================================================
 
@@ -651,184 +872,7 @@ export default function SeedVisualizer({ seed, version = '1.21', coordinates }) 
                         ctx.fill();
 
                         // Structure Icon Rendering
-                        ctx.fillStyle = s.color;
-                        ctx.strokeStyle = '#fff';
-                        ctx.lineWidth = 2;
-
-                        switch (s.type) {
-                            case 'spawn':
-                                ctx.beginPath();
-                                ctx.arc(sx, sz, size / 2, 0, Math.PI * 2);
-                                ctx.fill();
-                                ctx.stroke();
-                                // Inner target
-                                ctx.beginPath();
-                                ctx.arc(sx, sz, size / 4, 0, Math.PI * 2);
-                                ctx.fillStyle = '#fff';
-                                ctx.fill();
-                                break;
-
-                            case 'stronghold':
-                                // Eye of Ender style
-                                ctx.beginPath();
-                                ctx.arc(sx, sz, size / 2, 0, Math.PI * 2);
-                                ctx.fillStyle = '#64748b'; // Stone
-                                ctx.fill();
-                                ctx.stroke();
-                                // Eye
-                                ctx.beginPath();
-                                ctx.ellipse(sx, sz, size / 4, size / 3, 0, 0, Math.PI * 2);
-                                ctx.fillStyle = '#10b981';
-                                ctx.fill();
-                                // Pupil
-                                ctx.beginPath();
-                                ctx.arc(sx, sz, size / 8, 0, Math.PI * 2);
-                                ctx.fillStyle = '#000';
-                                ctx.fill();
-                                break;
-
-                            case 'desert_pyramid':
-                                ctx.beginPath();
-                                ctx.moveTo(sx, sz - size / 1.5);
-                                ctx.lineTo(sx + size / 1.5, sz + size / 2);
-                                ctx.lineTo(sx - size / 1.5, sz + size / 2);
-                                ctx.closePath();
-                                ctx.fillStyle = '#eab308';
-                                ctx.fill();
-                                ctx.stroke();
-                                // Blue center
-                                ctx.beginPath();
-                                ctx.rect(sx - size / 6, sz, size / 3, size / 3);
-                                ctx.fillStyle = '#3b82f6';
-                                ctx.fill();
-                                break;
-
-                            case 'jungle_temple':
-                                ctx.fillStyle = '#4d7c0f'; // Mossy green
-                                // Bottom tier
-                                ctx.fillRect(sx - size / 1.5, sz, size * 1.3, size / 2);
-                                ctx.strokeRect(sx - size / 1.5, sz, size * 1.3, size / 2);
-                                // Top tier
-                                ctx.fillRect(sx - size / 2, sz - size / 2, size, size / 2);
-                                ctx.strokeRect(sx - size / 2, sz - size / 2, size, size / 2);
-                                break;
-
-                            case 'witch_hut':
-                                ctx.fillStyle = '#4a5568';
-                                ctx.beginPath();
-                                ctx.moveTo(sx, sz - size / 2);
-                                ctx.lineTo(sx + size / 2, sz);
-                                ctx.lineTo(sx + size / 2, sz + size / 2);
-                                ctx.lineTo(sx - size / 2, sz + size / 2);
-                                ctx.lineTo(sx - size / 2, sz);
-                                ctx.closePath();
-                                ctx.fill();
-                                ctx.stroke();
-                                break;
-
-                            case 'igloo':
-                                ctx.fillStyle = '#bae6fd';
-                                ctx.beginPath();
-                                ctx.arc(sx, sz, size / 2, Math.PI, 0); // Dome
-                                ctx.lineTo(sx + size / 2, sz);
-                                ctx.closePath();
-                                ctx.fill();
-                                ctx.stroke();
-                                break;
-
-                            case 'village':
-                                ctx.fillStyle = '#f59e0b';
-                                // House Body
-                                ctx.fillRect(sx - size / 2, sz, size, size / 2);
-                                ctx.strokeRect(sx - size / 2, sz, size, size / 2);
-                                // Roof
-                                ctx.beginPath();
-                                ctx.moveTo(sx - size / 2 - 2, sz);
-                                ctx.lineTo(sx, sz - size / 1.5);
-                                ctx.lineTo(sx + size / 2 + 2, sz);
-                                ctx.closePath();
-                                ctx.fill();
-                                ctx.stroke();
-                                break;
-
-                            case 'monument':
-                                ctx.fillStyle = '#06b6d4';
-                                // Prism/Diamond shape
-                                ctx.beginPath();
-                                ctx.moveTo(sx, sz - size / 1.5);
-                                ctx.lineTo(sx + size / 1.5, sz);
-                                ctx.lineTo(sx, sz + size / 1.5);
-                                ctx.lineTo(sx - size / 1.5, sz);
-                                ctx.closePath();
-                                ctx.fill();
-                                ctx.stroke();
-                                // Inner eye
-                                ctx.fillStyle = '#ff9e5e';
-                                ctx.beginPath();
-                                ctx.arc(sx, sz, size / 5, 0, Math.PI * 2);
-                                ctx.fill();
-                                break;
-
-                            case 'mansion':
-                                ctx.fillStyle = '#78350f'; // Dark wood
-                                // Large House
-                                ctx.fillRect(sx - size / 1.5, sz - size / 4, size * 1.3, size);
-                                ctx.strokeRect(sx - size / 1.5, sz - size / 4, size * 1.3, size);
-                                // Roof
-                                ctx.fillStyle = '#451a03';
-                                ctx.beginPath();
-                                ctx.moveTo(sx - size / 1.5 - 2, sz - size / 4);
-                                ctx.lineTo(sx, sz - size);
-                                ctx.lineTo(sx + size / 1.5 + 2, sz - size / 4);
-                                ctx.closePath();
-                                ctx.fill();
-                                ctx.stroke();
-                                break;
-
-                            case 'ruined_portal':
-                                ctx.fillStyle = '#4a044e'; // Obsidian color
-                                ctx.beginPath();
-                                ctx.arc(sx, sz, size / 2, 0, Math.PI * 2);
-                                ctx.fill();
-                                ctx.stroke();
-                                // Portal Purple
-                                ctx.fillStyle = '#d946ef';
-                                ctx.beginPath();
-                                ctx.arc(sx, sz, size / 3, 0, Math.PI * 2);
-                                ctx.fill();
-                                break;
-
-                            case 'outpost':
-                                ctx.fillStyle = '#9f1239'; // Dark red
-                                // Tower
-                                ctx.fillRect(sx - size / 4, sz - size / 2, size / 2, size);
-                                ctx.strokeRect(sx - size / 4, sz - size / 2, size / 2, size);
-                                // Top
-                                ctx.fillRect(sx - size / 2, sz - size / 2, size, size / 3);
-                                ctx.strokeRect(sx - size / 2, sz - size / 2, size, size / 3);
-                                // Flag
-                                ctx.strokeStyle = '#fff';
-                                ctx.beginPath();
-                                ctx.moveTo(sx, sz - size / 2);
-                                ctx.lineTo(sx + size / 2, sz - size);
-                                ctx.stroke();
-                                break;
-
-                            default:
-                                // Fallback to circle
-                                ctx.beginPath();
-                                ctx.arc(sx, sz, size / 2, 0, Math.PI * 2);
-                                ctx.fillStyle = s.color;
-                                ctx.fill();
-                                ctx.stroke();
-                                // Fallback Text
-                                ctx.fillStyle = '#fff';
-                                ctx.font = `${Math.max(12, size - 6)}px sans-serif`;
-                                ctx.textAlign = 'center';
-                                ctx.textBaseline = 'middle';
-                                ctx.fillText(s.icon || '?', sx, sz + 1);
-                                break;
-                        }
+                        drawStructureIcon(ctx, s.type, sx, sz, size, s.color);
 
                         ctx.globalAlpha = 1.0; // Reset
                     }
@@ -978,18 +1022,18 @@ export default function SeedVisualizer({ seed, version = '1.21', coordinates }) 
 
             {/* Legend */}
             <div className="legend">
-                <div className="legend-item"><span className="legend-dot" style={{ background: '#ef4444' }}></span> Spawn</div>
-                <div className="legend-item"><span className="legend-dot" style={{ background: '#7c3aed' }}></span> Stronghold</div>
-                <div className="legend-item"><span className="legend-dot" style={{ background: '#f59e0b' }}></span> Village</div>
-                <div className="legend-item"><span className="legend-dot" style={{ background: '#c27e2e' }}></span> Mansion</div>
-                <div className="legend-item"><span className="legend-dot" style={{ background: '#9f1239' }}></span> Outpost</div>
-                <div className="legend-item"><span className="legend-dot" style={{ background: '#166534' }}></span> J. Temple</div>
-                <div className="legend-item"><span className="legend-dot" style={{ background: '#eab308' }}></span> D. Pyramid</div>
-                <div className="legend-item"><span className="legend-dot" style={{ background: '#4a5568' }}></span> Witch Hut</div>
-                <div className="legend-item"><span className="legend-dot" style={{ background: '#3b82f6' }}></span> Igloo</div>
-                <div className="legend-item"><span className="legend-dot" style={{ background: '#06b6d4' }}></span> Monument</div>
-                <div className="legend-item"><span className="legend-dot" style={{ background: '#a855f7' }}></span> Ruined Portal</div>
-                {coordinates && <div className="legend-item"><span className="legend-dot type-star" style={{ background: '#ef4444' }}>★</span> Target</div>}
+                {Object.entries(STRUCTURE_CONFIG).map(([type, config]) => (
+                    <div className="legend-item" key={type}>
+                        <LegendIcon type={type} color={config.color} size={config.size} />
+                        {config.name}
+                    </div>
+                ))}
+                {coordinates && (
+                    <div className="legend-item">
+                        <span className="legend-dot type-star" style={{ background: '#ef4444' }}>★</span>
+                        Target
+                    </div>
+                )}
             </div>
 
             {/* Footer */}

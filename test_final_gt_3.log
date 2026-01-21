@@ -1,0 +1,78 @@
+=================================================================
+CUBIOMES GROUND TRUTH VERIFICATION
+Testing JS implementation against C cubiomes library
+=================================================================
+
+VERSION               ORIGIN (0,0)      FAR (5000,5000)   OVERALL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MC 1.21             100.0% ✓          100.0% ✓          100.0% ✓
+MC 1.20             100.0% ✓          100.0% ✓          100.0% ✓
+MC 1.19.2           100.0% ✓          100.0% ✓          100.0% ✓
+MC 1.18             100.0% ✓          100.0% ✓          100.0% ✓
+MC 1.17             0.0% ✗            0.0% ✗            0.0% ✗
+MC 1.12             0.0% ✗            0.0% ✗            0.0% ✗
+MC 1.7              0.0% ✗            0.0% ✗            0.0% ✗
+MC 1.6              0.0% ✗            0.0% ✗            0.0% ✗
+MC 1.2              0.0% ✗            0.0% ✗            0.0% ✗
+MC 1.0              0.0% ✗            0.0% ✗            0.0% ✗
+MC B1.8             0.0% ✗            0.0% ✗            0.0% ✗
+MC B1.7             0.0% ✗            28.6% ✗           14.3% ✗
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TOTAL               33.33%            35.71%            34.52%
+                    28/84             30/84             58/168
+
+
+=== SAMPLE FAILURES (for debugging) ===
+
+
+MC 1.17 (C:21 → JS:21):
+  Origin (0,0):
+    Seed 0: ERROR - mapIsland is not defined
+    Seed 1: ERROR - mapIsland is not defined
+    Seed 100: ERROR - mapIsland is not defined
+
+MC 1.12 (C:15 → JS:15):
+  Origin (0,0):
+    Seed 0: ERROR - mapIsland is not defined
+    Seed 1: ERROR - mapIsland is not defined
+    Seed 100: ERROR - mapIsland is not defined
+
+MC 1.7 (C:10 → JS:10):
+  Origin (0,0):
+    Seed 0: ERROR - mapIsland is not defined
+    Seed 1: ERROR - mapIsland is not defined
+    Seed 100: ERROR - mapIsland is not defined
+
+MC 1.6 (C:9 → JS:9):
+  Origin (0,0):
+    Seed 0: ERROR - mapVoronoi114 is not defined
+    Seed 1: ERROR - mapVoronoi114 is not defined
+    Seed 100: ERROR - mapVoronoi114 is not defined
+
+MC 1.2 (C:5 → JS:5):
+  Origin (0,0):
+    Seed 0: ERROR - mapVoronoi114 is not defined
+    Seed 1: ERROR - mapVoronoi114 is not defined
+    Seed 100: ERROR - mapVoronoi114 is not defined
+
+MC 1.0 (C:3 → JS:3):
+  Origin (0,0):
+    Seed 0: ERROR - mapVoronoi114 is not defined
+    Seed 1: ERROR - mapVoronoi114 is not defined
+    Seed 100: ERROR - mapVoronoi114 is not defined
+
+MC B1.8 (C:2 → JS:2):
+  Origin (0,0):
+    Seed 0: ERROR - mapVoronoi114 is not defined
+    Seed 1: ERROR - mapVoronoi114 is not defined
+    Seed 100: ERROR - mapVoronoi114 is not defined
+
+MC B1.7 (C:1 → JS:1):
+  Origin (0,0):
+    Seed 0: got 0 (ocean), expected 4 (forest)
+    Seed 1: got 4 (forest), expected 0 (ocean)
+    Seed 100: got 4 (forest), expected 2 (desert)
+  Far (5000,5000):
+    Seed 1: got 4 (forest), expected 0 (ocean)
+    Seed 12345: got 4 (forest), expected 0 (ocean)
+    Seed 123456789012345: got 4 (forest), expected 0 (ocean)

@@ -12,7 +12,8 @@
 import fs from 'fs';
 import { LegacyBiomeGenerator } from './lib/cubiomes/layers.js';
 
-const EXPECTED_FILE = '../cubiomes/expected_versions.txt';
+const EXPECTED_FILE = '../cubiomes-original/ground_truth.txt';
+import { BiomeNoise } from './lib/cubiomes/generator.js';
 
 // Read file with proper encoding (handle UTF-16LE BOM)
 function readTestFile(filepath) {
@@ -26,6 +27,8 @@ function readTestFile(filepath) {
 
 // C cubiomes version enum values
 const C_VERSION_MAP = {
+    1: { name: 'B1.7', js: 1 },
+    2: { name: 'B1.8', js: 2 },
     3: { name: '1.0', js: 3 },
     4: { name: '1.1', js: 4 },
     5: { name: '1.2', js: 5 },
@@ -42,9 +45,20 @@ const C_VERSION_MAP = {
     16: { name: '1.13', js: 16 },
     17: { name: '1.14', js: 17 },
     18: { name: '1.15', js: 18 },
-    19: { name: '1.16_1', js: 19 },  // Note: 1.16.1
+    19: { name: '1.16_1', js: 19 },
     20: { name: '1.16', js: 20 },
-    21: { name: '1.17', js: 21 }
+    21: { name: '1.17', js: 21 },
+    22: { name: '1.18', js: 18, modern: true },
+    31: { name: '1.18', js: 18, modern: true },
+    23: { name: '1.19.2', js: 19.2, modern: true },
+    32: { name: '1.19.2', js: 19.2, modern: true },
+    24: { name: '1.19', js: 19, modern: true },
+    33: { name: '1.19', js: 19, modern: true },
+    25: { name: '1.20', js: 20.6, modern: true },
+    34: { name: '1.20', js: 20.6, modern: true },
+    28: { name: '1.21', js: 21, modern: true }, // WD
+    36: { name: '1.21', js: 21, modern: true },
+    38: { name: '1.21', js: 21, modern: true }
 };
 
 // Biome ID to name mapping
@@ -117,16 +131,22 @@ async function runTest() {
         }
 
         try {
-            // Create generator for this seed and version
-            const generator = new LegacyBiomeGenerator(seed, js_mc);
+            let gotOrigin, gotFar;
+            if (versionInfo.modern) {
+                const generator = new BiomeNoise();
+                generator.setSeed(seed, js_mc);
+                gotOrigin = generator.getBiome(0, 0, 64 >> 2); // biome coord Y
+                gotFar = generator.getBiome(Math.floor(5000 / 1), Math.floor(5000 / 1), 64 >> 2);
+            } else {
+                const generator = new LegacyBiomeGenerator(seed, js_mc);
+                gotOrigin = generator.getBiome(0, 0);
+                gotFar = generator.getBiome(20000, 20000);
+            }
 
-            // Test origin (0, 0) - JS coords need to be multiplied by 4 since C uses scale 4
-            // Actually getBiome divides by 4, so we pass 0,0 directly for scale-4 coordinate 0,0
-            const gotOrigin = generator.getBiome(0, 0);
             if (gotOrigin === expOrigin) {
                 results[c_mc].origin.passed++;
             } else {
-                if (results[c_mc].origin.failures.length < 5) {  // Limit failures shown
+                if (results[c_mc].origin.failures.length < 5) {
                     results[c_mc].origin.failures.push({
                         seed,
                         got: gotOrigin,
@@ -138,9 +158,6 @@ async function runTest() {
             }
             results[c_mc].origin.total++;
 
-            // Test far (5000, 5000) - C uses scale 4, so this is biome coord 5000
-            // JS getBiome divides by 4, so pass 5000*4 = 20000
-            const gotFar = generator.getBiome(20000, 20000);
             if (gotFar === expFar) {
                 results[c_mc].far.passed++;
             } else {
