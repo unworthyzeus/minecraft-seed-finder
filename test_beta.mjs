@@ -1,132 +1,144 @@
+/**
+ * Beta Version Ground Truth Test
+ * Tests Beta 1.7 and Beta 1.8 against C cubiomes
+ */
 
 import fs from 'fs';
-import { LegacyBiomeGenerator, MC_B1_7, MC_B1_8 } from './lib/cubiomes/layers.js'; // Adjust path if needed
-import { BiomeNames } from './lib/cubiomes/core.js'; // Trying to import names, fallback if not
+import { LegacyBiomeGenerator, MC_B1_7, MC_B1_8 } from './lib/cubiomes/layers.js';
 
-// Define local map if core.js doesn't export BiomeNames
+const EXPECTED_FILE = '../cubiomes/groundtruth_beta.txt';
+const LOG_FILE = 'test_beta_failures.log';
+
+// Version name mapping
+const VERSION_NAMES = {
+    1: 'Beta 1.7',
+    2: 'Beta 1.8'
+};
+
+// Beta biome names
 const BIOME_NAMES = {
     0: 'ocean', 1: 'plains', 2: 'desert', 3: 'mountains', 4: 'forest',
     5: 'taiga', 6: 'swamp', 7: 'river', 10: 'frozen_ocean', 11: 'frozen_river',
-    12: 'snowy_tundra', 13: 'snowy_mountains', 14: 'mushroom_fields', 15: 'mushroom_field_shore',
-    16: 'beach', 17: 'desert_hills', 18: 'wooded_hills', 19: 'taiga_hills',
-    20: 'mountain_edge', 21: 'jungle', 22: 'jungle_hills', 23: 'jungle_edge',
-    24: 'deep_ocean', 25: 'stone_shore', 26: 'snowy_beach', 27: 'birch_forest',
-    28: 'birch_forest_hills', 29: 'dark_forest', 30: 'snowy_taiga', 31: 'snowy_taiga_hills',
-    32: 'giant_tree_taiga', 33: 'giant_tree_taiga_hills', 34: 'wooded_mountains',
-    35: 'savanna', 36: 'savanna_plateau', 37: 'badlands', 38: 'wooded_badlands_plateau',
-    39: 'badlands_plateau', 44: 'warm_ocean', 45: 'lukewarm_ocean', 46: 'cold_ocean',
-    47: 'deep_warm_ocean', 48: 'deep_lukewarm_ocean', 49: 'deep_cold_ocean',
-    50: 'deep_frozen_ocean', 129: 'sunflower_plains', 130: 'desert_lakes',
-    131: 'gravelly_mountains', 132: 'flower_forest', 133: 'taiga_mountains',
-    134: 'swamp_hills', 155: 'tall_birch_forest', 156: 'tall_birch_hills',
-    157: 'dark_forest_hills', 158: 'snowy_taiga_mountains', 160: 'giant_spruce_taiga',
-    161: 'giant_spruce_taiga_hills', 162: 'modified_gravelly_mountains',
-    163: 'shattered_savanna', 164: 'shattered_savanna_plateau',
-    165: 'eroded_badlands', 166: 'modified_wooded_badlands_plateau',
-    167: 'modified_badlands_plateau', 168: 'bamboo_jungle', 169: 'bamboo_jungle_hills'
+    12: 'snowy_tundra', 35: 'savanna',
+    // Beta 1.7 specific biomes
+    51: 'seasonal_forest_b17', 52: 'rainforest_b17', 53: 'shrubland_b17',
+    54: 'shrubland_b17', 55: 'taiga_b17', 56: 'desert_b17', 57: 'plains_b17',
+    58: 'tundra_b17', 59: 'savanna_b17'
 };
 
 function getBiomeName(id) {
     return BIOME_NAMES[id] || `biome_${id}`;
 }
 
-const LEGACY_GT_FILE = '../cubiomes/legacy_gt.txt';
+function readTestFile(filepath) {
+    const buffer = fs.readFileSync(filepath);
+    if (buffer[0] === 0xFF && buffer[1] === 0xFE) {
+        return buffer.slice(2).toString('utf16le');
+    }
+    return buffer.toString('utf-8');
+}
 
 async function runTest() {
-    console.log("=================================================================");
-    console.log("BETA & LEGACY GROUND TRUTH VERIFICATION");
-    console.log(`Reading from ${LEGACY_GT_FILE}`);
-    console.log("=================================================================\n");
+    console.log("═".repeat(80));
+    console.log("  BETA VERSION GROUND TRUTH TEST");
+    console.log("  Testing Beta 1.7 and Beta 1.8 against C cubiomes");
+    console.log("  10,000 total test cases (5,000 per version)");
+    console.log("═".repeat(80) + "\n");
 
-    if (!fs.existsSync(LEGACY_GT_FILE)) {
-        console.error(`Error: File ${LEGACY_GT_FILE} not found.`);
-        return;
-    }
+    const logStream = fs.createWriteStream(LOG_FILE);
+    logStream.write(`Test run: ${new Date().toISOString()}\n`);
+    logStream.write(`Format: VERSION SEED X Z GOT_BIOME EXPECTED_BIOME GOT_NAME EXPECTED_NAME\n`);
+    logStream.write("=".repeat(120) + "\n\n");
 
-    const buffer = fs.readFileSync(LEGACY_GT_FILE);
-    let content;
-    if (buffer[0] === 0xFF && buffer[1] === 0xFE) {
-        content = buffer.slice(2).toString('utf16le');
-    } else {
-        content = buffer.toString('utf-8');
-    }
+    const fileContent = readTestFile(EXPECTED_FILE);
+    const lines = fileContent.split(/\r?\n/);
 
-    // Remove null bytes or other non-printable chars just in case
-    content = content.replace(/[\x00-\x09\x0B-\x1F\x7F-\x9F]/g, '');
+    const results = {};
+    let processed = 0;
+    let totalFailures = 0;
+    let errors = 0;
 
-    const lines = content.split(/\r?\n/);
-
-    // Stats per version
-    const stats = {};
-
-    let lineNum = 0;
     for (const line of lines) {
-        lineNum++;
-        const parts = line.trim().split(/\s+/);
+        const cleanedLine = line.replace(/[\x00-\x1F\x7F-\x9F]/g, '').trim();
+        if (!cleanedLine) continue;
+
+        const parts = cleanedLine.split(/\s+/).filter(p => p.trim());
         if (parts.length < 5) continue;
 
-        const version = parseInt(parts[0]);
+        const c_mc = parseInt(parts[0]);
         const seed = BigInt(parts[1]);
         const x = parseInt(parts[2]);
         const z = parseInt(parts[3]);
-        const expectedBiome = parseInt(parts[4]);
+        const expected = parseInt(parts[4]);
+        const vName = VERSION_NAMES[c_mc] || `v${c_mc}`;
 
-        if (!stats[version]) {
-            stats[version] = { passed: 0, total: 0, failures: [] };
+        if (!results[c_mc]) {
+            results[c_mc] = { passed: 0, total: 0, failCount: 0 };
         }
 
         try {
-            const gen = new LegacyBiomeGenerator(seed, version);
-            const gotBiome = gen.getBiome(x, z);
+            const generator = new LegacyBiomeGenerator(seed, c_mc);
+            const got = generator.getBiome(x * 4, z * 4);
 
-            if (gotBiome === expectedBiome) {
-                stats[version].passed++;
+            if (got === expected) {
+                results[c_mc].passed++;
             } else {
-                if (stats[version].failures.length < 5) {
-                    stats[version].failures.push({
-                        seed, x, z,
-                        got: gotBiome, gotName: getBiomeName(gotBiome),
-                        exp: expectedBiome, expName: getBiomeName(expectedBiome)
-                    });
-                }
+                results[c_mc].failCount++;
+                totalFailures++;
+                logStream.write(`${vName}\t${seed}\t${x}\t${z}\t${got}\t${expected}\t${getBiomeName(got)}\t${getBiomeName(expected)}\n`);
             }
-            stats[version].total++;
+            results[c_mc].total++;
+
         } catch (e) {
-            console.error(`Error on line ${lineNum}: ${e.message}`);
+            errors++;
+            totalFailures++;
+            logStream.write(`${vName}\t${seed}\t${x}\t${z}\tERROR\t${expected}\t${e.message}\n`);
+            results[c_mc].total++;
+        }
+
+        processed++;
+        if (processed % 2000 === 0) {
+            process.stdout.write(`\rProcessed ${processed.toLocaleString()} test cases... (${totalFailures} failures)`);
         }
     }
 
-    console.log("VERSION     PASSED/TOTAL     PERCENTAGE");
-    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+    logStream.write("\n" + "=".repeat(120) + "\n");
+    logStream.write(`Total failures: ${totalFailures}\n`);
+    logStream.end();
 
-    const versions = Object.keys(stats).sort((a, b) => parseInt(a) - parseInt(b));
-    let grandTotal = 0;
-    let grandPassed = 0;
+    console.log(`\rProcessed ${processed.toLocaleString()} test cases. ${totalFailures} failures logged to ${LOG_FILE}\n`);
 
-    for (const v of versions) {
-        const s = stats[v];
-        const pct = (s.passed / s.total * 100).toFixed(1) + '%';
-        const vName = v === 1 ? "B1.7" : (v === 2 ? "B1.8" : v.toString());
-        console.log(`${vName.padEnd(10)}  ${(s.passed + '/' + s.total).padEnd(15)}  ${pct}`);
+    console.log("VERSION          PASSED/TOTAL           PERCENTAGE       STATUS");
+    console.log("━".repeat(70));
 
-        grandTotal += s.total;
-        grandPassed += s.passed;
+    const mcs = Object.keys(results).map(Number).sort((a, b) => a - b);
+    let totalPass = 0, totalTests = 0;
+
+    for (const c_mc of mcs) {
+        const r = results[c_mc];
+        const vName = VERSION_NAMES[c_mc] || `v${c_mc}`;
+        const pct = ((r.passed / r.total) * 100).toFixed(2);
+        const status = r.passed === r.total ? '✓' : '✗';
+
+        console.log(`${vName.padEnd(15)}  ${(r.passed + '/' + r.total).padEnd(25)}${(pct + '%').padEnd(17)}${status}`);
+
+        totalPass += r.passed;
+        totalTests += r.total;
     }
 
-    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-    console.log(`${"TOTAL".padEnd(10)}  ${(grandPassed + '/' + grandTotal).padEnd(15)}  ${(grandPassed / grandTotal * 100).toFixed(1)}%`);
+    console.log("━".repeat(70));
+    const grandPct = ((totalPass / totalTests) * 100).toFixed(2);
+    console.log(`${'TOTAL'.padEnd(17)}${(totalPass + '/' + totalTests).padEnd(25)}${(grandPct + '%').padEnd(17)}${totalPass === totalTests ? '✓' : '✗'}`);
 
-    console.log("\n=== FAILURES ===");
-    for (const v of versions) {
-        const s = stats[v];
-        if (s.failures.length > 0) {
-            const vName = v === 1 ? "B1.7" : (v === 2 ? "B1.8" : v.toString());
-            console.log(`\nVersion ${vName}:`);
-            for (const f of s.failures) {
-                console.log(`  Seed ${f.seed} at (${f.x},${f.z}): Got ${f.got} (${f.gotName}), Expected ${f.exp} (${f.expName})`);
-            }
-        }
+    if (totalFailures > 0) {
+        console.log("\n📄 All failures logged to: " + LOG_FILE);
+
+        // Show first few sample failures
+        console.log("\nSample failures (first 10):");
+        const logContent = fs.readFileSync(LOG_FILE, 'utf-8');
+        const failureLines = logContent.split('\n').filter(l => l.includes('Beta'));
+        failureLines.slice(0, 10).forEach(l => console.log("  " + l));
     }
 }
 
-runTest();
+runTest().catch(console.error);
