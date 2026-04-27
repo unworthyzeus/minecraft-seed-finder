@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:worldgen": "node tests/test_beta.mjs && node tests/test_versions.mjs && node tests/test_diverse.mjs && node tests/test_118_plus.mjs && node tests/test_5000_seeds.mjs && node tests/test_structures.mjs && node tests/test_bedrock_generation.mjs && node tests/validate_seed_versions.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",

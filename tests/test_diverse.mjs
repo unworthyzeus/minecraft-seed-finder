@@ -8,10 +8,14 @@
  */
 
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { LegacyBiomeGenerator } from '../lib/cubiomes/layers.js';
 
-const EXPECTED_FILE = '../../cubiomes/groundtruth_100k.txt';
-const LOG_FILE = 'test_diverse_failures.log';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const EXPECTED_FILE = path.resolve(__dirname, '../../cubiomes/groundtruth_100k.txt');
+const LOG_FILE = path.resolve(__dirname, 'test_diverse_failures.log');
 
 // Version name mapping
 const VERSION_NAMES = {

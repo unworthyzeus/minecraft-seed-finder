@@ -4,10 +4,14 @@
  */
 
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { LegacyBiomeGenerator, MC_B1_7, MC_B1_8 } from '../lib/cubiomes/layers.js';
 
-const EXPECTED_FILE = '../../cubiomes/groundtruth_beta.txt';
-const LOG_FILE = 'test_beta_failures.log';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const EXPECTED_FILE = path.resolve(__dirname, '../../cubiomes/groundtruth_beta.txt');
+const LOG_FILE = path.resolve(__dirname, 'test_beta_failures.log');
 
 // Version name mapping
 const VERSION_NAMES = {
@@ -78,7 +82,9 @@ async function runTest() {
 
         try {
             const generator = new LegacyBiomeGenerator(seed, c_mc);
-            const got = generator.getBiome(x * 4, z * 4);
+            const got = c_mc === MC_B1_7
+                ? generator.snb.getBiome(x * 4 + 2, z * 4 + 2, 4)
+                : generator.getBiome(x * 4, z * 4);
 
             if (got === expected) {
                 results[c_mc].passed++;
@@ -104,7 +110,10 @@ async function runTest() {
 
     logStream.write("\n" + "=".repeat(120) + "\n");
     logStream.write(`Total failures: ${totalFailures}\n`);
-    logStream.end();
+    await new Promise((resolve, reject) => {
+        logStream.end(resolve);
+        logStream.on('error', reject);
+    });
 
     console.log(`\rProcessed ${processed.toLocaleString()} test cases. ${totalFailures} failures logged to ${LOG_FILE}\n`);
 

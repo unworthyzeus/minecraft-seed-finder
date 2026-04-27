@@ -3,6 +3,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { LegacyBiomeGenerator } from '../lib/cubiomes/layers';
 import { Generator } from '../lib/cubiomes/generator';
+import { BedrockBiomeGenerator } from '../lib/cubiomes/bedrock';
+import { generateStructureCandidates, getStructureLegend, toCubiomesMcVersion } from '../lib/cubiomes/structures';
+import { getSupportedGeneratorMinor } from '../lib/version-utils';
 
 
 /**
@@ -220,25 +223,19 @@ class ModernBiomeGenerator {
         // Use surface level (y=64)
         return this.gen.getBiomeAt(1, x, 64, z);
     }
+
+    getBiomeAtY(x, y, z) {
+        return this.gen.getBiomeAt(1, x, y, z);
+    }
 }
 
 // ============================================================================
 // STRUCTURE HELPERS
 // ============================================================================
 
-const STRUCTURE_CONFIG = {
-    spawn: { name: 'World Spawn', color: '#ef4444', size: 24, icon: 'Spawn' },
-    stronghold: { name: 'Stronghold', color: '#7c3aed', size: 20, icon: 'Stronghold' },
-    village: { name: 'Village', color: '#f59e0b', size: 20, icon: 'Village' },
-    mansion: { name: 'Mansion', color: '#c27e2e', size: 24, icon: 'Mansion' },
-    outpost: { name: 'Pillager Outpost', color: '#9f1239', size: 20, icon: 'Outpost' },
-    jungle_temple: { name: 'Jungle Temple', color: '#166534', size: 18, icon: 'Temple' },
-    desert_pyramid: { name: 'Desert Pyramid', color: '#eab308', size: 18, icon: 'Pyramid' },
-    witch_hut: { name: 'Witch Hut', color: '#4a5568', size: 18, icon: 'Hut' },
-    igloo: { name: 'Igloo', color: '#3b82f6', size: 16, icon: 'Igloo' },
-    monument: { name: 'Ocean Monument', color: '#06b6d4', size: 20, icon: 'Monument' },
-    ruined_portal: { name: 'Ruined Portal', color: '#a855f7', size: 16, icon: 'Portal' },
-};
+const STRUCTURE_CONFIG = Object.fromEntries(
+    getStructureLegend().map(({ key, ...config }) => [key, config])
+);
 
 function drawStructureIcon(ctx, type, x, y, size, color) {
     ctx.fillStyle = color;
@@ -608,7 +605,7 @@ function generateStructures(seed, centerX, centerZ, range, generator, version = 
 // MAIN COMPONENT
 // ============================================================================
 
-export default function SeedVisualizer({ seed, version = '1.21', coordinates }) {
+export default function SeedVisualizer({ seed, version = '1.21', edition = 'java', coordinates }) {
     const canvasRef = useRef(null);
     const containerRef = useRef(null);
     const [zoom, setZoom] = useState(0.5);
@@ -627,20 +624,18 @@ export default function SeedVisualizer({ seed, version = '1.21', coordinates }) 
     const structuresRef = useRef([]);
 
     // Parse version number
-    const parseVersion = useCallback((v) => {
-        const match = String(v).match(/1\.(\d+)/);
-        return match ? parseInt(match[1]) : 21;
-    }, []);
+    const parseVersion = useCallback((v) => getSupportedGeneratorMinor(v), []);
 
     // Parse seed
     const parseSeed = useCallback((seedInput) => {
         if (typeof seedInput === 'string') {
             if (/^-?\d+$/.test(seedInput)) return BigInt(seedInput);
-            let hash = 0n;
+            let hash = 0;
             for (let i = 0; i < seedInput.length; i++) {
-                hash = ((hash << 5n) - hash + BigInt(seedInput.charCodeAt(i))) & 0xFFFFFFFFFFFFFFFFn;
+                hash = Math.imul(31, hash) + seedInput.charCodeAt(i);
+                hash |= 0;
             }
-            return hash;
+            return BigInt(hash);
         }
         return BigInt(seedInput);
     }, []);
@@ -650,20 +645,30 @@ export default function SeedVisualizer({ seed, version = '1.21', coordinates }) 
         const parsedSeed = parseSeed(seed);
         const versionNum = parseVersion(version);
 
-        if (versionNum >= 18) {
+        if (edition === 'bedrock') {
+            generatorRef.current = new BedrockBiomeGenerator(seed, version);
+        } else if (versionNum >= 18) {
             generatorRef.current = new ModernBiomeGenerator(parsedSeed, versionNum);
         } else {
-            generatorRef.current = new LegacyBiomeGenerator(parsedSeed, versionNum);
+            generatorRef.current = new LegacyBiomeGenerator(parsedSeed, toCubiomesMcVersion(version));
         }
 
-        // Generate structures
-        structuresRef.current = generateStructures(parsedSeed, 0, 0, 4000, generatorRef.current, versionNum);
+        structuresRef.current = generateStructureCandidates({
+            seed: generatorRef.current.seed ?? parsedSeed,
+            version,
+            edition,
+            centerX: 0,
+            centerZ: 0,
+            range: 4000,
+            generator: generatorRef.current,
+            includeUnconfirmed: false,
+        });
 
         // Center on POI if provided
         if (coordinates) {
             setOffset({ x: -coordinates.x, z: -coordinates.z });
         }
-    }, [seed, version, coordinates, parseSeed, parseVersion]);
+    }, [seed, version, edition, coordinates, parseSeed, parseVersion]);
 
     // Handle resize
     useEffect(() => {
@@ -859,11 +864,12 @@ export default function SeedVisualizer({ seed, version = '1.21', coordinates }) 
                     }
 
                     // Filtering
-                    if ((!verifiedOnly || isPOIMatch) && isBiomeConfirmed) {
+                    const passesVerificationFilter = !verifiedOnly || isPOIMatch || s.status === 'confirmed';
+                    if (passesVerificationFilter && isBiomeConfirmed) {
                         const size = s.size || 16;
 
                         // Confidence Opacity
-                        ctx.globalAlpha = isPOIMatch ? 1.0 : 0.7;
+                        ctx.globalAlpha = isPOIMatch || s.status === 'confirmed' ? 1.0 : 0.62;
 
                         // Background circle (shadow/contrast)
                         ctx.beginPath();
@@ -879,7 +885,7 @@ export default function SeedVisualizer({ seed, version = '1.21', coordinates }) 
                 }
             }
         }
-    }, [seed, version, zoom, offset, showStructures, showGrid, coordinates, canvasSize]);
+    }, [seed, version, edition, zoom, offset, showStructures, showGrid, coordinates, canvasSize]);
 
     // Mouse handlers
     const handleMouseDown = (e) => {
@@ -938,6 +944,10 @@ export default function SeedVisualizer({ seed, version = '1.21', coordinates }) 
     };
 
     const versionNum = parseVersion(version);
+    const editionLabel = edition === 'bedrock' ? 'Bedrock Edition' : 'Java Edition';
+    const algorithmLabel = edition === 'bedrock'
+        ? (versionNum >= 18 ? 'Parity Biomes' : 'Legacy Bedrock Seed')
+        : (versionNum >= 18 ? 'Multi-Noise' : 'Layer-Based');
 
     return (
         <div
@@ -950,7 +960,7 @@ export default function SeedVisualizer({ seed, version = '1.21', coordinates }) 
                     <span className="header-icon">🗺️</span>
                     <div>
                         <h3>Seed Map</h3>
-                        <p>Cubiomes-JS • {version} {versionNum >= 18 ? '(Multi-Noise)' : '(Layer-Based)'}</p>
+                        <p>Cubiomes-JS • {editionLabel} {version} ({algorithmLabel})</p>
                     </div>
                 </div>
                 <div className="header-right">

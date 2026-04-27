@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { CATEGORIES, getConfidenceLevel } from '@/lib/categories';
+import { getSeedEditions } from '@/lib/version-utils';
 
 export default function SeedCard({ seed, onCopySuccess }) {
     const category = CATEGORIES[seed.category] || {
@@ -10,6 +11,7 @@ export default function SeedCard({ seed, onCopySuccess }) {
         color: '#6b7280'
     };
     const confidence = getConfidenceLevel(seed.confidence);
+    const editions = getSeedEditions(seed);
 
     const handleCopy = async (e) => {
         e.preventDefault();
@@ -68,12 +70,11 @@ export default function SeedCard({ seed, onCopySuccess }) {
                     <span>{seed.probability}</span>
                 </div>
                 <div className="version-tags">
-                    {seed.version.java && (
-                        <span className="version-tag version-java">Java</span>
-                    )}
-                    {seed.version.bedrock && (
-                        <span className="version-tag version-bedrock">Bedrock</span>
-                    )}
+                    {editions.map(({ edition, version }) => (
+                        <span className={`version-tag version-${edition}`} key={edition}>
+                            {edition === 'java' ? 'Java' : 'Bedrock'} {version}
+                        </span>
+                    ))}
                 </div>
             </div>
         </Link>

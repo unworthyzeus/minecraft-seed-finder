@@ -1,8 +1,12 @@
 import fs from 'fs';
+import path from 'path';
 import readline from 'readline';
+import { fileURLToPath } from 'url';
 import { LegacyBiomeGenerator, MC_1_0, MC_1_13, MC_1_17 } from '../lib/cubiomes/layers.js';
 
-const EXPECTED_FILE = '../../cubiomes/legacy_gt.txt';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const EXPECTED_FILE = path.resolve(__dirname, '../../cubiomes/legacy_gt.txt');
 
 // Version name mapping
 const VERSION_NAMES = {

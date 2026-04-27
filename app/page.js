@@ -19,6 +19,7 @@ const EDITION_OPTIONS = [
 // Available versions for filtering
 const VERSION_OPTIONS = [
   { value: 'all', label: 'All Versions' },
+  { value: '26.', label: '26.x Current' },
   { value: '1.21', label: '1.21+' },
   { value: '1.20', label: '1.20' },
   { value: '1.19', label: '1.19' },

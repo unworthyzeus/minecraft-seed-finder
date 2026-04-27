@@ -10,10 +10,14 @@
  */
 
 import fs from 'fs';
-import { LegacyBiomeGenerator } from '../lib/cubiomes/layers.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { LegacyBiomeGenerator, MC_B1_7 } from '../lib/cubiomes/layers.js';
 
-const EXPECTED_FILE = '../../cubiomes/groundtruth_5000.txt';
-const LOG_FILE = 'test_5000_failures.log';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const EXPECTED_FILE = path.resolve(__dirname, '../../cubiomes/groundtruth_5000.txt');
+const LOG_FILE = path.resolve(__dirname, 'test_5000_failures.log');
 
 // Version name mapping (C enum values to human-readable)
 const VERSION_NAMES = {
@@ -133,7 +137,9 @@ async function runTest() {
             const generator = new LegacyBiomeGenerator(seed, js_mc);
 
             // Test origin (0, 0)
-            const gotOrigin = generator.getBiome(0, 0);
+            const gotOrigin = c_mc === MC_B1_7
+                ? generator.snb.getBiome(2, 2, 4)
+                : generator.getBiome(0, 0);
             if (gotOrigin === expOrigin) {
                 results[c_mc].origin.passed++;
             } else {
@@ -145,7 +151,9 @@ async function runTest() {
             results[c_mc].origin.total++;
 
             // Test far (5000, 5000)
-            const gotFar = generator.getBiome(20000, 20000);
+            const gotFar = c_mc === MC_B1_7
+                ? generator.snb.getBiome(20002, 20002, 4)
+                : generator.getBiome(20000, 20000);
             if (gotFar === expFar) {
                 results[c_mc].far.passed++;
             } else {
@@ -175,7 +183,10 @@ async function runTest() {
     // Close log stream
     logStream.write("\n" + "=".repeat(100) + "\n");
     logStream.write(`Total failures: ${totalFailures}\n`);
-    logStream.end();
+    await new Promise((resolve, reject) => {
+        logStream.end(resolve);
+        logStream.on('error', reject);
+    });
 
     console.log(`\rProcessed ${processed.toLocaleString()} test cases. ${totalFailures} failures logged to ${LOG_FILE}\n`);
 

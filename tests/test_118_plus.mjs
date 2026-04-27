@@ -4,9 +4,12 @@
 
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { Generator, BiomeID, BiomeNames } from '../lib/cubiomes/generator.js';
 
-const EXPECTED_FILE = '../../cubiomes/expected_1_18_plus.txt';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const EXPECTED_FILE = path.resolve(__dirname, '../../cubiomes/expected_1_18_plus.txt');
 
 const C_VERSION_MAP = {
     22: { name: '1.18', js: 18 },

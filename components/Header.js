@@ -17,6 +17,10 @@ export default function Header({ onSubmitClick }) {
                 </Link>
 
                 <nav className="nav">
+                    <Link href="/search" className="nav-link" title="Procedural Search">
+                        <span className="desktop-only">Search Lab</span>
+                        <span className="mobile-only">Lab</span>
+                    </Link>
                     <Link href="/algorithms" className="nav-link" title="Algorithms">
                         <span className="desktop-only">Algorithms</span>
                         <span className="mobile-only">Algos</span>

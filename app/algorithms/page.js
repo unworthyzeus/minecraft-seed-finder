@@ -6,6 +6,22 @@ import Header from '../../components/Header';
 import VisualSeedCracker from '../../components/VisualSeedCracker';
 import SubmitModal from '../../components/SubmitModal';
 
+const pipeline = [
+  ['Seed input', '64-bit world seed, 48-bit Java RNG state, and chunk coordinates.'],
+  ['Legacy layers', 'Ocean, land, climate, rivers, shores, and biome zooms from Beta 1.8 through 1.17.'],
+  ['Beta climate', 'Beta 1.7 samples climate and sea-level noise directly instead of using the layer stack.'],
+  ['Modern noise', '1.18+ resolves biomes from temperature, humidity, continentalness, erosion, weirdness, and depth.'],
+  ['Structure RNG', 'Many structures use region seeds and salts, so lower-bit searches can prune huge seed spaces.']
+];
+
+const versionRows = [
+  ['Beta 1.7', 'Climate table + interpolated sea-level noise', 'Block and scale-4 parity'],
+  ['Beta 1.8', 'Early layer stack with Beta land rules', 'Scale-4 parity'],
+  ['1.0 - 1.17', 'Layer stack, rivers, shores, hills, oceans', 'Scale-4 parity'],
+  ['1.18+', 'Multi-noise biome source', 'Origin and far-field parity'],
+  ['Bedrock', 'Edition-aware biome renderer', 'Parity-era terrain with Bedrock seed normalization']
+];
+
 export default function AlgorithmsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -13,419 +29,484 @@ export default function AlgorithmsPage() {
     <>
       <Header onSubmitClick={() => setIsModalOpen(true)} />
       <SubmitModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
       <main className="algorithms-page">
-        <div className="container">
-          <Link href="/" className="back-link">
-            ← Back to Seeds
-          </Link>
-
-          <h1 className="page-title">Seed Discovery Algorithms</h1>
-          <p className="intro">
-            A deep dive into the mathematics, RNG implementations, and reverse-engineering
-            techniques used to discover the rarest Minecraft seeds in existence.
-          </p>
-
-          <section className="algo-section">
-            <div className="section-header">
-              <h2>🌌 12-Eye End Portal</h2>
-              <span className="tag rare">1 in 1 trillion</span>
-            </div>
-
-            <p>
-              An End Portal frame consists of 12 blocks. Each block has a <strong>10% independent chance</strong>
-              of generating with an Eye of Ender already filled. A "12-eye" portal is one where
-              all 12 frames generate with eyes, activating the portal instantly.
+        <section className="algo-hero">
+          <div className="hero-copy">
+            <Link href="/" className="back-link">Back to Seeds</Link>
+            <p className="eyebrow">Cubiomes parity notes</p>
+            <h1>Seed Discovery Algorithms</h1>
+            <p className="hero-text">
+              How Minecraft seeds collapse from impossible search spaces into testable RNG states,
+              biome maps, Bedrock parity rendering, and structure filters.
             </p>
+          </div>
 
-            <h3>The Mathematics</h3>
-            <div className="math-box">
-              <p>
-                The probability $P$ of a specific frame having an eye is $0.1$.
-                Since all 12 frames are determined independently by the chunk RNG:
-              </p>
-              <code className="math-formula">
-                P(12 eyes) = (1/10)¹² = 10⁻¹²
-              </code>
-              <p>
-                This means <strong>1 in 1,000,000,000,000</strong> portals (one trillion) will be fully lit.
-                With roughly 128 strongholds per world (in modern versions), you'd need to generate
-                about <strong>7.8 billion worlds</strong> to find just one.
-              </p>
+          <div className="map-rail" aria-hidden="true">
+            <div className="map-grid">
+              {Array.from({ length: 96 }).map((_, index) => (
+                <span key={index} className={`tile tile-${index % 7}`} />
+              ))}
             </div>
+            <div className="map-caption">
+              <span>64-bit seed</span>
+              <span>biome oracle</span>
+              <span>structure oracle</span>
+            </div>
+          </div>
+        </section>
 
-            <h3>RNG Implementation (Java)</h3>
+        <section className="status-band">
+          <div>
+            <span className="status-label">Current verification</span>
+            <strong>0 fixture errors across Beta, legacy Java, modern Java, and structure placement tests.</strong>
+          </div>
+          <div>
+            <span className="status-label">Bedrock scope</span>
+            <strong>Current Bedrock renders through parity-era biomes and edition-specific seed normalization.</strong>
+          </div>
+        </section>
+
+        <section className="pipeline-section">
+          <div className="section-kicker">Pipeline</div>
+          <h2>From seed to biome</h2>
+          <div className="pipeline-list">
+            {pipeline.map(([title, body], index) => (
+              <article className="pipeline-row" key={title}>
+                <span className="step">{String(index + 1).padStart(2, '0')}</span>
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="split-section">
+          <div>
+            <div className="section-kicker">RNG core</div>
+            <h2>Java Random is reversible</h2>
             <p>
-              The game uses the chunk's random seed to determine decoration placement.
-              Here is the decompiled logic responsible for eye generation:
+              Java Edition structure and decoration checks often begin with the same 48-bit
+              linear congruential generator. Once enough outputs or placements are known,
+              hunters can work backward instead of testing every world seed.
             </p>
-
             <div className="code-block">
-              <div className="code-header">EndPortalFrameBlock.java</div>
-              <pre>{`public BlockState getStateForPlacement(BlockPlaceContext context) {
-    // ...
-    boolean hasEye = false;
-    if (Config.configuredStructures) {
-        // Use the Chunk RNG, initialized with world seed + chunk coords
-        Random random = new Random();
-        random.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L + worldSeed + 10387312L);
-        
-        // precise 10% chance check
-        if (random.nextFloat() < 0.1F) {
-            hasEye = true;
-        }
-    }
-    return this.getDefaultState().with(HAS_EYE, hasEye);
-}`}</pre>
+              <div className="code-header">java.util.Random state step</div>
+              <pre>{`next = (state * 0x5DEECE66D + 0xB) & ((1L << 48) - 1)`}</pre>
             </div>
-          </section>
+          </div>
+          <VisualSeedCracker />
+        </section>
 
-          <section className="algo-section">
-            <div className="section-header">
-              <h2>🌵 Infinite Cactus Stacking</h2>
-              <span className="tag legendary">~1 in 10¹⁸</span>
-            </div>
-
+        <section className="split-section reverse">
+          <div>
+            <div className="section-kicker">Rare events</div>
+            <h2>Some searches are probability filters</h2>
             <p>
-              Cacti normally grow 1-3 blocks high. However, during world generation,
-              if a new cactus block attempts to generate on top of an existing one,
-              it simply adds to the height. This can chain recursively due to
-              <span className="highlight">chunk population order</span>.
+              A fully lit End portal has twelve independent 10 percent checks, so a single
+              portal lands at 10^-12. Good searchers stack cheap filters first: structure
+              position, biome validity, then the expensive decoration or terrain condition.
             </p>
+          </div>
+          <div className="formula-panel">
+            <span>12-eye portal</span>
+            <strong>P = (1/10)^12</strong>
+            <small>One in one trillion per portal.</small>
+          </div>
+        </section>
 
-            <h3>The recursive formula</h3>
-            <p>
-              Each extra block of height requires a successful RNG roll <strong>and</strong>
-              a specific chunk generation order. The probability drops exponentially.
-            </p>
-
-            <div className="code-block">
-              <pre>{`// Simplified probability model per block above 3
-P(h) ≈ P(h-1) * (1 / 4096)
-
-// For a 22-block cactus (World Record):
-P(22) ≈ (1/4096)¹⁹ ≈ 1.8 × 10⁻⁶⁹`}</pre>
-            </div>
-
-            <p>
-              The <strong>Kaktwoos Project</strong> utilized distributed GPU brute-forcing
-              to check trillions of seeds specifically optimizing for this rare recursive call.
-            </p>
-          </section>
-
-
-
-          <section className="algo-section">
-            <div className="section-header">
-              <h2>🎲 The Linear Congruential Generator</h2>
-              <span className="tag tech">Core Mechanic</span>
-            </div>
-
-            <p>
-              At the heart of Minecraft's seed generation is Java's `java.util.Random`.
-              It is not "truly" random, but a deterministic mathematical sequence.
-              If you know the internal state (seed), you know every future number.
-            </p>
-
-            <div className="code-block">
-              <div className="code-header">Standard Java LCG Formula</div>
-              <pre>{`next_seed = (current_seed * 0x5DEECE66DL + 0xBL) & ((1L << 48) - 1)`}</pre>
-            </div>
-
-            <p>
-              <strong>Reverse Engineering Demo:</strong> Try our interactive visualizer below to understand
-              how tools brute-force the lower 48 bits of a seed based on structure coordinates.
-            </p>
-
-            <VisualSeedCracker />
-
-            <p>
-              <strong>Real-World Tools:</strong> Because this formula is reversible, tools like
-              <a href="https://github.com/19MisterX98/SeedcrackerX" target="_blank" className="text-link">SeedCrackerX</a> can
-              take a sequence of observed events (dungeon floor patterns, emerald ore locations)
-              and mathematically solve for the `world_seed`.
-            </p>
-          </section>
-
-          <section className="algo-section">
-            <div className="section-header">
-              <h2>🌍 World Generation Explained</h2>
-              <span className="tag tech">The Biome Map</span>
-            </div>
-
-            <p>
-              Minecraft's terrain generation has undergone massive shifts. The most significant change occurred in
-              <strong>Version 1.18 (Caves & Cliffs Part 2)</strong>, which completely replaced the old system.
-            </p>
-
-            <h3>Legacy Generation (Pre-1.18)</h3>
-            <p>
-              Old worlds were generated using a <strong>Layer-Based System</strong>. It worked like image processing:
-            </p>
-            <ul style={{ color: 'var(--text-primary)', lineHeight: '1.7', marginBottom: '16px' }}>
-              <li><strong>Islands:</strong> Start with a noise map defining ocean vs land (1:4096 scale).</li>
-              <li><strong>Zooming:</strong> Scale up the map (Zoom x2) and smooth the edges.</li>
-              <li><strong>Additions:</strong> Sprinkle biomes, rivers, and shores at different zoom levels.</li>
-              <li><strong>Final Polish:</strong> The map is zoomed to 1:4 scale for the final biome lookup.</li>
-            </ul>
-            <p>
-              This is why older maps often have "continental" shapes and predictable climate zones (hot to cold transitions).
-            </p>
-
-            <h3>Modern Generation (1.18+)</h3>
-            <p>
-              Modern Minecraft uses <strong>Multi-Noise Generation</strong>. Instead of layers, the game queries
-              mathematical noise functions for every coordinate (x, y, z) to determine the biome.
-            </p>
-
-            <div className="code-block">
-              <div className="code-header">The 6 Noise Parameters</div>
-              <div style={{ padding: '16px', color: '#d4d4d4', fontSize: '0.9rem' }}>
-                <ul style={{ margin: 0, paddingLeft: '20px' }}>
-                  <li style={{ marginBottom: '8px' }}>🌡️ <strong>Temperature:</strong> Cold (Snow) ↔ Hot (Desert)</li>
-                  <li style={{ marginBottom: '8px' }}>💧 <strong>Humidity:</strong> Dry (Savanna) ↔ Wet (Jungle)</li>
-                  <li style={{ marginBottom: '8px' }}>🏔️ <strong>Continentalness:</strong> Ocean ↔ Coast ↔ Inland ↔ Far Inland</li>
-                  <li style={{ marginBottom: '8px' }}>📉 <strong>Erosion:</strong> Peaks ↔ Flat terrain</li>
-                  <li style={{ marginBottom: '8px' }}>🌀 <strong>Weirdness:</strong> Variant selector (e.g., Shattered Savanna)</li>
-                  <li>📏 <strong>Depth:</strong> Surface vs Underground (for caves)</li>
-                </ul>
+        <section className="version-section">
+          <div className="section-kicker">Version behavior</div>
+          <h2>Why the implementation has separate paths</h2>
+          <div className="version-table">
+            {versionRows.map(([version, model, status]) => (
+              <div className="version-row" key={version}>
+                <strong>{version}</strong>
+                <span>{model}</span>
+                <em>{status}</em>
               </div>
-            </div>
+            ))}
+          </div>
+        </section>
 
+        <section className="split-section">
+          <div>
+            <div className="section-kicker">Structures</div>
+            <h2>Shadow seeds narrow the search</h2>
             <p>
-              This creates more natural transitions and allows for 3D biomes (e.g., Lush Caves under a Jungle),
-              but makes reverse-engineering much harder as you cannot simply "zoom out" to see the full structure easily.
+              Many structure placements use a region coordinate, a salt, and only part of
+              the world seed. That means different world seeds can share the same structure
+              layout, letting tools search the lower bits first and resolve biome or terrain
+              validity later. The visualizer now separates exact region placement from
+              biome-confirmed and terrain-candidate markers.
             </p>
-          </section>
+          </div>
+          <div className="code-block compact">
+            <div className="code-header">Region placement sketch</div>
+            <pre>{`structSeed = worldSeed & 0xFFFFFFFFFFFFL
+regionSeed = regionX * A + regionZ * B + structSeed + salt
+candidate = randomChunkInRegion(regionSeed)`}</pre>
+          </div>
+        </section>
 
-          <section className="algo-section">
-            <div className="section-header">
-              <h2>⚡ Speedrun Verification</h2>
-              <span className="tag rare">High Optimization</span>
-            </div>
-
+        <section className="credits-section">
+          <div>
+            <div className="section-kicker">Research</div>
+            <h2>Built on public seed hunting work</h2>
             <p>
-              Speedrunners use "Filtered Seeds" (FSG) to practice specific strategies.
-              These seeds are pre-generated to ensure a specific subset of conditions:
+              The page summarizes ideas used by Minecraft@Home, speedrunning seed filters,
+              SeedCracker-style tools, and cubiomes-compatible verification suites.
             </p>
-            <ul>
-              <li><strong>Bastion + Fortress:</strong> Within 128 blocks in Nether.</li>
-              <li><strong>Blind Travel:</strong> Stronghold located exactly at calculated angles.</li>
-              <li><strong>Village Entry:</strong> Starting with beds and food.</li>
-            </ul>
-
-            <p style={{ marginTop: '16px' }}>
-              We have now integrated verified seeds from the <strong>Minecraft Speedrunning Community</strong>
-              into our database, allowing you to browse optimal practice worlds.
-            </p>
-          </section>
-
-          <section className="algo-section">
-            <div className="section-header">
-              <h2>🏯 Structure Seeding & finding Quad-Huts</h2>
-            </div>
-
-            <p>
-              Structures don't use the full 64-bit world seed. They often rely on the lower
-              48 bits or even fewer. This generates "Shadow Seeds" - different worlds
-              with identical structure placements.
-            </p>
-
-            <div className="code-block">
-              <div className="code-header">Structure placement logic</div>
-              <pre>{`// Step 1: Divide world into regions (e.g., 16x16 chunks)
-int regionX = chunkX / spacing;
-int regionZ = chunkZ / spacing;
-
-// Step 2: Initialize RNG with only the lower 48 bits
-long structSeed = worldSeed & 0xFFFFFFFFFFFFL;
-
-// Step 3: Mix region coordinates to get unique seed per region
-long seed = regionX * 341873128712L + regionZ * 132897987541L + structSeed + uniqueSalt;
-
-// Step 4: Pick random chunk in region
-int xOffset = (seed & 0xF); // random 0-15
-int zOffset = (seed >> 8) & 0xF; // random 0-15`}</pre>
-            </div>
-
-            <p>
-              <strong>Quad-Witch Huts:</strong> To find 4 witch huts close enough to farm,
-              seed hunters limit the search to the lower 20 bits of the seed (checking only
-              1 million possibilities instead of quintillions) to find the perfect region layout,
-              then brute-force the upper bits to find a biome match (Swamp).
-            </p>
-          </section>
-
-          <section className="algo-section">
-            <div className="section-header">
-              <h2>🤝 Credits & Research</h2>
-            </div>
-            <p>
-              Much of the data and research presented here is powered by the incredible work of the
-              <a href="https://github.com/minecrafthome" target="_blank" className="text-link"> Minecraft@Home </a>
-              team and the <strong>Minecraft Speedrunning Community</strong>.
-            </p>
-            <p>
-              Their distributed computing projects have discovered the tallest cactus, the Pack.png seed,
-              the Title Screen seed, and many other historic worlds. Support their research on GitHub!
-            </p>
-          </section>
-        </div>
+          </div>
+          <a
+            className="research-link"
+            href="https://github.com/Cubitect/cubiomes"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Cubiomes reference
+          </a>
+        </section>
       </main>
 
       <style jsx>{`
         .algorithms-page {
-          padding: 40px 16px 80px;
-          max-width: 800px;
+          --page-accent: var(--diamond-blue);
+          max-width: 1180px;
           margin: 0 auto;
+          padding: 36px 16px 88px;
+          letter-spacing: 0;
+        }
+
+        .algo-hero {
+          min-height: calc(100svh - var(--header-height) - 48px);
+          display: grid;
+          grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.8fr);
+          align-items: center;
+          gap: clamp(28px, 6vw, 72px);
+          border-bottom: 4px solid var(--obsidian);
+          padding-bottom: 40px;
         }
 
         .back-link {
-          display: inline-block;
-          margin-bottom: 24px;
+          display: inline-flex;
+          width: fit-content;
+          margin-bottom: 28px;
           color: var(--text-secondary);
-          text-decoration: none;
           font-family: 'Press Start 2P', cursive;
-          font-size: 0.8rem;
+          font-size: 0.7rem;
         }
-        
+
         .back-link:hover {
           color: var(--gold-yellow);
         }
-        
-        .page-title {
-          font-family: 'Press Start 2P', cursive;
-          color: var(--gold-yellow);
-          font-size: clamp(1.2rem, 4vw, 1.8rem);
-          line-height: 1.4;
-          margin-bottom: 16px;
-          text-shadow: 2px 2px 0 var(--obsidian);
-        }
-        
-        .intro {
-          font-size: 1.1rem;
-          color: var(--text-secondary);
-          line-height: 1.6;
-          margin-bottom: 48px;
-          border-left: 4px solid var(--emerald-green);
-          padding-left: 16px;
-        }
-        
-        .algo-section {
-          background: rgba(0,0,0,0.2);
-          border: 2px solid var(--dark-grass);
-          border-radius: 4px;
-          padding: 32px;
-          margin-bottom: 40px;
-        }
-        
-        .section-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          flex-wrap: wrap;
-          gap: 16px;
-          margin-bottom: 24px;
-        }
-        
-        .algo-section h2 {
-          font-family: 'Press Start 2P', cursive;
-          font-size: 1.1rem;
-          color: var(--diamond-blue);
-          margin: 0;
-          line-height: 1.4;
-        }
-        
-        .tag {
-          font-size: 0.8rem;
-          padding: 4px 8px;
-          border: 2px solid;
-          font-family: 'Press Start 2P', cursive;
-        }
-        
-        .tag.rare { color: #FFAA00; border-color: #FFAA00; background: rgba(255,170,0,0.1); }
-        .tag.legendary { color: #FF5555; border-color: #FF5555; background: rgba(255,85,85,0.1); }
-        .tag.tech { color: #AAAAAA; border-color: #AAAAAA; background: rgba(170,170,170,0.1); }
-        
-        .algo-section h3 {
-          color: var(--gold-yellow);
-          font-size: 1rem;
-          margin: 32px 0 16px;
-          font-family: 'Press Start 2P', cursive;
-        }
-        
-        p {
-          color: var(--text-primary);
-          line-height: 1.7;
-          margin-bottom: 16px;
-        }
-        
-        .highlight {
-          color: var(--emerald-green);
-          font-weight: bold;
-        }
-        
-        .math-box {
-          background: var(--obsidian);
-          padding: 20px;
-          border-left: 3px solid var(--gold-yellow);
-          margin: 16px 0;
-        }
-        
-        .math-formula {
+
+        .eyebrow,
+        .section-kicker,
+        .status-label {
           display: block;
-          font-family: 'VT323', monospace;
-          font-size: 1.4rem;
-          color: var(--gold-yellow);
-          margin: 16px 0;
-          text-align: center;
-          background: rgba(255,255,255,0.05);
-          padding: 8px;
-        }
-        
-        .code-block {
-          background: #111;
-          border: 1px solid #333;
-          border-radius: 4px;
-          overflow: hidden;
-          margin: 24px 0;
-        }
-        
-        .code-header {
-          background: #222;
-          padding: 8px 16px;
-          font-size: 0.85rem;
-          color: #888;
-          font-family: monospace;
-          border-bottom: 1px solid #333;
-        }
-        
-        .code-block pre {
-          margin: 0;
-          padding: 16px;
-          overflow-x: auto;
-          font-family: 'Consolas', 'Monaco', monospace;
-          font-size: 0.9rem;
+          color: var(--emerald-green);
+          font-family: 'Press Start 2P', cursive;
+          font-size: 0.7rem;
           line-height: 1.5;
-          color: #d4d4d4;
+          margin-bottom: 14px;
         }
 
-        .text-link {
-          color: var(--diamond-blue);
-          text-decoration: underline;
+        h1,
+        h2,
+        h3,
+        p {
+          letter-spacing: 0;
         }
-        
-        @media (max-width: 600px) {
-          .algo-section {
-            padding: 20px;
+
+        h1 {
+          max-width: 760px;
+          color: var(--gold-yellow);
+          font-family: 'Press Start 2P', cursive;
+          font-size: clamp(1.7rem, 6vw, 4.7rem);
+          line-height: 1.15;
+          text-shadow: 4px 4px 0 var(--obsidian);
+          margin-bottom: 24px;
+        }
+
+        h2 {
+          color: var(--gold-yellow);
+          font-family: 'Press Start 2P', cursive;
+          font-size: clamp(1.1rem, 3vw, 2rem);
+          line-height: 1.35;
+          margin-bottom: 18px;
+        }
+
+        h3 {
+          color: var(--page-accent);
+          font-family: 'Press Start 2P', cursive;
+          font-size: 0.9rem;
+          line-height: 1.45;
+        }
+
+        p {
+          color: var(--text-primary);
+          font-size: 1.2rem;
+          line-height: 1.65;
+        }
+
+        .hero-text {
+          max-width: 660px;
+          color: var(--text-secondary);
+          font-size: clamp(1.2rem, 2.4vw, 1.65rem);
+        }
+
+        .map-rail {
+          border: 4px solid var(--obsidian);
+          background:
+            linear-gradient(180deg, rgba(29, 29, 33, 0.25), rgba(29, 29, 33, 0.88)),
+            var(--dark-dirt);
+          box-shadow:
+            inset -5px -5px 0 var(--dark-stone),
+            inset 5px 5px 0 var(--stone-gray);
+          padding: clamp(14px, 3vw, 24px);
+        }
+
+        .map-grid {
+          display: grid;
+          grid-template-columns: repeat(12, minmax(12px, 1fr));
+          gap: 4px;
+          aspect-ratio: 1 / 1;
+        }
+
+        .tile {
+          min-width: 0;
+          border: 1px solid rgba(0, 0, 0, 0.4);
+          transition: transform 0.18s ease, filter 0.18s ease;
+        }
+
+        .map-rail:hover .tile:nth-child(3n) {
+          transform: translateY(-2px);
+          filter: brightness(1.2);
+        }
+
+        .tile-0 { background: var(--grass-green); }
+        .tile-1 { background: var(--dark-grass); }
+        .tile-2 { background: var(--water-blue); }
+        .tile-3 { background: var(--stone-gray); }
+        .tile-4 { background: var(--wood-brown); }
+        .tile-5 { background: var(--dirt-brown); }
+        .tile-6 { background: var(--diamond-blue); }
+
+        .map-caption {
+          display: flex;
+          justify-content: space-between;
+          gap: 12px;
+          margin-top: 18px;
+          color: var(--text-secondary);
+          font-size: 1rem;
+        }
+
+        .status-band,
+        .credits-section {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+          padding: 28px 0;
+          border-bottom: 2px solid var(--dark-grass);
+        }
+
+        .status-band strong,
+        .version-row strong {
+          display: block;
+          color: var(--text-primary);
+          font-size: 1.25rem;
+          line-height: 1.45;
+          font-weight: normal;
+        }
+
+        .pipeline-section,
+        .version-section,
+        .split-section,
+        .credits-section {
+          margin-top: 56px;
+        }
+
+        .pipeline-list {
+          border-top: 2px solid var(--dark-grass);
+        }
+
+        .pipeline-row {
+          display: grid;
+          grid-template-columns: 72px minmax(150px, 240px) minmax(0, 1fr);
+          gap: 20px;
+          align-items: baseline;
+          padding: 22px 0;
+          border-bottom: 2px solid var(--dark-grass);
+          transition: padding-left 0.18s ease, border-color 0.18s ease;
+        }
+
+        .pipeline-row:hover {
+          padding-left: 10px;
+          border-color: var(--emerald-green);
+        }
+
+        .step {
+          color: var(--stone-gray);
+          font-family: 'Press Start 2P', cursive;
+          font-size: 0.75rem;
+        }
+
+        .pipeline-row p {
+          margin: 0;
+          color: var(--text-secondary);
+        }
+
+        .split-section {
+          display: grid;
+          grid-template-columns: minmax(0, 0.88fr) minmax(280px, 1fr);
+          gap: clamp(24px, 5vw, 56px);
+          align-items: start;
+          padding-top: 8px;
+        }
+
+        .split-section.reverse {
+          grid-template-columns: minmax(0, 1fr) minmax(260px, 0.65fr);
+        }
+
+        .code-block,
+        .formula-panel {
+          border: 3px solid var(--obsidian);
+          background: #111;
+          box-shadow:
+            inset -4px -4px 0 #050505,
+            inset 4px 4px 0 #2a2a2a;
+          margin-top: 22px;
+        }
+
+        .code-block.compact {
+          margin-top: 0;
+        }
+
+        .code-header {
+          border-bottom: 2px solid #333;
+          color: var(--text-muted);
+          font-family: Consolas, Monaco, monospace;
+          font-size: 0.9rem;
+          padding: 10px 14px;
+        }
+
+        pre {
+          color: #d7ffe9;
+          font-family: Consolas, Monaco, monospace;
+          font-size: 0.95rem;
+          line-height: 1.55;
+          margin: 0;
+          overflow-x: auto;
+          padding: 16px;
+          white-space: pre;
+        }
+
+        .formula-panel {
+          display: grid;
+          gap: 12px;
+          padding: 28px;
+        }
+
+        .formula-panel span,
+        .formula-panel small,
+        .version-row em {
+          color: var(--text-secondary);
+          font-style: normal;
+        }
+
+        .formula-panel strong {
+          color: var(--gold-yellow);
+          font-family: 'Press Start 2P', cursive;
+          font-size: clamp(1rem, 3vw, 1.7rem);
+          line-height: 1.5;
+        }
+
+        .version-table {
+          border-top: 2px solid var(--dark-grass);
+        }
+
+        .version-row {
+          display: grid;
+          grid-template-columns: minmax(120px, 0.6fr) minmax(220px, 1.2fr) minmax(160px, 0.75fr);
+          gap: 18px;
+          padding: 18px 0;
+          border-bottom: 2px solid var(--dark-grass);
+          align-items: center;
+        }
+
+        .version-row span {
+          color: var(--text-primary);
+          line-height: 1.45;
+        }
+
+        .research-link {
+          align-self: center;
+          justify-self: end;
+          border: 3px solid var(--obsidian);
+          color: var(--obsidian);
+          background: var(--gold-yellow);
+          box-shadow: 4px 4px 0 var(--obsidian);
+          font-family: 'Press Start 2P', cursive;
+          font-size: 0.72rem;
+          line-height: 1.5;
+          padding: 14px 16px;
+          transition: transform 0.16s ease, box-shadow 0.16s ease;
+        }
+
+        .research-link:hover {
+          color: var(--obsidian);
+          transform: translate(2px, 2px);
+          box-shadow: 2px 2px 0 var(--obsidian);
+        }
+
+        @media (max-width: 860px) {
+          .algo-hero,
+          .status-band,
+          .split-section,
+          .split-section.reverse,
+          .credits-section {
+            grid-template-columns: 1fr;
           }
-          
-          .section-header {
+
+          .algo-hero {
+            min-height: auto;
+          }
+
+          .pipeline-row,
+          .version-row {
+            grid-template-columns: 1fr;
+            gap: 10px;
+          }
+
+          .research-link {
+            justify-self: start;
+          }
+        }
+
+        @media (max-width: 560px) {
+          .algorithms-page {
+            padding: 28px 12px 72px;
+          }
+
+          h1 {
+            font-size: 1.45rem;
+          }
+
+          h2 {
+            font-size: 1rem;
+          }
+
+          p {
+            font-size: 1.1rem;
+          }
+
+          .map-caption {
             flex-direction: column;
-            gap: 12px;
           }
-          
-          .code-block pre {
-            font-size: 0.8rem;
+
+          pre {
+            font-size: 0.82rem;
           }
         }
       `}</style>

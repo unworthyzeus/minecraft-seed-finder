@@ -1,14 +1,20 @@
 'use client';
 
+import { useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { getSeedById } from '@/lib/seeds-database';
 import { CATEGORIES, getConfidenceLevel } from '@/lib/categories';
+import { getPreferredSeedEdition, getSeedEditions } from '@/lib/version-utils';
 import SeedVisualizer from '@/components/SeedVisualizer';
 
 export default function SeedDetailPage() {
     const params = useParams();
     const seed = getSeedById(params.id);
+    const editions = useMemo(() => seed ? getSeedEditions(seed) : [], [seed]);
+    const preferredEdition = seed ? getPreferredSeedEdition(seed) : null;
+    const [selectedEditionKey, setSelectedEditionKey] = useState(null);
+    const selectedEdition = editions.find(e => e.edition === selectedEditionKey) || preferredEdition;
 
     if (!seed) {
         return (
@@ -100,12 +106,28 @@ export default function SeedDetailPage() {
                         <span style={{ color: 'var(--text-muted)' }}>Version information not available</span>
                     )}
                 </div>
+                {editions.length > 1 && (
+                    <div className="edition-switcher" aria-label="Map edition">
+                        <span>Render map as:</span>
+                        {editions.map(entry => (
+                            <button
+                                key={entry.edition}
+                                type="button"
+                                className={`edition-switch ${selectedEdition?.edition === entry.edition ? 'active' : ''}`}
+                                onClick={() => setSelectedEditionKey(entry.edition)}
+                            >
+                                {entry.edition === 'java' ? 'Java' : 'Bedrock'} {entry.version}
+                            </button>
+                        ))}
+                    </div>
+                )}
             </section>
 
             {/* Seed Visualizer - Interactive Map */}
             <SeedVisualizer
                 seed={seed.seed}
-                version={seed.version.java || seed.version.bedrock || '1.21'}
+                version={selectedEdition?.version || '26.1.2'}
+                edition={selectedEdition?.edition || 'java'}
                 coordinates={seed.coordinates}
             />
 
