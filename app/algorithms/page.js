@@ -154,8 +154,9 @@ candidate = randomChunkInRegion(regionSeed)`}</pre>
             <div className="section-kicker">Research</div>
             <h2>Built on public seed hunting work</h2>
             <p>
-              The page summarizes ideas used by Minecraft@Home, speedrunning seed filters,
-              SeedCracker-style tools, and cubiomes-compatible verification suites.
+              The page summarizes ideas from the wider seed-hunting community,
+              speedrunning seed filters, SeedCracker-style tools, and
+              cubiomes-compatible verification suites.
             </p>
           </div>
           <a

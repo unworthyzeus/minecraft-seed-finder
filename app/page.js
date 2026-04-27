@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import Link from 'next/link';
@@ -205,7 +205,7 @@ export default function Home() {
   };
 
   const handleCopySuccess = () => {
-    showToast('✓ Seed copied to clipboard!');
+    showToast('âœ“ Seed copied to clipboard!');
   };
 
   // Categories to display
@@ -237,7 +237,7 @@ export default function Home() {
 
             {/* Search */}
             <div className="search-container">
-              <span className="search-icon">🔍</span>
+              <span className="search-icon">ðŸ”</span>
               <input
                 type="text"
                 className="search-input"
@@ -358,7 +358,7 @@ export default function Home() {
                 className={`category-pill ${!activeCategory ? 'active' : ''}`}
                 onClick={() => handleFilterChange(setActiveCategory)(null)}
               >
-                <span className="category-icon">✨</span>
+                <span className="category-icon">âœ¨</span>
                 All ({preCategoryFilteredSeeds.length.toLocaleString()})
               </button>
               {displayedCategories.map(category => {
@@ -380,7 +380,7 @@ export default function Home() {
                   className="category-pill category-more"
                   onClick={() => setShowAllCategories(!showAllCategories)}
                 >
-                  {showAllCategories ? '← Show Less' : `+${hiddenCount} more`}
+                  {showAllCategories ? 'â† Show Less' : `+${hiddenCount} more`}
                 </button>
               )}
             </div>
@@ -440,7 +440,7 @@ export default function Home() {
             </div>
           ) : (
             <div className="empty-state">
-              <div className="empty-icon">🔍</div>
+              <div className="empty-icon">ðŸ”</div>
               <h3>No seeds found</h3>
               <p>Try adjusting your search or filters</p>
               <Link href="/search" className="search-inline-btn">Search procedurally instead</Link>
@@ -455,14 +455,14 @@ export default function Home() {
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage(1)}
               >
-                ««
+                Â«Â«
               </button>
               <button
                 className="pagination-btn"
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
               >
-                ‹ Prev
+                â€¹ Prev
               </button>
 
               <div className="pagination-info">
@@ -474,14 +474,14 @@ export default function Home() {
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
               >
-                Next ›
+                Next â€º
               </button>
               <button
                 className="pagination-btn"
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage(totalPages)}
               >
-                »»
+                Â»Â»
               </button>
             </div>
           )}
@@ -493,18 +493,17 @@ export default function Home() {
             <Link href="/search" className="search-inline-btn">Open Search Lab</Link>
           </p>
           <p>
-            Inspired by <a href="https://minecraftathome.com" target="_blank" rel="noopener noreferrer">Minecraft At Home</a>
-            {' '}• {stats.verified} expert-verified seeds + {stats.community.toLocaleString()} community-reported discoveries
+            Mildly inspired by the wider Minecraft seed-hunting and mapping community
+            {' '} - {stats.verified} expert-verified seeds + {stats.community.toLocaleString()} community-reported discoveries
           </p>
           <p style={{ marginTop: '8px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
             Community seeds are scraped from public forums and may not be fully verified. Always test seeds yourself.
           </p>
           <p style={{ marginTop: '12px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-            Biome algorithms based on <a href="https://github.com/Cubitect/cubiomes" target="_blank" rel="noopener noreferrer">Cubiomes</a> by Cubitect (MIT License)
-            {' '}• Accurate maps via <a href="https://www.chunkbase.com" target="_blank" rel="noopener noreferrer">Chunkbase</a>
+            World-generation algorithms are ported or adapted from <a href="https://github.com/Cubitect/cubiomes" target="_blank" rel="noopener noreferrer">Cubiomes</a> by Cubitect (MIT License)
           </p>
           <p style={{ marginTop: '12px', fontSize: '0.9rem' }}>
-            Built with ❤️ for the Minecraft community
+            Built with â¤ï¸ for the Minecraft community
           </p>
         </footer>
       </main>

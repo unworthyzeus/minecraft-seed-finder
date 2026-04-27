@@ -12,7 +12,7 @@ The fun part: this is also a JavaScript/TypeScript port of Minecraft seed genera
 - **Procedural Search Lab** - Search for new seeds with biome, structure, and cluster-distance filters
 - **7,953+ Seeds** - Curated database of verified and community-reported seeds
 - **Browser Worldgen** - JavaScript/TypeScript seed-generation code runs client-side for portable seed discovery
-- **Seed Explorer** - Quick links to Chunkbase for accurate biome and structure mapping
+- **Seed Visualizer** - In-browser biome and structure previews for seed inspection
 - **Responsive Design** - Works on desktop and mobile devices
 - **Categories** - Speedrun seeds, rare biomes, structures, historic seeds, and more
 
@@ -36,9 +36,10 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 
 ## Credits & Acknowledgments
 
+This project is mildly inspired by the wider Minecraft seed-hunting and mapping community. It is built as its own browser-first version of that idea: a portable seed catalog and procedural search lab with JavaScript/TypeScript world generation.
+
 ### Cubiomes
-This project incorporates algorithms and biome data from [Cubiomes](https://github.com/Cubitect/cubiomes), 
-a C library that mimics Minecraft's biome generation.
+This project ports and adapts algorithms and biome data from [Cubiomes](https://github.com/Cubitect/cubiomes), a C library that mimics Minecraft's biome generation.
 
 ```
 MIT License
@@ -55,15 +56,14 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 ```
 
-### Other Credits
-- **Chunkbase** - For providing accurate seed mapping tools
-- **Minecraft@Home** - Community-distributed computing for seed discovery
-- **r/minecraftseeds** - Community seed submissions
+### Community Data
+Community seed submissions are collected from public seed-sharing communities and direct submissions. Entries are best-effort catalog records and should be tested in the target Minecraft version before relying on them.
 
 ## License
 
-This project is open source. The seed database is community-contributed.
-Cubiomes integration is used under the MIT License.
+This project is open source under the [Apache License 2.0](./LICENSE). Redistributors must preserve the copyright and attribution notices in [NOTICE](./NOTICE).
+
+Cubiomes-derived portions remain credited to Cubitect under the MIT License, as recorded in the NOTICE file.
 
 ## Deploy
 

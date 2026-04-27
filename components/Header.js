@@ -25,25 +25,6 @@ export default function Header({ onSubmitClick }) {
                         <span className="desktop-only">Algorithms</span>
                         <span className="mobile-only">Algos</span>
                     </Link>
-                    <a
-                        href="https://minecraftathome.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="nav-link"
-                        title="Minecraft@Home"
-                    >
-                        MC@H
-                    </a>
-                    <a
-                        href="https://www.chunkbase.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="nav-link"
-                        title="Chunkbase"
-                    >
-                        <span className="desktop-only">Chunkbase</span>
-                        <span className="mobile-only">CB</span>
-                    </a>
                     <button className="submit-btn" onClick={onSubmitClick} title="Submit Discovery">
                         <span className="desktop-only">➕ Submit</span>
                         <span className="mobile-only">➕</span>

@@ -19,9 +19,9 @@ export default function SeedDetailPage() {
     if (!seed) {
         return (
             <div className="seed-detail">
-                <Link href="/" className="back-link">← Back to Seeds</Link>
+                <Link href="/" className="back-link">Back to Seeds</Link>
                 <div className="empty-state">
-                    <div className="empty-icon">❓</div>
+                    <div className="empty-icon">?</div>
                     <h3>Seed not found</h3>
                     <p>This seed doesn&apos;t exist in our database.</p>
                 </div>
@@ -31,10 +31,10 @@ export default function SeedDetailPage() {
 
     const category = CATEGORIES[seed.category] || {
         name: seed.category,
-        icon: '🌍',
+        icon: '',
         color: '#6b7280',
         description: 'Unknown category',
-        probability: 'Unknown'
+        probability: 'Unknown',
     };
     const confidence = getConfidenceLevel(seed.confidence);
 
@@ -50,7 +50,7 @@ export default function SeedDetailPage() {
     return (
         <div className="seed-detail">
             <Link href="/" className="back-link">
-                ← Back to Seeds
+                Back to Seeds
             </Link>
 
             <div className="seed-detail-header">
@@ -59,7 +59,7 @@ export default function SeedDetailPage() {
                         className="seed-category-badge"
                         style={{
                             background: `${category.color}20`,
-                            '--badge-color': category.color
+                            '--badge-color': category.color,
                         }}
                     >
                         {category.icon} {category.name}
@@ -69,7 +69,7 @@ export default function SeedDetailPage() {
                     </span>
                     {seed.isGenerated && (
                         <span className="generated-indicator">
-                            ⚙️ Algorithmically Generated - Verify Before Use
+                            Algorithmically Generated - Verify Before Use
                         </span>
                     )}
                 </div>
@@ -84,7 +84,7 @@ export default function SeedDetailPage() {
                         className="submit-btn"
                         style={{ padding: '8px 16px', fontSize: '0.9rem', marginLeft: 'auto', whiteSpace: 'nowrap' }}
                     >
-                        📋 Copy
+                        Copy
                     </button>
                     <Link href={searchHref} className="search-inline-btn seed-search-link">
                         Search Similar
@@ -92,18 +92,17 @@ export default function SeedDetailPage() {
                 </div>
             </div>
 
-            {/* Version Compatibility */}
             <section className="seed-detail-section">
                 <h2>Version Compatibility</h2>
                 <div className="version-tags" style={{ fontSize: '1rem' }}>
                     {seed.version.java && (
                         <span className="version-tag version-java" style={{ padding: '6px 12px' }}>
-                            ☕ Java Edition {seed.version.java}
+                            Java Edition {seed.version.java}
                         </span>
                     )}
                     {seed.version.bedrock && (
                         <span className="version-tag version-bedrock" style={{ padding: '6px 12px' }}>
-                            🪨 Bedrock Edition {seed.version.bedrock}
+                            Bedrock Edition {seed.version.bedrock}
                         </span>
                     )}
                     {!seed.version.java && !seed.version.bedrock && (
@@ -127,7 +126,6 @@ export default function SeedDetailPage() {
                 )}
             </section>
 
-            {/* Seed Visualizer - Interactive Map */}
             <SeedVisualizer
                 seed={seed.seed}
                 version={selectedEdition?.version || '26.1.2'}
@@ -135,7 +133,6 @@ export default function SeedDetailPage() {
                 coordinates={seed.coordinates}
             />
 
-            {/* Description */}
             <section className="seed-detail-section">
                 <h2>Description</h2>
                 <p style={{ color: 'var(--text-primary)', lineHeight: 1.8 }}>
@@ -143,7 +140,6 @@ export default function SeedDetailPage() {
                 </p>
             </section>
 
-            {/* Coordinates */}
             {seed.coordinates && (
                 <section className="seed-detail-section">
                     <h2>Coordinates</h2>
@@ -164,7 +160,6 @@ export default function SeedDetailPage() {
                 </section>
             )}
 
-            {/* Statistics */}
             <section className="seed-detail-section">
                 <h2>Statistics</h2>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px' }}>
@@ -184,7 +179,7 @@ export default function SeedDetailPage() {
                             return isNaN(date.getTime()) ? seed.discoveredDate : date.toLocaleDateString('en-US', {
                                 year: 'numeric',
                                 month: 'long',
-                                day: 'numeric'
+                                day: 'numeric',
                             });
                         })()}</div>
                     </div>
@@ -202,60 +197,6 @@ export default function SeedDetailPage() {
                 </div>
             </section>
 
-            {/* External Links */}
-            <section className="seed-detail-section">
-                <h2>Explore This Seed</h2>
-                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                    {seed.sourceUrl && (
-                        <a
-                            href={seed.sourceUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="external-link"
-                            style={{
-                                borderColor: 'var(--accent-primary)',
-                                color: 'var(--accent-primary)',
-                                background: 'rgba(var(--accent-primary-rgb), 0.05)'
-                            }}
-                        >
-                            🔗 View Original Source
-                        </a>
-                    )}
-                    {seed.chunkbaseUrl && (
-                        <a
-                            href={seed.chunkbaseUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="external-link"
-                        >
-                            🗺️ View on Chunkbase
-                        </a>
-                    )}
-                    <a
-                        href={`https://www.google.com/search?q=minecraft+seed+${seed.seed}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="external-link"
-                    >
-                        🔍 Search Online
-                    </a>
-                    <Link href={searchHref} className="external-link">
-                        Search Lab Nearby
-                    </Link>
-                    {seed.version.java && (
-                        <a
-                            href={`https://mcseedmap.net/?seed=${seed.seed}&version=java`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="external-link"
-                        >
-                            🌍 MCSeedMap
-                        </a>
-                    )}
-                </div>
-            </section>
-
-            {/* About Category */}
             <section className="seed-detail-section" style={{ borderLeft: `4px solid ${category.color}` }}>
                 <h2>About {category.name}</h2>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '8px' }}>
@@ -266,10 +207,9 @@ export default function SeedDetailPage() {
                 </p>
             </section>
 
-            {/* Warning for generated seeds */}
             {seed.isGenerated && (
                 <section className="seed-detail-section" style={{ borderLeft: '4px solid var(--accent-amber)', background: 'rgba(249, 115, 22, 0.1)' }}>
-                    <h2>⚠️ Generated Seed Notice</h2>
+                    <h2>Generated Seed Notice</h2>
                     <p style={{ color: 'var(--text-secondary)' }}>
                         This seed was algorithmically generated based on probability patterns and has not been individually verified.
                         The described features may not exist at the specified coordinates or may vary depending on your Minecraft version.

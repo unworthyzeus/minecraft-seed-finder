@@ -177,7 +177,7 @@
     "title": "Smallest 12-Eye Stronghold",
     "description": "The smallest recorded stronghold containing a naturally lit 12-eye portal.",
     "category": "end_portal_12eye",
-    "discoveredBy": "Minecraft@Home",
+    "discoveredBy": "community seed-hunting project",
     "discoveredDate": "2024-12-10",
     "version": {
       "java": "1.21.10"
