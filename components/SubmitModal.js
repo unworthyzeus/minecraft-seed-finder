@@ -66,7 +66,7 @@ export default function SubmitModal({ isOpen, onClose, initialData = null }) {
 
 **Seed:** \`${formData.seed}\`
 **Category:** ${categoryName}
-**Edition:** ${formData.edition === 'java' ? 'Java' : formData.edition === 'bedrock' ? 'Bedrock' : 'Both'}
+**Edition:** ${formData.edition === 'java' ? 'Java' : 'Bedrock'}
 **Version:** ${versionLabel}
 **Coordinates:** X:${formData.coordinates.x || '?'} Y:${formData.coordinates.y || '?'} Z:${formData.coordinates.z || '?'}
 
@@ -145,7 +145,6 @@ ${formData.description}
                             >
                                 <option value="java">Java Edition</option>
                                 <option value="bedrock">Bedrock</option>
-                                <option value="both">Both</option>
                             </select>
                         </div>
 

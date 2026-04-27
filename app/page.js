@@ -13,16 +13,14 @@ const SEEDS_PER_PAGE = 24;
 
 // Available editions for filtering
 const EDITION_OPTIONS = [
-  { value: 'all', label: 'All Editions' },
   { value: 'java', label: 'Java Edition' },
-  { value: 'bedrock', label: 'Bedrock Edition' },
-  { value: 'both', label: 'Both Editions' }
+  { value: 'bedrock', label: 'Bedrock Edition' }
 ];
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState(null);
-  const [editionFilter, setEditionFilter] = useState('all');
+  const [editionFilter, setEditionFilter] = useState('java');
   const [versionFilter, setVersionFilter] = useState('all');
   const [confidenceFilter, setConfidenceFilter] = useState('all');
   const [coordinatesFilter, setCoordinatesFilter] = useState('all');
@@ -75,14 +73,10 @@ export default function Home() {
     }
 
     // Apply edition filter
-    if (editionFilter !== 'all') {
-      if (editionFilter === 'java') {
-        results = results.filter(seed => seed.version.java);
-      } else if (editionFilter === 'bedrock') {
-        results = results.filter(seed => seed.version.bedrock);
-      } else if (editionFilter === 'both') {
-        results = results.filter(seed => seed.version.java && seed.version.bedrock);
-      }
+    if (editionFilter === 'java') {
+      results = results.filter(seed => seed.version.java);
+    } else if (editionFilter === 'bedrock') {
+      results = results.filter(seed => seed.version.bedrock);
     }
 
     // Apply version filter
@@ -236,8 +230,8 @@ export default function Home() {
               <Link href="/search" className="search-hero-btn">
                 Open Search Lab
               </Link>
-              <Link href="/search?biome=plains&structures=village,ruined_portal&cluster=420&biomeCluster=480&count=900" className="search-hero-btn secondary">
-                Find Village + Portal
+              <Link href="/search?biome=deep_dark&structures=ancient_city,trial_chambers&cluster=900&biomeCluster=700&count=1500" className="search-hero-btn secondary">
+                Find Ancient City + Trials
               </Link>
             </div>
 

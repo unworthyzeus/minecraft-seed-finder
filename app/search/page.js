@@ -20,7 +20,6 @@ import {
   getSupportedGeneratorMinor,
   getVersionSelectOptions,
   normalizeSelectableVersion,
-  splitEditionVersion,
 } from '@/lib/version-utils';
 
 const DEFAULT_QUERY = {
@@ -161,7 +160,6 @@ const MASK64 = (1n << 64n) - 1n;
 const GOLDEN_GAMMA = 0x9e3779b97f4a7c15n;
 const JAVA_STREAM_SALT = 0x4f1bbcdc67625d45n;
 const BEDROCK_STREAM_SALT = 0x632be59bd9b4e019n;
-const BOTH_STREAM_SALT = 0x7d1b54a32d192ed3n;
 
 function parseSeed(value) {
   const raw = String(value || '0').trim();
@@ -182,7 +180,7 @@ function mixSeed64(value) {
 }
 
 function candidateSeedAt(anchor, index, edition) {
-  const salt = edition === 'bedrock' ? BEDROCK_STREAM_SALT : edition === 'both' ? BOTH_STREAM_SALT : JAVA_STREAM_SALT;
+  const salt = edition === 'bedrock' ? BEDROCK_STREAM_SALT : JAVA_STREAM_SALT;
   const mixed = mixSeed64(anchor + BigInt(index + 1) * GOLDEN_GAMMA + salt);
   const signed = BigInt.asIntN(64, mixed);
   return signed === 0n ? 1n : signed;
@@ -218,17 +216,9 @@ function createGenerator(edition, version, seed) {
 }
 
 function getEditionRuns(query) {
-  const versions = splitEditionVersion(query.edition, query.version);
-  if (query.edition === 'both') {
-    return [
-      { edition: 'java', version: versions.java, label: 'Java' },
-      { edition: 'bedrock', version: versions.bedrock, label: 'Bedrock' },
-    ];
-  }
-
   return [{
     edition: query.edition,
-    version: query.edition === 'bedrock' ? versions.bedrock : versions.java,
+    version: query.version,
     label: query.edition === 'bedrock' ? 'Bedrock' : 'Java',
   }];
 }
@@ -239,15 +229,6 @@ function displayStructuresForEdition(structures, label, includePrefix) {
     ...structure,
     name: `${label} ${structure.name}`,
   }));
-}
-
-function uniqueBadges(badges) {
-  const seen = new Set();
-  return badges.filter(badge => {
-    if (seen.has(badge.label)) return false;
-    seen.add(badge.label);
-    return true;
-  });
 }
 
 function getBiomeOption(id) {
@@ -452,7 +433,7 @@ function decodeQuery(search) {
 }
 
 function normalizeQuery(query) {
-  const edition = ['java', 'bedrock', 'both'].includes(query.edition) ? query.edition : DEFAULT_QUERY.edition;
+  const edition = ['java', 'bedrock'].includes(query.edition) ? query.edition : DEFAULT_QUERY.edition;
   return {
     ...query,
     edition,
@@ -569,12 +550,9 @@ export default function SearchPage() {
       const structures = reports.flatMap(report => displayStructuresForEdition(
         report.structureReport.structures,
         report.label,
-        activeQuery.edition === 'both'
+        false
       ));
-      const badges = uniqueBadges([
-        ...(activeQuery.edition === 'both' ? [{ label: 'Dual-edition pass', level: 'exact' }] : []),
-        ...reports.flatMap(report => confidenceBadges(report.query, report.structureReport)),
-      ]);
+      const badges = reports.flatMap(report => confidenceBadges(report.query, report.structureReport));
 
       found.push({
         seed: seed.toString(),
@@ -714,7 +692,6 @@ export default function SearchPage() {
               })}>
                 <option value="java">Java</option>
                 <option value="bedrock">Bedrock</option>
-                <option value="both">Both editions</option>
               </select>
             </label>
 
