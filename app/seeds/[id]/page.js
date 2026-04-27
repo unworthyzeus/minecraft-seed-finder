@@ -45,6 +45,7 @@ export default function SeedDetailPage() {
             console.error('Failed to copy:', err);
         }
     };
+    const searchHref = `/search?edition=${selectedEdition?.edition || 'java'}&version=${encodeURIComponent(selectedEdition?.version || '26.1.2')}&start=${encodeURIComponent(seed.seed)}&count=900`;
 
     return (
         <div className="seed-detail">
@@ -85,6 +86,9 @@ export default function SeedDetailPage() {
                     >
                         📋 Copy
                     </button>
+                    <Link href={searchHref} className="search-inline-btn seed-search-link">
+                        Search Similar
+                    </Link>
                 </div>
             </div>
 
@@ -235,6 +239,9 @@ export default function SeedDetailPage() {
                     >
                         🔍 Search Online
                     </a>
+                    <Link href={searchHref} className="external-link">
+                        Search Lab Nearby
+                    </Link>
                     {seed.version.java && (
                         <a
                             href={`https://mcseedmap.net/?seed=${seed.seed}&version=java`}

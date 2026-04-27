@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
+import Link from 'next/link';
 import { SEEDS_DATABASE, searchSeeds, filterSeeds, getDatabaseStats } from '@/lib/seeds-database';
 import { CATEGORIES, VERSIONS, getConfidenceLevel, CONFIDENCE_LEVELS, parseProbability } from '@/lib/categories';
 import Header from '@/components/Header';
@@ -51,6 +52,14 @@ export default function Home() {
   const [showAllCategories, setShowAllCategories] = useState(false);
 
   const stats = useMemo(() => getDatabaseStats(), []);
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search).get('q');
+    if (query) {
+      setSearchQuery(query);
+      setCurrentPage(1);
+    }
+  }, []);
 
   // Pre-filter seeds (before category) - used for dynamic category counts
   const preCategoryFilteredSeeds = useMemo(() => {
@@ -261,6 +270,14 @@ export default function Home() {
               Discover {stats.total.toLocaleString()}+ rare and legendary seeds from the Minecraft community.
               Find 12-eye portals, record-breaking cacti, structure anomalies, and lost historic worlds.
             </p>
+            <div className="hero-actions">
+              <Link href="/search" className="search-hero-btn">
+                Open Search Lab
+              </Link>
+              <Link href="/search?biome=plains&structures=village,ruined_portal&cluster=420&biomeCluster=480&count=900" className="search-hero-btn secondary">
+                Find Village + Portal
+              </Link>
+            </div>
 
             {/* Search */}
             <div className="search-container">
@@ -275,6 +292,14 @@ export default function Home() {
                   setCurrentPage(1);
                 }}
               />
+            </div>
+
+            <div className="search-promo">
+              <div>
+                <strong>Need a seed that does not exist in the catalog yet?</strong>
+                <span>Use procedural search to combine biomes, structures, and cluster distances.</span>
+              </div>
+              <Link href="/search" className="search-inline-btn">Search new seeds</Link>
             </div>
 
             {/* Filter Bar */}
@@ -426,6 +451,14 @@ export default function Home() {
               <div className="stat-label">Matching Filters</div>
             </div>
           </div>
+          <div className="search-wide-cta">
+            <div>
+              <span className="section-kicker">Procedural Search</span>
+              <h2>Build a seed from biome + structure requirements.</h2>
+              <p>Search smarter candidates across the seed space, then keep worlds where structures and biomes cluster together.</p>
+            </div>
+            <Link href="/search" className="search-hero-btn">Launch Search Lab</Link>
+          </div>
         </div>
 
         {/* Results Info */}
@@ -454,6 +487,7 @@ export default function Home() {
               <div className="empty-icon">🔍</div>
               <h3>No seeds found</h3>
               <p>Try adjusting your search or filters</p>
+              <Link href="/search" className="search-inline-btn">Search procedurally instead</Link>
             </div>
           )}
 
@@ -499,6 +533,9 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="footer">
+          <p style={{ marginBottom: '10px' }}>
+            <Link href="/search" className="search-inline-btn">Open Search Lab</Link>
+          </p>
           <p>
             Inspired by <a href="https://minecraftathome.com" target="_blank" rel="noopener noreferrer">Minecraft At Home</a>
             {' '}• {stats.verified} expert-verified seeds + {stats.community.toLocaleString()} community-reported discoveries

@@ -1,19 +1,33 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CATEGORIES } from '../lib/categories';
 
-export default function SubmitModal({ isOpen, onClose }) {
-    if (!isOpen) return null;
+const EMPTY_FORM = {
+    seed: '',
+    category: '',
+    edition: 'java',
+    versionNumber: '',
+    coordinates: { x: '', y: '', z: '' },
+    description: ''
+};
 
-    const [formData, setFormData] = useState({
-        seed: '',
-        category: '',
-        edition: 'java',
-        versionNumber: '',
-        coordinates: { x: '', y: '', z: '' },
-        description: ''
-    });
+export default function SubmitModal({ isOpen, onClose, initialData = null }) {
+    const [formData, setFormData] = useState(EMPTY_FORM);
+
+    useEffect(() => {
+        if (!isOpen) return;
+        setFormData({
+            ...EMPTY_FORM,
+            ...(initialData || {}),
+            coordinates: {
+                ...EMPTY_FORM.coordinates,
+                ...(initialData?.coordinates || {})
+            }
+        });
+    }, [isOpen, initialData]);
+
+    if (!isOpen) return null;
 
     const handleChange = (e) => {
         const { name, value } = e.target;
