@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { LegacyBiomeGenerator } from '../lib/cubiomes/layers';
 import { Generator } from '../lib/cubiomes/generator';
 import { BedrockBiomeGenerator } from '../lib/cubiomes/bedrock';
-import { generateStructureCandidates, getStructureLegend, toCubiomesMcVersion } from '../lib/cubiomes/structures';
+import { generateStructureCandidates, getStructureConfig, getStructureLegend, toCubiomesMcVersion } from '../lib/cubiomes/structures';
 import { getSupportedGeneratorMinor } from '../lib/version-utils';
 
 
@@ -236,6 +236,112 @@ class ModernBiomeGenerator {
 const STRUCTURE_CONFIG = Object.fromEntries(
     getStructureLegend().map(({ key, ...config }) => [key, config])
 );
+
+const COMMON_STRUCTURE_KEYS = new Set(['buried_treasure', 'ocean_ruin', 'shipwreck']);
+const STRUCTURE_PRIORITY = {
+    mansion: 120,
+    village: 110,
+    desert_pyramid: 100,
+    jungle_temple: 100,
+    witch_hut: 96,
+    monument: 94,
+    outpost: 92,
+    ancient_city: 90,
+    trial_chambers: 88,
+    trail_ruins: 82,
+    ruined_portal: 78,
+    igloo: 72,
+    shipwreck: 42,
+    ocean_ruin: 34,
+    buried_treasure: 20,
+};
+
+function getStructurePriority(structure) {
+    return STRUCTURE_PRIORITY[structure.key] || 50;
+}
+
+function getStructureDisplayLimit(zoom, canvasSize) {
+    const viewportFactor = Math.max(0.75, Math.min(1.4, (canvasSize.width * canvasSize.height) / (800 * 500)));
+    const base = zoom < 0.25 ? 45 : zoom < 0.45 ? 70 : zoom < 0.8 ? 115 : 180;
+    return Math.round(base * viewportFactor);
+}
+
+function getStructureCollisionRadius(zoom) {
+    if (zoom < 0.25) return 24;
+    if (zoom < 0.45) return 20;
+    if (zoom < 0.8) return 16;
+    return 12;
+}
+
+function getDisplaySize(structure, zoom) {
+    const base = structure.size || 16;
+    if (zoom < 0.25) return Math.min(base, 11);
+    if (zoom < 0.45) return Math.min(base, 13);
+    if (zoom < 0.8) return Math.min(base, 16);
+    return Math.min(base, 22);
+}
+
+function drawStructureMarker(ctx, structure, x, y, zoom, isPOIMatch = false) {
+    const size = getDisplaySize(structure, zoom);
+    const isCandidate = structure.status === 'terrain-candidate';
+
+    ctx.save();
+    ctx.globalAlpha = isCandidate && !isPOIMatch ? 0.6 : 0.95;
+
+    ctx.beginPath();
+    ctx.arc(x, y, size / 2 + 3, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.58)';
+    ctx.fill();
+
+    drawStructureIcon(ctx, structure.key || structure.type, x, y, size, structure.color);
+
+    if (isCandidate && !isPOIMatch) {
+        ctx.setLineDash([3, 3]);
+        ctx.strokeStyle = '#fbbf24';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(x, y, size / 2 + 5, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+
+    ctx.restore();
+}
+
+function drawTargetMarker(ctx, x, y) {
+    ctx.save();
+
+    ctx.beginPath();
+    ctx.arc(x, y, 16, 0, Math.PI * 2);
+    ctx.fillStyle = '#ef4444';
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 18px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('x', x, y + 1);
+
+    const label = 'Target';
+    ctx.font = 'bold 12px sans-serif';
+    const labelWidth = ctx.measureText(label).width + 14;
+    const labelHeight = 18;
+    const labelX = x - labelWidth / 2;
+    const labelY = y - 38;
+
+    ctx.fillStyle = 'rgba(10, 14, 24, 0.86)';
+    ctx.fillRect(labelX, labelY, labelWidth, labelHeight);
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.28)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(labelX, labelY, labelWidth, labelHeight);
+    ctx.fillStyle = '#fff';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(label, x, labelY + labelHeight / 2 + 1);
+
+    ctx.restore();
+}
 
 function drawStructureIcon(ctx, type, x, y, size, color) {
     ctx.fillStyle = color;
@@ -614,8 +720,10 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
     const [dragStart, setDragStart] = useState({ x: 0, z: 0 });
     const [mouseCoords, setMouseCoords] = useState({ x: 0, z: 0 });
     const [hoveredBiome, setHoveredBiome] = useState(null);
-    const [verifiedOnly, setVerifiedOnly] = useState(false);
+    const [isPointerOnCanvas, setIsPointerOnCanvas] = useState(false);
     const [showStructures, setShowStructures] = useState(true);
+    const [showCommonStructures, setShowCommonStructures] = useState(false);
+    const [showCandidateStructures, setShowCandidateStructures] = useState(false);
     const [showGrid, setShowGrid] = useState(true);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [canvasSize, setCanvasSize] = useState({ width: 800, height: 500 });
@@ -653,13 +761,16 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
             generatorRef.current = new LegacyBiomeGenerator(parsedSeed, toCubiomesMcVersion(version));
         }
 
+        const structureCenterX = coordinates?.x ?? 0;
+        const structureCenterZ = coordinates?.z ?? 0;
+
         structuresRef.current = generateStructureCandidates({
             seed: generatorRef.current.seed ?? parsedSeed,
             version,
             edition,
-            centerX: 0,
-            centerZ: 0,
-            range: 4000,
+            centerX: structureCenterX,
+            centerZ: structureCenterZ,
+            range: coordinates ? 3600 : 2600,
             generator: generatorRef.current,
             includeUnconfirmed: false,
         });
@@ -806,86 +917,54 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
             }
         }
 
-        // POI marker
+        // Structures
+        if (showStructures && generatorRef.current) {
+            const focusX = coordinates?.x ?? worldCenterX;
+            const focusZ = coordinates?.z ?? worldCenterZ;
+            const maxVisible = getStructureDisplayLimit(zoom, canvasSize);
+            const minGap = getStructureCollisionRadius(zoom);
+            const placed = [];
+            let drawn = 0;
+
+            const visibleStructures = structuresRef.current.map(s => {
+                const sx = centerX + (s.x - worldCenterX) * zoom;
+                const sz = centerZ + (s.z - worldCenterZ) * zoom;
+                const isPOIMatch = coordinates && Math.abs(s.x - coordinates.x) < 48 && Math.abs(s.z - coordinates.z) < 48;
+                const distanceToFocus = Math.hypot(s.x - focusX, s.z - focusZ);
+
+                return { structure: s, sx, sz, isPOIMatch, distanceToFocus };
+            }).filter(({ structure, sx, sz, isPOIMatch }) => {
+                if (sx < -50 || sx > width + 50 || sz < -50 || sz > height + 50) return false;
+                if (structure.status === 'biome-mismatch') return false;
+                if (!showCandidateStructures && structure.status === 'terrain-candidate' && !isPOIMatch) return false;
+                if (!showCommonStructures && COMMON_STRUCTURE_KEYS.has(structure.key) && !isPOIMatch) return false;
+                return true;
+            }).sort((a, b) => {
+                if (a.isPOIMatch !== b.isPOIMatch) return a.isPOIMatch ? -1 : 1;
+                const priorityDelta = getStructurePriority(b.structure) - getStructurePriority(a.structure);
+                if (priorityDelta !== 0) return priorityDelta;
+                return a.distanceToFocus - b.distanceToFocus;
+            });
+
+            for (const entry of visibleStructures) {
+                if (drawn >= maxVisible && !entry.isPOIMatch) break;
+                if (!entry.isPOIMatch && placed.some(p => Math.hypot(p.x - entry.sx, p.y - entry.sz) < minGap)) {
+                    continue;
+                }
+
+                drawStructureMarker(ctx, entry.structure, entry.sx, entry.sz, zoom, entry.isPOIMatch);
+                placed.push({ x: entry.sx, y: entry.sz });
+                drawn++;
+            }
+        }
+
+        // POI marker is drawn last so structures never cover it.
         if (coordinates) {
             const poiX = centerX + (coordinates.x - worldCenterX) * zoom;
             const poiZ = centerZ + (coordinates.z - worldCenterZ) * zoom;
-
-            ctx.beginPath();
-            ctx.arc(poiX, poiZ, 16, 0, Math.PI * 2);
-            ctx.fillStyle = '#ef4444';
-            ctx.fill();
-            ctx.strokeStyle = '#fff';
-            ctx.lineWidth = 3;
-            ctx.stroke();
-
-            ctx.fillStyle = '#ef4444'; // Red star
-            ctx.font = 'bold 24px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('★', poiX, poiZ + 1);
-            // Label
-            ctx.font = 'bold 12px sans-serif';
-            ctx.fillStyle = '#fff';
-            ctx.fillText('Target', poiX, poiZ - 20);
+            drawTargetMarker(ctx, poiX, poiZ);
         }
-
-        // Structures
-        if (showStructures && generatorRef.current) {
-            const generator = generatorRef.current;
-            const offsets = [[0, 0], [32, 0], [-32, 0], [0, 32], [0, -32]];
-
-            for (const s of structuresRef.current) {
-                const sx = centerX + (s.x - worldCenterX) * zoom;
-                const sz = centerZ + (s.z - worldCenterZ) * zoom;
-
-                if (sx >= -50 && sx <= width + 50 && sz >= -50 && sz <= height + 50) {
-
-                    // Verify Match
-                    let isPOIMatch = false;
-                    let isBiomeConfirmed = false;
-
-                    // 1. POI Match (High Confidence)
-                    if (coordinates && Math.abs(s.x - coordinates.x) < 32 && Math.abs(s.z - coordinates.z) < 32) {
-                        isPOIMatch = true;
-                        isBiomeConfirmed = true; // Force confirm
-                    }
-                    // 2. Biome Check (Medium Verified)
-                    else if (s.validBiomes) {
-                        for (const [dx, dz] of [[0, 0], ...offsets]) {
-                            const b = generator.getBiome(s.x + dx, s.z + dz);
-                            if (s.validBiomes.includes(b)) {
-                                isBiomeConfirmed = true;
-                                break;
-                            }
-                        }
-                    } else {
-                        isBiomeConfirmed = true;
-                    }
-
-                    // Filtering
-                    const passesVerificationFilter = !verifiedOnly || isPOIMatch || s.status === 'confirmed';
-                    if (passesVerificationFilter && isBiomeConfirmed) {
-                        const size = s.size || 16;
-
-                        // Confidence Opacity
-                        ctx.globalAlpha = isPOIMatch || s.status === 'confirmed' ? 1.0 : 0.62;
-
-                        // Background circle (shadow/contrast)
-                        ctx.beginPath();
-                        ctx.arc(sx, sz, size / 2 + 3, 0, Math.PI * 2);
-                        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-                        ctx.fill();
-
-                        // Structure Icon Rendering
-                        drawStructureIcon(ctx, s.type, sx, sz, size, s.color);
-
-                        ctx.globalAlpha = 1.0; // Reset
-                    }
-                }
-            }
-        }
-    }, [seed, version, edition, zoom, offset, showStructures, showGrid, coordinates, canvasSize]);
+    }, [seed, version, edition, zoom, offset, showStructures, showCommonStructures, showCandidateStructures, showGrid, coordinates, canvasSize]);
 
     // Mouse handlers
     const handleMouseDown = (e) => {
@@ -903,6 +982,8 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
         const rect = canvas.getBoundingClientRect();
         const canvasX = e.clientX - rect.left;
         const canvasZ = e.clientY - rect.top;
+
+        setIsPointerOnCanvas(true);
 
         const centerX = canvas.width / 2;
         const centerZ = canvas.height / 2;
@@ -927,6 +1008,7 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
     const handleMouseUp = () => setIsDragging(false);
     const handleMouseLeave = () => {
         setIsDragging(false);
+        setIsPointerOnCanvas(false);
         setHoveredBiome(null);
     };
 
@@ -948,6 +1030,12 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
     const algorithmLabel = edition === 'bedrock'
         ? (versionNum >= 18 ? 'Parity Biomes' : 'Legacy Bedrock Seed')
         : (versionNum >= 18 ? 'Multi-Noise' : 'Layer-Based');
+    const mcVersion = toCubiomesMcVersion(version);
+    const availableStructureEntries = Object.entries(STRUCTURE_CONFIG).filter(([type, config]) => {
+        if (!getStructureConfig(config.type, mcVersion)) return false;
+        if (!showCommonStructures && COMMON_STRUCTURE_KEYS.has(type)) return false;
+        return true;
+    });
 
     return (
         <div
@@ -989,7 +1077,21 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
                         className={showStructures ? 'active' : ''}
                         title="Toggle Structures"
                     >
-                        🏠 Structures
+                        Structures
+                    </button>
+                    <button
+                        onClick={() => setShowCommonStructures(v => !v)}
+                        className={showCommonStructures ? 'active' : ''}
+                        title="Toggle common structures"
+                    >
+                        Common
+                    </button>
+                    <button
+                        onClick={() => setShowCandidateStructures(v => !v)}
+                        className={showCandidateStructures ? 'active' : ''}
+                        title="Toggle terrain candidates"
+                    >
+                        Candidates
                     </button>
                     <button
                         onClick={() => setShowGrid(v => !v)}
@@ -1004,43 +1106,45 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
                 </div>
             </div>
 
-            {/* Info Panel */}
-            <div className="info-panel">
-                <span className="coords">X: {mouseCoords.x} Z: {mouseCoords.z}</span>
-                {hoveredBiome && (
-                    <span className="biome-info">
-                        <span className="biome-color" style={{ background: hoveredBiome.color }}></span>
-                        {hoveredBiome.name}
-                    </span>
-                )}
-            </div>
-
             {/* Canvas */}
-            <canvas
-                ref={canvasRef}
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseLeave}
-                onWheel={handleWheel}
-                style={{
-                    cursor: isDragging ? 'grabbing' : 'grab',
-                    width: '100%',
-                    height: isFullscreen ? 'calc(100vh - 180px)' : '500px'
-                }}
-            />
+            <div className="canvas-wrap">
+                {isPointerOnCanvas && (
+                    <div className="info-panel">
+                        <span className="coords">X: {mouseCoords.x} Z: {mouseCoords.z}</span>
+                        {hoveredBiome && (
+                            <span className="biome-info">
+                                <span className="biome-color" style={{ background: hoveredBiome.color }}></span>
+                                {hoveredBiome.name}
+                            </span>
+                        )}
+                    </div>
+                )}
+                <canvas
+                    ref={canvasRef}
+                    onMouseDown={handleMouseDown}
+                    onMouseMove={handleMouseMove}
+                    onMouseUp={handleMouseUp}
+                    onMouseLeave={handleMouseLeave}
+                    onWheel={handleWheel}
+                    style={{
+                        cursor: isDragging ? 'grabbing' : 'grab',
+                        width: '100%',
+                        height: isFullscreen ? 'calc(100vh - 180px)' : '500px'
+                    }}
+                />
+            </div>
 
             {/* Legend */}
             <div className="legend">
-                {Object.entries(STRUCTURE_CONFIG).map(([type, config]) => (
-                    <div className="legend-item" key={type}>
-                        <LegendIcon type={type} color={config.color} size={config.size} />
-                        {config.name}
-                    </div>
-                ))}
+                {showStructures && availableStructureEntries.map(([type, config]) => (
+                        <div className="legend-item" key={type}>
+                            <LegendIcon type={type} color={config.color} size={config.size} />
+                            {config.name}
+                        </div>
+                    ))}
                 {coordinates && (
                     <div className="legend-item">
-                        <span className="legend-dot type-star" style={{ background: '#ef4444' }}>★</span>
+                        <span className="legend-dot type-star" style={{ background: '#ef4444' }}>x</span>
                         Target
                     </div>
                 )}
@@ -1167,10 +1271,15 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
                     font-family: monospace;
                 }
 
+                .canvas-wrap {
+                    position: relative;
+                }
+
                 .info-panel {
                     position: absolute;
-                    top: 130px;
+                    top: 12px;
                     left: 20px;
+                    max-width: calc(100% - 40px);
                     padding: 10px 16px;
                     background: rgba(0, 0, 0, 0.75);
                     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1179,8 +1288,10 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
                     font-family: monospace;
                     font-size: 0.9rem;
                     display: flex;
+                    flex-wrap: wrap;
                     gap: 20px;
                     z-index: 10;
+                    pointer-events: none;
                     backdrop-filter: blur(8px);
                 }
 
