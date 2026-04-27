@@ -1,20 +1,24 @@
 # Minecraft Seed Finder
 
-A comprehensive catalog of rare and legendary Minecraft seeds, featuring an intuitive search interface and accurate seed visualization.
+A comprehensive catalog of rare and legendary Minecraft seeds, featuring an intuitive search interface, procedural filters, and accurate seed visualization.
+
+The fun part: this is also a JavaScript/TypeScript port of Minecraft seed generation logic inspired by Cubiomes. That makes it portable enough to search cool seeds directly in the browser with edition, version, biome, structure, and cluster filters, without needing a dedicated backend just to explore candidates.
 
 ![Minecraft Seed Finder](https://img.shields.io/badge/Minecraft-Seed%20Finder-green?style=for-the-badge)
 
 ## Features
 
 - **Search & Filter** - Find seeds by name, category, version, edition, and confidence level
-- **7,950+ Seeds** - Curated database of verified and community-reported seeds
+- **Procedural Search Lab** - Search for new seeds with biome, structure, and cluster-distance filters
+- **7,953+ Seeds** - Curated database of verified and community-reported seeds
+- **Browser Worldgen** - JavaScript/TypeScript seed-generation code runs client-side for portable seed discovery
 - **Seed Explorer** - Quick links to Chunkbase for accurate biome and structure mapping
 - **Responsive Design** - Works on desktop and mobile devices
 - **Categories** - Speedrun seeds, rare biomes, structures, historic seeds, and more
 
 ## Tech Stack
 
-- **Framework**: [Next.js](https://nextjs.org) 14 (App Router)
+- **Framework**: [Next.js](https://nextjs.org) 13.5 (App Router)
 - **Styling**: CSS with modern design patterns
 - **Font**: [Geist](https://vercel.com/font) by Vercel
 
