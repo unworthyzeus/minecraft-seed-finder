@@ -2,6 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { CATEGORIES } from '../lib/categories';
+import {
+    formatEditionVersion,
+    getDefaultVersionForEdition,
+    getVersionSelectOptions,
+    normalizeSelectableVersion
+} from '../lib/version-utils';
 
 const EMPTY_FORM = {
     seed: '',
@@ -17,9 +23,12 @@ export default function SubmitModal({ isOpen, onClose, initialData = null }) {
 
     useEffect(() => {
         if (!isOpen) return;
+        const edition = initialData?.edition || EMPTY_FORM.edition;
         setFormData({
             ...EMPTY_FORM,
             ...(initialData || {}),
+            edition,
+            versionNumber: normalizeSelectableVersion(edition, initialData?.versionNumber || getDefaultVersionForEdition(edition)),
             coordinates: {
                 ...EMPTY_FORM.coordinates,
                 ...(initialData?.coordinates || {})
@@ -37,6 +46,12 @@ export default function SubmitModal({ isOpen, onClose, initialData = null }) {
                 ...prev,
                 coordinates: { ...prev.coordinates, [coord]: value }
             }));
+        } else if (name === 'edition') {
+            setFormData(prev => ({
+                ...prev,
+                edition: value,
+                versionNumber: getDefaultVersionForEdition(value)
+            }));
         } else {
             setFormData(prev => ({ ...prev, [name]: value }));
         }
@@ -44,6 +59,7 @@ export default function SubmitModal({ isOpen, onClose, initialData = null }) {
 
     const generateBody = () => {
         const categoryName = CATEGORIES[formData.category]?.name || formData.category || 'Unknown';
+        const versionLabel = formatEditionVersion(formData.edition, formData.versionNumber);
 
         return `
 ### New Seed Submission
@@ -51,7 +67,7 @@ export default function SubmitModal({ isOpen, onClose, initialData = null }) {
 **Seed:** \`${formData.seed}\`
 **Category:** ${categoryName}
 **Edition:** ${formData.edition === 'java' ? 'Java' : formData.edition === 'bedrock' ? 'Bedrock' : 'Both'}
-**Version:** ${formData.versionNumber}
+**Version:** ${versionLabel}
 **Coordinates:** X:${formData.coordinates.x || '?'} Y:${formData.coordinates.y || '?'} Z:${formData.coordinates.z || '?'}
 
 **Description:**
@@ -75,6 +91,7 @@ ${formData.description}
     const sortedCategories = Object.entries(CATEGORIES)
         .map(([id, data]) => ({ id, ...data }))
         .sort((a, b) => a.name.localeCompare(b.name));
+    const versionOptions = getVersionSelectOptions(formData.edition);
 
     return (
         <div className="modal-overlay" onClick={onClose}>
@@ -134,15 +151,19 @@ ${formData.description}
 
                         <div className="form-group half">
                             <label className="form-label">Version *</label>
-                            <input
-                                type="text"
+                            <select
                                 name="versionNumber"
-                                className="form-input"
-                                placeholder="e.g. 1.21"
-                                required
+                                className="form-select"
                                 value={formData.versionNumber}
                                 onChange={handleChange}
-                            />
+                                required
+                            >
+                                {versionOptions.map(option => (
+                                    <option key={option.value} value={option.value}>
+                                        {option.label}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                     </div>
 

@@ -1,48 +1,104 @@
-import data from '../lib/seeds-data.json' with { type: 'json' };
-import { BedrockBiomeGenerator, normalizeBedrockSeed } from '../lib/cubiomes/bedrock.js';
-import { CURRENT_MINECRAFT_VERSIONS } from '../lib/version-utils.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const versions = new Set([CURRENT_MINECRAFT_VERSIONS.bedrock.version]);
-for (const seed of data) {
-    if (seed.version?.bedrock) versions.add(seed.version.bedrock);
+import { BedrockBiomeGenerator, normalizeBedrockSeed } from '../lib/cubiomes/bedrock.js';
+import {
+    BEDROCK_WORLDGEN_VERSION_OPTIONS,
+    CURRENT_MINECRAFT_VERSIONS,
+} from '../lib/version-utils.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const fixturePath = path.resolve(__dirname, 'fixtures/groundtruth_bedrock_generation.json');
+
+if (!fs.existsSync(fixturePath)) {
+    console.error(`Missing Bedrock generation ground truth: ${fixturePath}`);
+    console.error('Run: node tests/generate_bedrock_groundtruth.mjs');
+    process.exit(1);
 }
 
-const sampleSeeds = ['0', '1', '-1', '2147483648', '8398967436125155523', 'Glacier'];
-const samplePoints = [
-    [0, 0],
-    [128, -256],
-    [-2048, 1536],
-];
+const fixture = JSON.parse(fs.readFileSync(fixturePath, 'utf8'));
+const fixtureVersions = new Set(fixture.versions);
+const expectedVersions = new Set([
+    CURRENT_MINECRAFT_VERSIONS.bedrock.version,
+    ...BEDROCK_WORLDGEN_VERSION_OPTIONS.map(option => option.value),
+]);
+
+for (const version of expectedVersions) {
+    if (!fixtureVersions.has(version)) {
+        throw new Error(`Bedrock ground truth does not cover selectable version ${version}`);
+    }
+}
 
 let checks = 0;
-for (const version of versions) {
-    const generator = new BedrockBiomeGenerator('12345', version);
-    for (const [x, z] of samplePoints) {
-        const biome = generator.getBiome(x, z);
-        if (!Number.isInteger(biome) || biome < -1) {
-            throw new Error(`Invalid Bedrock biome ${biome} for version=${version} at ${x},${z}`);
-        }
-        checks++;
+const failures = [];
+
+for (const sample of fixture.biomeSamples) {
+    const generator = new BedrockBiomeGenerator(sample.seed, sample.version);
+    const actual = generator.getBiomeAtY(sample.x, sample.y, sample.z);
+    if (actual !== sample.biome) {
+        failures.push({
+            type: 'biome',
+            version: sample.version,
+            seed: sample.seed,
+            x: sample.x,
+            y: sample.y,
+            z: sample.z,
+            expected: sample.biome,
+            actual,
+        });
     }
+    checks++;
 }
 
-for (const version of ['1.11.0', '1.17', '1.18', '1.20', '1.21', CURRENT_MINECRAFT_VERSIONS.bedrock.version]) {
-    for (const seed of sampleSeeds) {
-        const generator = new BedrockBiomeGenerator(seed, version);
-        const structures = generator.getStructures({ centerX: 0, centerZ: 0, range: 768 });
-        if (!Array.isArray(structures)) {
-            throw new Error(`Bedrock structures did not return an array for seed=${seed} version=${version}`);
-        }
-        checks++;
+for (const sample of fixture.structureSamples) {
+    const generator = new BedrockBiomeGenerator(sample.seed, sample.version);
+    const actual = generator.getStructures({
+        centerX: 0,
+        centerZ: 0,
+        range: 768,
+        structureKeys: fixture.structureKeys,
+    })
+        .map(item => ({
+            key: item.key,
+            x: item.x,
+            z: item.z,
+            status: item.status,
+            biome: item.biome,
+        }))
+        .sort((a, b) => a.key.localeCompare(b.key) || a.x - b.x || a.z - b.z)
+        .slice(0, 12);
+
+    if (JSON.stringify(actual) !== JSON.stringify(sample.structures)) {
+        failures.push({
+            type: 'structures',
+            version: sample.version,
+            seed: sample.seed,
+            expected: sample.structures,
+            actual,
+        });
     }
+    checks++;
 }
 
-if (normalizeBedrockSeed('2147483648', '1.17').toString() !== '-2147483648') {
-    throw new Error('Pre-1.18 Bedrock seed normalization should use signed 32-bit seeds');
+for (const sample of fixture.normalizations) {
+    const actual = normalizeBedrockSeed(sample.seed, sample.version).toString();
+    if (actual !== sample.expected) {
+        failures.push({
+            type: 'normalization',
+            version: sample.version,
+            seed: sample.seed,
+            expected: sample.expected,
+            actual,
+        });
+    }
+    checks++;
 }
 
-if (normalizeBedrockSeed('2147483648', CURRENT_MINECRAFT_VERSIONS.bedrock.version).toString() !== '2147483648') {
-    throw new Error('Current Bedrock seed normalization should preserve 64-bit numeric seeds');
+if (failures.length > 0) {
+    console.error(JSON.stringify(failures.slice(0, 25), null, 2));
+    throw new Error(`Bedrock generation ground truth failed: ${failures.length} mismatches`);
 }
 
-console.log(`Bedrock generation smoke checks: ${checks}`);
+console.log(`Bedrock generation ground truth: ${checks} checks across ${fixtureVersions.size} versions`);

@@ -13,7 +13,15 @@ import {
   toCubiomesMcVersion,
 } from '@/lib/cubiomes/structures';
 import { BiomeID } from '@/lib/cubiomes/core';
-import { CURRENT_MINECRAFT_VERSIONS, getSupportedGeneratorMinor } from '@/lib/version-utils';
+import {
+  CURRENT_MINECRAFT_VERSIONS,
+  formatEditionVersion,
+  getDefaultVersionForEdition,
+  getSupportedGeneratorMinor,
+  getVersionSelectOptions,
+  normalizeSelectableVersion,
+  splitEditionVersion,
+} from '@/lib/version-utils';
 
 const DEFAULT_QUERY = {
   edition: 'java',
@@ -153,6 +161,7 @@ const MASK64 = (1n << 64n) - 1n;
 const GOLDEN_GAMMA = 0x9e3779b97f4a7c15n;
 const JAVA_STREAM_SALT = 0x4f1bbcdc67625d45n;
 const BEDROCK_STREAM_SALT = 0x632be59bd9b4e019n;
+const BOTH_STREAM_SALT = 0x7d1b54a32d192ed3n;
 
 function parseSeed(value) {
   const raw = String(value || '0').trim();
@@ -173,7 +182,7 @@ function mixSeed64(value) {
 }
 
 function candidateSeedAt(anchor, index, edition) {
-  const salt = edition === 'bedrock' ? BEDROCK_STREAM_SALT : JAVA_STREAM_SALT;
+  const salt = edition === 'bedrock' ? BEDROCK_STREAM_SALT : edition === 'both' ? BOTH_STREAM_SALT : JAVA_STREAM_SALT;
   const mixed = mixSeed64(anchor + BigInt(index + 1) * GOLDEN_GAMMA + salt);
   const signed = BigInt.asIntN(64, mixed);
   return signed === 0n ? 1n : signed;
@@ -206,6 +215,39 @@ function createGenerator(edition, version, seed) {
   }
 
   return new LegacyBiomeGenerator(seed, toCubiomesMcVersion(version));
+}
+
+function getEditionRuns(query) {
+  const versions = splitEditionVersion(query.edition, query.version);
+  if (query.edition === 'both') {
+    return [
+      { edition: 'java', version: versions.java, label: 'Java' },
+      { edition: 'bedrock', version: versions.bedrock, label: 'Bedrock' },
+    ];
+  }
+
+  return [{
+    edition: query.edition,
+    version: query.edition === 'bedrock' ? versions.bedrock : versions.java,
+    label: query.edition === 'bedrock' ? 'Bedrock' : 'Java',
+  }];
+}
+
+function displayStructuresForEdition(structures, label, includePrefix) {
+  if (!includePrefix) return structures;
+  return structures.map(structure => ({
+    ...structure,
+    name: `${label} ${structure.name}`,
+  }));
+}
+
+function uniqueBadges(badges) {
+  const seen = new Set();
+  return badges.filter(badge => {
+    if (seen.has(badge.label)) return false;
+    seen.add(badge.label);
+    return true;
+  });
 }
 
 function getBiomeOption(id) {
@@ -410,8 +452,11 @@ function decodeQuery(search) {
 }
 
 function normalizeQuery(query) {
+  const edition = ['java', 'bedrock', 'both'].includes(query.edition) ? query.edition : DEFAULT_QUERY.edition;
   return {
     ...query,
+    edition,
+    version: normalizeSelectableVersion(edition, query.version),
     maxSeeds: Math.max(1, Math.min(20000, Number(query.maxSeeds) || DEFAULT_QUERY.maxSeeds)),
     radius: Math.max(128, Math.min(5000, Number(query.radius) || DEFAULT_QUERY.radius)),
     maxStructureDistance: Math.max(0, Math.min(5000, Number(query.maxStructureDistance) || 0)),
@@ -447,12 +492,20 @@ export default function SearchPage() {
     setQuery(prev => normalizeQuery({ ...prev, ...patch }));
   }, []);
 
+  const versionOptions = useMemo(() => getVersionSelectOptions(query.edition), [query.edition]);
   const selectedBiome = useMemo(() => getBiomeOption(query.biome), [query.biome]);
   const selectedStructures = useMemo(() => new Set(query.structures), [query.structures]);
   const strategyText = useMemo(() => {
     const seedCount = Number(query.maxSeeds).toLocaleString();
-    return `Smart spread: ${seedCount} candidates sampled across the signed 64-bit seed space from key "${query.startSeed || DEFAULT_QUERY.startSeed}".`;
-  }, [query.maxSeeds, query.startSeed]);
+    const versionLabel = formatEditionVersion(query.edition, query.version);
+    return `Smart spread: ${seedCount} candidates sampled across the signed 64-bit seed space from key "${query.startSeed || DEFAULT_QUERY.startSeed}" for ${versionLabel}.`;
+  }, [query.edition, query.maxSeeds, query.startSeed, query.version]);
+
+  useEffect(() => {
+    if (!versionOptions.some(option => option.value === query.version)) {
+      updateQuery({ version: getDefaultVersionForEdition(query.edition) });
+    }
+  }, [query.edition, query.version, updateQuery, versionOptions]);
 
   const toggleStructure = (key) => {
     const next = selectedStructures.has(key)
@@ -480,34 +533,55 @@ export default function SearchPage() {
       if (cancelRef.current) break;
       scanned = i + 1;
       const seed = candidateSeedAt(start, i, activeQuery.edition);
-      const generator = createGenerator(activeQuery.edition, activeQuery.version, seed);
+      const editionRuns = getEditionRuns(activeQuery);
+      const reports = [];
+      let failedStage = null;
 
-      const biomeReport = sampleBiomeNear(generator, biomeOption, Number(activeQuery.radius));
-      if (!biomeReport.matched) {
+      for (const run of editionRuns) {
+        const runQuery = { ...activeQuery, edition: run.edition, version: run.version };
+        const generator = createGenerator(run.edition, run.version, seed);
+        const biomeReport = sampleBiomeNear(generator, biomeOption, Number(activeQuery.radius));
+        if (!biomeReport.matched) {
+          failedStage = 'Biome gate';
+          break;
+        }
+
+        const structureReport = analyzeStructures(runQuery, generator, seed, biomeReport);
+        if (!structureReport.matched) {
+          failedStage = 'Structure gate';
+          break;
+        }
+
+        reports.push({ ...run, query: runQuery, biomeReport, structureReport });
+      }
+
+      if (failedStage) {
         if (i % batch === 0) {
-          setStatus({ running: true, scanned, biomeMatches, structureMatches, stage: 'Biome gate' });
+          setStatus({ running: true, scanned, biomeMatches, structureMatches, stage: failedStage });
           await new Promise(resolve => setTimeout(resolve, 0));
         }
         continue;
       }
       biomeMatches++;
-
-      const structureReport = analyzeStructures(activeQuery, generator, seed, biomeReport);
-      if (!structureReport.matched) {
-        if (i % batch === 0) {
-          setStatus({ running: true, scanned, biomeMatches, structureMatches, stage: 'Structure gate' });
-          await new Promise(resolve => setTimeout(resolve, 0));
-        }
-        continue;
-      }
       structureMatches++;
+
+      const primaryReport = reports[0];
+      const structures = reports.flatMap(report => displayStructuresForEdition(
+        report.structureReport.structures,
+        report.label,
+        activeQuery.edition === 'both'
+      ));
+      const badges = uniqueBadges([
+        ...(activeQuery.edition === 'both' ? [{ label: 'Dual-edition pass', level: 'exact' }] : []),
+        ...reports.flatMap(report => confidenceBadges(report.query, report.structureReport)),
+      ]);
 
       found.push({
         seed: seed.toString(),
-        biomePoint: structureReport.cluster?.biomePoint || biomeReport.point,
-        structures: structureReport.structures,
-        badges: confidenceBadges(activeQuery, structureReport),
-        cluster: structureReport.cluster,
+        biomePoint: primaryReport.structureReport.cluster?.biomePoint || primaryReport.biomeReport.point,
+        structures,
+        badges,
+        cluster: primaryReport.structureReport.cluster,
         query: activeQuery,
         biomeLabel: biomeOption.label,
         biomeY: biomeOption.y,
@@ -535,7 +609,7 @@ export default function SearchPage() {
   const saveSearch = () => {
     const item = {
       id: Date.now(),
-      name: `${query.edition} ${query.version} - ${selectedBiome.label}`,
+      name: `${formatEditionVersion(query.edition, query.version)} - ${selectedBiome.label}`,
       query: normalizeQuery(query),
     };
     const next = [item, ...saved].slice(0, 8);
@@ -581,7 +655,7 @@ export default function SearchPage() {
         z: point?.z ?? '',
       },
       description: [
-        `Found with Search Lab using ${resultQuery.edition} ${resultQuery.version}.`,
+        `Found with Search Lab using ${formatEditionVersion(resultQuery.edition, resultQuery.version)}.`,
         `Required biome: ${result.biomeLabel || selectedBiome.label}.`,
         `Required structures: ${structureNames}.`,
         `Structure cluster distance: ${formatDistance(result.cluster?.structureClusterDiameter)}.`,
@@ -597,6 +671,11 @@ export default function SearchPage() {
     <>
       <Header onSubmitClick={() => openSubmitForResult(null)} />
       <main className="search-lab">
+        <div className="search-lab-return">
+          <Link href="/" className="search-home-btn">
+            Back to Seed Finder Home
+          </Link>
+        </div>
         <section className="search-lab-header">
           <div>
             <span className="section-kicker">Procedural Search</span>
@@ -631,16 +710,21 @@ export default function SearchPage() {
               Edition
               <select className="filter-select" value={query.edition} onChange={e => updateQuery({
                 edition: e.target.value,
-                version: e.target.value === 'bedrock' ? CURRENT_MINECRAFT_VERSIONS.bedrock.version : CURRENT_MINECRAFT_VERSIONS.java.version,
+                version: getDefaultVersionForEdition(e.target.value),
               })}>
                 <option value="java">Java</option>
                 <option value="bedrock">Bedrock</option>
+                <option value="both">Both editions</option>
               </select>
             </label>
 
             <label>
               Version
-              <input className="search-input compact" value={query.version} onChange={e => updateQuery({ version: e.target.value })} />
+              <select className="filter-select" value={query.version} onChange={e => updateQuery({ version: e.target.value })}>
+                {versionOptions.map(option => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+              </select>
             </label>
 
             <label>

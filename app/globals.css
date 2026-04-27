@@ -1088,6 +1088,34 @@ a:hover {
   padding: 32px 16px 56px;
 }
 
+.search-lab-return {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 14px;
+}
+
+.search-home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--diamond-blue);
+  color: var(--obsidian);
+  border: 4px solid var(--obsidian);
+  padding: 10px 16px;
+  font-family: 'VT323', monospace;
+  font-size: 1.3rem;
+  box-shadow:
+    inset -3px -3px 0 #178b84,
+    inset 3px 3px 0 #a7fff8,
+    0 4px 0 var(--obsidian);
+}
+
+.search-home-btn:hover {
+  background: var(--gold-yellow);
+  color: var(--obsidian);
+  transform: translateY(-2px);
+}
+
 .search-lab-header {
   display: flex;
   justify-content: space-between;

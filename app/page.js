@@ -3,7 +3,8 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { SEEDS_DATABASE, searchSeeds, filterSeeds, getDatabaseStats } from '@/lib/seeds-database';
-import { CATEGORIES, VERSIONS, getConfidenceLevel, CONFIDENCE_LEVELS, parseProbability } from '@/lib/categories';
+import { CATEGORIES, getConfidenceLevel, CONFIDENCE_LEVELS, parseProbability } from '@/lib/categories';
+import { getVersionFilterOptions, seedMatchesVersionFilter } from '@/lib/version-utils';
 import Header from '@/components/Header';
 import SeedCard from '@/components/SeedCard';
 import SubmitModal from '@/components/SubmitModal';
@@ -14,27 +15,8 @@ const SEEDS_PER_PAGE = 24;
 const EDITION_OPTIONS = [
   { value: 'all', label: 'All Editions' },
   { value: 'java', label: 'Java Edition' },
-  { value: 'bedrock', label: 'Bedrock Edition' }
-];
-
-// Available versions for filtering
-const VERSION_OPTIONS = [
-  { value: 'all', label: 'All Versions' },
-  { value: '26.', label: '26.x Current' },
-  { value: '1.21', label: '1.21+' },
-  { value: '1.20', label: '1.20' },
-  { value: '1.19', label: '1.19' },
-  { value: '1.18', label: '1.18' },
-  { value: '1.17', label: '1.17' },
-  { value: '1.16', label: '1.16' },
-  { value: '1.15', label: '1.15' },
-  { value: '1.14', label: '1.14' },
-  { value: '1.13', label: '1.13' },
-  { value: '1.12', label: '1.12' },
-  { value: '1.8', label: '1.8 - 1.11' },
-  { value: '1.0', label: '1.0 - 1.7' },
-  { value: 'beta', label: 'Beta' },
-  { value: 'alpha', label: 'Alpha' }
+  { value: 'bedrock', label: 'Bedrock Edition' },
+  { value: 'both', label: 'Both Editions' }
 ];
 
 export default function Home() {
@@ -52,6 +34,7 @@ export default function Home() {
   const [showAllCategories, setShowAllCategories] = useState(false);
 
   const stats = useMemo(() => getDatabaseStats(), []);
+  const versionOptions = useMemo(() => getVersionFilterOptions(editionFilter), [editionFilter]);
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search).get('q');
@@ -60,6 +43,12 @@ export default function Home() {
       setCurrentPage(1);
     }
   }, []);
+
+  useEffect(() => {
+    if (!versionOptions.some(option => option.value === versionFilter)) {
+      setVersionFilter('all');
+    }
+  }, [versionOptions, versionFilter]);
 
   // Pre-filter seeds (before category) - used for dynamic category counts
   const preCategoryFilteredSeeds = useMemo(() => {
@@ -91,41 +80,14 @@ export default function Home() {
         results = results.filter(seed => seed.version.java);
       } else if (editionFilter === 'bedrock') {
         results = results.filter(seed => seed.version.bedrock);
+      } else if (editionFilter === 'both') {
+        results = results.filter(seed => seed.version.java && seed.version.bedrock);
       }
     }
 
     // Apply version filter
     if (versionFilter !== 'all') {
-      results = results.filter(seed => {
-        const jv = (seed.version.java || '').toLowerCase();
-        const bv = (seed.version.bedrock || '').toLowerCase();
-        const combined = jv + ' ' + bv;
-
-        // Helper to check range
-        const checkRange = (min, max) => {
-          const matches = combined.match(/1\.(\d+)/g);
-          if (!matches) return false;
-          return matches.some(v => {
-            const minor = parseInt(v.split('.')[1]);
-            return minor >= min && minor <= max;
-          });
-        };
-
-        if (versionFilter === '1.8') {
-          // Matches 1.8 - 1.11
-          return checkRange(8, 11);
-        }
-
-        if (versionFilter === '1.0') {
-          // Matches 1.0 - 1.7
-          return checkRange(0, 7);
-        }
-
-        if (versionFilter === 'beta') return jv.includes('beta');
-        if (versionFilter === 'alpha') return jv.includes('alpha');
-
-        return jv.includes(versionFilter) || bv.includes(versionFilter);
-      });
+      results = results.filter(seed => seedMatchesVersionFilter(seed, editionFilter, versionFilter));
     }
 
     // Apply confidence filter with exact matching
@@ -326,7 +288,7 @@ export default function Home() {
                   onChange={(e) => handleFilterChange(setVersionFilter)(e.target.value)}
                   className="filter-select"
                 >
-                  {VERSION_OPTIONS.map(opt => (
+                  {versionOptions.map(opt => (
                     <option key={opt.value} value={opt.value}>{opt.label}</option>
                   ))}
                 </select>
