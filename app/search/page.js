@@ -399,8 +399,11 @@ function confidenceBadges(query, structureReport) {
   if (statuses.has('terrain-candidate')) {
     badges.push({ label: 'Terrain-candidate', level: 'candidate' });
   }
-  if (statuses.has('bedrock-candidate')) {
-    badges.push({ label: 'Bedrock parity candidate', level: 'approx' });
+  if (statuses.has('bedrock-placement-candidate')) {
+    badges.push({ label: 'Bedrock MCBE placement', level: 'approx' });
+  }
+  if (statuses.has('bedrock-fallback-candidate')) {
+    badges.push({ label: 'Bedrock fallback', level: 'approx' });
   }
   return badges;
 }
@@ -643,7 +646,9 @@ export default function SearchPage() {
         result.cluster?.biomeStructureDistance != null
           ? `Biome-structure cluster distance: ${formatDistance(result.cluster.biomeStructureDistance)}.`
           : 'Biome-structure cluster distance: off.',
-        'Search Lab structures are candidates, not final in-game proof. Verify in Minecraft or with an official/JAR ground-truth run before treating the seed as 100%.',
+        resultQuery.edition === 'bedrock'
+          ? 'Search Lab Bedrock structures use MCBE-style placement where implemented, or a Java/parity fallback otherwise. Verify in Bedrock/BDS before treating the seed as 100%.'
+          : 'Search Lab Java structures are checked against Cubiomes-style placement/biome rules, but final generated-world proof still needs Minecraft, the official JAR, or a trusted fixture run.',
       ].join('\n'),
     });
     setShowSubmitModal(true);
@@ -804,7 +809,7 @@ export default function SearchPage() {
               </div>
               <div>
                 <strong>Accuracy status</strong>
-                <p>Structure results are candidate hits. Java checks cover region placement and sampled biomes; Bedrock checks use parity rendering and must be verified in-game for final proof.</p>
+                <p>Java biome/structure math is tested against Cubiomes GT for the covered versions. Bedrock uses MCBE-style placement candidates where implemented; final Bedrock proof still needs BDS or in-game verification.</p>
               </div>
             </div>
 
@@ -852,7 +857,9 @@ export default function SearchPage() {
                   )}
                   {result.structures.length > 0 && (
                     <p className="result-note">
-                      Candidate result: placement/biome checks passed for the selected model, but this is not a 100% generated-world confirmation.
+                      {result.query?.edition === 'bedrock'
+                        ? 'Bedrock candidate: MCBE-style placement/biome checks passed where implemented, but this is not a 100% BDS or in-game generated-world confirmation.'
+                        : 'Java candidate: Cubiomes-style placement/biome checks passed, but this is not a final generated-world terrain/start confirmation.'}
                     </p>
                   )}
                   {result.cluster && (

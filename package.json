@@ -10,7 +10,9 @@
     "start": "next start",
     "lint": "next lint",
     "test:catalog": "node tests/validate_seed_versions.mjs && node tests/validate_website_submissions.mjs",
-    "test:worldgen": "node tests/test_beta.mjs && node tests/test_versions.mjs && node tests/test_diverse.mjs && node tests/test_118_plus.mjs && node tests/test_5000_seeds.mjs && node tests/test_structures.mjs && node tests/test_structure_candidate_status.mjs && node tests/test_bedrock_generation.mjs && node tests/validate_seed_versions.mjs && node tests/validate_website_submissions.mjs"
+    "test:java:cubiomes": "node tests/test_cubiomes_groundtruth.mjs && node tests/test_java_port_parity.mjs",
+    "test:worldgen:local": "node tests/test_java_port_parity.mjs && node tests/test_bedrock_structure_placement.mjs && node tests/test_structure_candidate_status.mjs && node tests/test_bedrock_generation.mjs",
+    "test:worldgen": "node tests/test_beta.mjs && node tests/test_versions.mjs && node tests/test_diverse.mjs && node tests/test_118_plus.mjs && node tests/test_5000_seeds.mjs && node tests/test_structures.mjs && node tests/test_java_port_parity.mjs && node tests/test_bedrock_structure_placement.mjs && node tests/test_structure_candidate_status.mjs && node tests/test_bedrock_generation.mjs && node tests/validate_seed_versions.mjs && node tests/validate_website_submissions.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",

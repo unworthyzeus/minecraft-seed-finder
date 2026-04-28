@@ -53,9 +53,9 @@ function summarizeStructures(structures) {
 }
 
 const fixture = {
-    format: 1,
-    generatedAt: '2026-04-27',
-    source: 'BedrockBiomeGenerator golden output matrix',
+    format: 2,
+    generatedAt: '2026-04-28',
+    source: 'BedrockBiomeGenerator golden output matrix with MCBE-style placement candidates',
     versions,
     seeds,
     biomePoints,

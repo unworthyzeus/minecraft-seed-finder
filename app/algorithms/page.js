@@ -18,17 +18,17 @@ const versionRows = [
   ['Beta 1.7', 'Climate table + interpolated sea-level noise', 'Block and scale-4 parity'],
   ['Beta 1.8', 'Early layer stack with Beta land rules', 'Scale-4 parity'],
   ['1.0 - 1.17', 'Layer stack, rivers, shores, hills, oceans', 'Scale-4 parity'],
-  ['1.18+', 'Multi-noise biome source', 'Implemented, but full C/JAR fixture coverage is still required'],
-  ['Java 26.x', 'Mapped to the 1.21+ worldgen family', 'Supported as current-family, not proven with 26.x-specific fixtures'],
-  ['Bedrock', 'Edition-aware biome renderer', 'Parity-era terrain with Bedrock seed normalization']
+  ['1.18+', 'Multi-noise biome source', 'Cubiomes GT fixture coverage for sampled biomes'],
+  ['Java 26.x', 'Mapped to the 1.21+ worldgen family', 'Supported as current-family; 26.x-specific worldgen changes still need fixtures'],
+  ['Bedrock', 'Edition-aware biome renderer + MCBE-style structure placement', 'Candidate model with Bedrock seed normalization']
 ];
 
 const accuracyRows = [
-  ['Java structure placement', 'Ground-truthed for region/chunk positions against local fixtures.', 'Strong for placement math, but still a candidate until biome, terrain, and generated-world checks all agree.'],
-  ['Java 1.18+ biomes and terrain', 'The renderer uses the modern multi-noise path.', 'Needs complete C cubiomes or official JAR fixtures in this checkout before we can claim full 1.18+ parity.'],
+  ['Java structure placement', 'Ground-truthed for region/chunk positions against local Cubiomes fixtures.', 'Strong for placement math, but still a candidate until biome, terrain, and generated-world checks all agree.'],
+  ['Java B1.8 through 1.21 biomes', 'Covered by the Cubiomes ground-truth matrix when ../cubiomes-original/ground_truth.txt is present.', 'Beta 1.7 is intentionally excluded from the strict pass because its sea-level/noise path still needs separate work.'],
   ['Java 26.x', 'Selectable and mapped to the modern 1.21+ family.', 'Minecraft 26.x is a new release line; any subtle worldgen change needs explicit fixtures before a 100% claim.'],
   ['Bedrock biomes', 'Covered by local Bedrock generation fixtures and version/seed normalization checks.', 'Good for the parity renderer, but not the same thing as final Bedrock structure proof.'],
-  ['Bedrock structures', 'Shown only as candidates.', 'Bedrock placement rules are edition-specific and are not fully proven by the Java structure fixture suite.'],
+  ['Bedrock structures', 'Dedicated MCBE-style placement for villages, temples, monuments, mansions, outposts, shipwrecks, ocean ruins, buried treasure, and ruined portals.', 'Still candidate-only until checked against Bedrock Dedicated Server or in-game /locate fixtures; unsupported structures use a lower-confidence Java/parity fallback.'],
   ['Catalog categories and rare decorations', 'Seeds such as end portal eyes, cacti, fossils, spawners, or community discoveries can be stored and searched.', 'Unless a category has a dedicated validator, it is catalog evidence or heuristic data, not generated proof.']
 ];
 
@@ -69,11 +69,11 @@ export default function AlgorithmsPage() {
         <section className="status-band">
           <div>
             <span className="status-label">Current verification</span>
-            <strong>Local fixtures cover structure placement, Bedrock rendering, and seed metadata; full Java C-cubiomes parity needs the external ground-truth files.</strong>
+            <strong>Local fixtures cover structure placement, Bedrock rendering, and seed metadata; Java Cubiomes GT passes when the external ground-truth matrix is present.</strong>
           </div>
           <div>
             <span className="status-label">Bedrock scope</span>
-            <strong>Bedrock uses edition-specific seed normalization and parity-era biome rendering; structure hits are candidates until checked in-game.</strong>
+            <strong>Bedrock uses edition-specific seed normalization, parity-era biome rendering, and MCBE-style structure placement; hits are candidates until checked with BDS or in-game.</strong>
           </div>
         </section>
 
@@ -148,8 +148,9 @@ export default function AlgorithmsPage() {
               the world seed. That means different world seeds can share the same structure
               layout, letting tools search the lower bits first and resolve biome or terrain
               validity later. The visualizer treats rendered structure hits as candidates:
-              Java can have verified placement math while still needing terrain/start checks,
-              and Bedrock requires edition-specific in-game or fixture verification.
+              Java can have verified placement math while still needing terrain/start checks.
+              Bedrock now uses MCBE-style placement rules where implemented, but needs
+              Bedrock Dedicated Server or in-game fixtures for final proof.
             </p>
           </div>
           <div className="code-block compact">
@@ -164,7 +165,8 @@ candidate = randomChunkInRegion(regionSeed)`}</pre>
           <div className="section-kicker">Accuracy scope</div>
           <h2>What is verified, and what is still candidate-only</h2>
           <p>
-            The app should not claim universal 100% accuracy yet. It has verified pieces,
+            The app should not claim universal 100% accuracy for every edition and version yet.
+            Java B1.8+ sampled biomes and Java structure placement have Cubiomes GT coverage,
             but Minecraft worldgen is a stack: seed parsing, version mapping, biome source,
             structure region placement, biome viability, terrain height, structure start,
             decoration RNG, and edition-specific behavior can each fail independently.
@@ -187,17 +189,27 @@ candidate = randomChunkInRegion(regionSeed)`}</pre>
             <p>
               The page summarizes ideas from the wider seed-hunting community,
               speedrunning seed filters, SeedCracker-style tools, and
-              cubiomes-compatible verification suites.
+              cubiomes-compatible verification suites, and Bedrock structure-placement research.
             </p>
           </div>
-          <a
-            className="research-link"
-            href="https://github.com/Cubitect/cubiomes"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Cubiomes reference
-          </a>
+          <div className="research-links">
+            <a
+              className="research-link"
+              href="https://github.com/Cubitect/cubiomes"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Cubiomes reference
+            </a>
+            <a
+              className="research-link"
+              href="https://github.com/bedrock-dev/MCBEStructureFinder"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Bedrock structure reference
+            </a>
+          </div>
         </section>
       </main>
 
@@ -497,9 +509,16 @@ candidate = randomChunkInRegion(regionSeed)`}</pre>
           line-height: 1.45;
         }
 
-        .research-link {
+        .research-links {
           align-self: center;
           justify-self: end;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          justify-content: flex-end;
+        }
+
+        .research-link {
           border: 3px solid var(--obsidian);
           color: var(--obsidian);
           background: var(--gold-yellow);
@@ -539,6 +558,11 @@ candidate = randomChunkInRegion(regionSeed)`}</pre>
 
           .research-link {
             justify-self: start;
+          }
+
+          .research-links {
+            justify-self: start;
+            justify-content: flex-start;
           }
         }
 

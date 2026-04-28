@@ -42,3 +42,14 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Bedrock Structure Reference Attribution
+---------------------------------------
+
+Bedrock structure placement constants and RNG behavior are cross-checked
+against MCBEStructureFinder by bedrock-dev:
+
+  https://github.com/bedrock-dev/MCBEStructureFinder
+
+MCBEStructureFinder is licensed under the MIT License according to its
+repository README.

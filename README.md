@@ -16,6 +16,12 @@ The fun part: this is also a JavaScript/TypeScript port of Minecraft seed genera
 - **Responsive Design** - Works on desktop and mobile devices
 - **Categories** - Speedrun seeds, rare biomes, structures, historic seeds, and more
 
+## Accuracy Scope
+
+Java worldgen is treated as a Cubiomes port. The strict local GT test `npm run test:java:cubiomes` compares sampled Java B1.8 through 1.21 biome output against Cubiomes' `ground_truth.txt` when `../cubiomes-original/ground_truth.txt` or `CUBIOMES_GT_FILE` is available, and also checks Java structure placement against the bundled Cubiomes structure fixture. Beta 1.7 is intentionally not included in that strict pass yet because its older sea-level/noise path still needs separate parity work.
+
+Bedrock is a different accuracy track. The app has Bedrock seed normalization, parity-era biome rendering, and MCBE-style structure placement for villages, temples, monuments, mansions, outposts, shipwrecks, ocean ruins, buried treasure, and ruined portals. Those Bedrock structures are still labeled as candidates: final proof should come from Minecraft Bedrock itself, Bedrock Dedicated Server, or `/locate`-based fixtures. Bedrock structures without a dedicated rule use a lower-confidence Java/parity fallback.
+
 ## Tech Stack
 
 - **Framework**: [Next.js](https://nextjs.org) 13.5 (App Router)
@@ -55,6 +61,9 @@ furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 ```
+
+### Bedrock Structure Reference
+Bedrock structure placement constants and RNG behavior are cross-checked against [bedrock-dev/MCBEStructureFinder](https://github.com/bedrock-dev/MCBEStructureFinder), an MIT-licensed Minecraft Bedrock Edition structure finder. This is not a substitute for Bedrock Dedicated Server or in-game ground truth, so Bedrock results stay candidate-labeled in the UI.
 
 ### Community Data
 Community seed submissions are collected from public seed-sharing communities and direct submissions. Entries are best-effort catalog records and should be tested in the target Minecraft version before relying on them.
