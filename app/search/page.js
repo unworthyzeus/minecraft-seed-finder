@@ -384,20 +384,23 @@ function analyzeStructures(query, generator, seed, biomeReport) {
 
 function confidenceBadges(query, structureReport) {
   const badges = [];
-  if (query.edition === 'bedrock') {
-    badges.push({ label: 'Bedrock parity', level: 'approx' });
+  const statuses = new Set(structureReport.statuses || []);
+  if (query.structures.length === 0) {
+    badges.push({ label: 'Seed candidate', level: 'candidate' });
+  } else if (query.edition === 'bedrock') {
+    badges.push({ label: 'Bedrock structure candidate', level: 'approx' });
   } else {
-    badges.push({ label: 'Exact placement', level: 'exact' });
+    badges.push({ label: 'Java placement candidate', level: 'candidate' });
   }
   if (query.biome !== 'any') badges.push({ label: 'Biome-confirmed', level: 'biome' });
   if (structureReport.cluster?.biomeStructureDistance != null) {
     badges.push({ label: 'Biome-structure cluster', level: 'biome' });
   }
-  if (structureReport.statuses.includes('terrain-candidate')) {
+  if (statuses.has('terrain-candidate')) {
     badges.push({ label: 'Terrain-candidate', level: 'candidate' });
   }
-  if (structureReport.statuses.includes('confirmed')) {
-    badges.push({ label: 'Structure-confirmed', level: 'exact' });
+  if (statuses.has('bedrock-candidate')) {
+    badges.push({ label: 'Bedrock parity candidate', level: 'approx' });
   }
   return badges;
 }
@@ -640,6 +643,7 @@ export default function SearchPage() {
         result.cluster?.biomeStructureDistance != null
           ? `Biome-structure cluster distance: ${formatDistance(result.cluster.biomeStructureDistance)}.`
           : 'Biome-structure cluster distance: off.',
+        'Search Lab structures are candidates, not final in-game proof. Verify in Minecraft or with an official/JAR ground-truth run before treating the seed as 100%.',
       ].join('\n'),
     });
     setShowSubmitModal(true);
@@ -660,7 +664,8 @@ export default function SearchPage() {
             <h1>Find seeds by constraints</h1>
             <p>
               Stream smart seed candidates through biome, structure, and cluster gates, then keep
-              the worlds that survive the version-specific checks.
+              the worlds that survive the version-specific checks. Results are candidates until
+              verified in Minecraft or against a trusted Java/C++ ground-truth generator.
             </p>
           </div>
           <div className="search-lab-actions">
@@ -797,6 +802,10 @@ export default function SearchPage() {
                 <strong>Biome-structure cluster</strong>
                 <p>When enabled, the selected structures must also sit within that block distance of the required biome sample.</p>
               </div>
+              <div>
+                <strong>Accuracy status</strong>
+                <p>Structure results are candidate hits. Java checks cover region placement and sampled biomes; Bedrock checks use parity rendering and must be verified in-game for final proof.</p>
+              </div>
             </div>
 
             {saved.length > 0 && (
@@ -836,9 +845,15 @@ export default function SearchPage() {
                       {result.structures.map((structure, index) => (
                         <li key={`${structure.key}-${index}`}>
                           {structure.name}: {structure.x}, {structure.z}
+                          <span>{structure.statusLabel || 'Candidate'}</span>
                         </li>
                       ))}
                     </ul>
+                  )}
+                  {result.structures.length > 0 && (
+                    <p className="result-note">
+                      Candidate result: placement/biome checks passed for the selected model, but this is not a 100% generated-world confirmation.
+                    </p>
                   )}
                   {result.cluster && (
                     <p className="result-cluster">

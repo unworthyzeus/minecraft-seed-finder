@@ -28,7 +28,7 @@ function parseTarget(value) {
 
 function formatStructures(structures) {
     return structures
-        .map(s => `${s.name || STRUCTURE_NAMES[s.key] || s.key} @ ${s.x}, ${s.z}`)
+        .map(s => `${s.name || STRUCTURE_NAMES[s.key] || s.key} @ ${s.x}, ${s.z} (${s.statusLabel || 'Candidate'})`)
         .join(' | ');
 }
 
@@ -200,7 +200,7 @@ export default function VisualSeedCracker() {
             </div>
 
             <div className="edition-note">
-                Java Edition only. 26.x uses the 1.21+ structure family until checked against official 26.x fixtures.
+                Java Edition only. Results are structure candidates: placement and biome checks can pass before terrain/start or official 26.x fixture verification.
             </div>
 
             <div className="cracker-grid">

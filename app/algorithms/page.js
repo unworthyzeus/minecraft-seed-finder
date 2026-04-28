@@ -18,8 +18,18 @@ const versionRows = [
   ['Beta 1.7', 'Climate table + interpolated sea-level noise', 'Block and scale-4 parity'],
   ['Beta 1.8', 'Early layer stack with Beta land rules', 'Scale-4 parity'],
   ['1.0 - 1.17', 'Layer stack, rivers, shores, hills, oceans', 'Scale-4 parity'],
-  ['1.18+', 'Multi-noise biome source', 'Origin and far-field parity'],
+  ['1.18+', 'Multi-noise biome source', 'Implemented, but full C/JAR fixture coverage is still required'],
+  ['Java 26.x', 'Mapped to the 1.21+ worldgen family', 'Supported as current-family, not proven with 26.x-specific fixtures'],
   ['Bedrock', 'Edition-aware biome renderer', 'Parity-era terrain with Bedrock seed normalization']
+];
+
+const accuracyRows = [
+  ['Java structure placement', 'Ground-truthed for region/chunk positions against local fixtures.', 'Strong for placement math, but still a candidate until biome, terrain, and generated-world checks all agree.'],
+  ['Java 1.18+ biomes and terrain', 'The renderer uses the modern multi-noise path.', 'Needs complete C cubiomes or official JAR fixtures in this checkout before we can claim full 1.18+ parity.'],
+  ['Java 26.x', 'Selectable and mapped to the modern 1.21+ family.', 'Minecraft 26.x is a new release line; any subtle worldgen change needs explicit fixtures before a 100% claim.'],
+  ['Bedrock biomes', 'Covered by local Bedrock generation fixtures and version/seed normalization checks.', 'Good for the parity renderer, but not the same thing as final Bedrock structure proof.'],
+  ['Bedrock structures', 'Shown only as candidates.', 'Bedrock placement rules are edition-specific and are not fully proven by the Java structure fixture suite.'],
+  ['Catalog categories and rare decorations', 'Seeds such as end portal eyes, cacti, fossils, spawners, or community discoveries can be stored and searched.', 'Unless a category has a dedicated validator, it is catalog evidence or heuristic data, not generated proof.']
 ];
 
 export default function AlgorithmsPage() {
@@ -137,8 +147,9 @@ export default function AlgorithmsPage() {
               Many structure placements use a region coordinate, a salt, and only part of
               the world seed. That means different world seeds can share the same structure
               layout, letting tools search the lower bits first and resolve biome or terrain
-              validity later. The visualizer now separates exact region placement from
-              biome-confirmed and terrain-candidate markers.
+              validity later. The visualizer treats rendered structure hits as candidates:
+              Java can have verified placement math while still needing terrain/start checks,
+              and Bedrock requires edition-specific in-game or fixture verification.
             </p>
           </div>
           <div className="code-block compact">
@@ -146,6 +157,26 @@ export default function AlgorithmsPage() {
             <pre>{`structSeed = worldSeed & 0xFFFFFFFFFFFFL
 regionSeed = regionX * A + regionZ * B + structSeed + salt
 candidate = randomChunkInRegion(regionSeed)`}</pre>
+          </div>
+        </section>
+
+        <section className="accuracy-section">
+          <div className="section-kicker">Accuracy scope</div>
+          <h2>What is verified, and what is still candidate-only</h2>
+          <p>
+            The app should not claim universal 100% accuracy yet. It has verified pieces,
+            but Minecraft worldgen is a stack: seed parsing, version mapping, biome source,
+            structure region placement, biome viability, terrain height, structure start,
+            decoration RNG, and edition-specific behavior can each fail independently.
+          </p>
+          <div className="accuracy-list">
+            {accuracyRows.map(([area, checked, caveat]) => (
+              <article key={area} className="accuracy-row">
+                <strong>{area}</strong>
+                <span>{checked}</span>
+                <em>{caveat}</em>
+              </article>
+            ))}
           </div>
         </section>
 
@@ -323,6 +354,7 @@ candidate = randomChunkInRegion(regionSeed)`}</pre>
 
         .pipeline-section,
         .version-section,
+        .accuracy-section,
         .split-section,
         .credits-section {
           margin-top: 56px;
@@ -427,7 +459,13 @@ candidate = randomChunkInRegion(regionSeed)`}</pre>
           border-top: 2px solid var(--dark-grass);
         }
 
-        .version-row {
+        .accuracy-list {
+          border-top: 2px solid var(--dark-grass);
+          margin-top: 18px;
+        }
+
+        .version-row,
+        .accuracy-row {
           display: grid;
           grid-template-columns: minmax(120px, 0.6fr) minmax(220px, 1.2fr) minmax(160px, 0.75fr);
           gap: 18px;
@@ -436,8 +474,26 @@ candidate = randomChunkInRegion(regionSeed)`}</pre>
           align-items: center;
         }
 
-        .version-row span {
+        .accuracy-section p {
+          color: var(--text-secondary);
+          max-width: 920px;
+        }
+
+        .version-row span,
+        .accuracy-row span {
           color: var(--text-primary);
+          line-height: 1.45;
+        }
+
+        .accuracy-row strong {
+          color: var(--gold-yellow);
+          font-size: 1.08rem;
+          line-height: 1.45;
+        }
+
+        .accuracy-row em {
+          color: var(--text-secondary);
+          font-style: normal;
           line-height: 1.45;
         }
 
@@ -475,7 +531,8 @@ candidate = randomChunkInRegion(regionSeed)`}</pre>
           }
 
           .pipeline-row,
-          .version-row {
+          .version-row,
+          .accuracy-row {
             grid-template-columns: 1fr;
             gap: 10px;
           }

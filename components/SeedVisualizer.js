@@ -281,9 +281,19 @@ function getDisplaySize(structure, zoom) {
     return Math.min(base, 22);
 }
 
+function isCandidateStatus(status) {
+    return typeof status === 'string' && status.endsWith('candidate');
+}
+
+function getCandidateStroke(status) {
+    if (status === 'bedrock-candidate') return '#fb923c';
+    if (status === 'terrain-candidate') return '#fbbf24';
+    return '#38bdf8';
+}
+
 function drawStructureMarker(ctx, structure, x, y, zoom, isPOIMatch = false) {
     const size = getDisplaySize(structure, zoom);
-    const isCandidate = structure.status === 'terrain-candidate';
+    const isCandidate = isCandidateStatus(structure.status);
 
     ctx.save();
     ctx.globalAlpha = isCandidate && !isPOIMatch ? 0.6 : 0.95;
@@ -297,7 +307,7 @@ function drawStructureMarker(ctx, structure, x, y, zoom, isPOIMatch = false) {
 
     if (isCandidate && !isPOIMatch) {
         ctx.setLineDash([3, 3]);
-        ctx.strokeStyle = '#fbbf24';
+        ctx.strokeStyle = getCandidateStroke(structure.status);
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.arc(x, y, size / 2 + 5, 0, Math.PI * 2);
@@ -822,7 +832,7 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
     const [isPointerOnCanvas, setIsPointerOnCanvas] = useState(false);
     const [showStructures, setShowStructures] = useState(true);
     const [showCommonStructures, setShowCommonStructures] = useState(false);
-    const [showCandidateStructures, setShowCandidateStructures] = useState(false);
+    const [showCandidateStructures, setShowCandidateStructures] = useState(true);
     const [showGrid, setShowGrid] = useState(true);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [canvasSize, setCanvasSize] = useState({ width: 800, height: 500 });
@@ -1035,7 +1045,7 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
             }).filter(({ structure, sx, sz, isPOIMatch }) => {
                 if (sx < -50 || sx > width + 50 || sz < -50 || sz > height + 50) return false;
                 if (structure.status === 'biome-mismatch') return false;
-                if (!showCandidateStructures && structure.status === 'terrain-candidate' && !isPOIMatch) return false;
+                if (!showCandidateStructures && isCandidateStatus(structure.status) && !isPOIMatch) return false;
                 if (!showCommonStructures && COMMON_STRUCTURE_KEYS.has(structure.key) && !isPOIMatch) return false;
                 return true;
             }).sort((a, b) => {
@@ -1188,7 +1198,7 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
                     <button
                         onClick={() => setShowCandidateStructures(v => !v)}
                         className={showCandidateStructures ? 'active' : ''}
-                        title="Toggle terrain candidates"
+                        title="Toggle structure candidates"
                     >
                         Candidates
                     </button>
@@ -1247,12 +1257,18 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
                         Target
                     </div>
                 )}
+                {showStructures && (
+                    <div className="legend-item candidate-key">
+                        <span className="candidate-ring"></span>
+                        Candidate, not final in-game proof
+                    </div>
+                )}
             </div>
 
             {/* Footer */}
             <div className="viz-footer">
                 <span>
-                    Biome algorithms by <a href="https://github.com/Cubitect/cubiomes" target="_blank" rel="noopener noreferrer">Cubiomes</a> (MIT License)
+                    Biome algorithms by <a href="https://github.com/Cubitect/cubiomes" target="_blank" rel="noopener noreferrer">Cubiomes</a> (MIT License). Structure overlays are candidates: Java placement and biome checks can pass while final terrain, decoration, or Bedrock-specific structure generation still needs world/JAR verification.
                 </span>
             </div>
 
@@ -1431,6 +1447,19 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
                     gap: 8px;
                     color: #aaa;
                     font-size: 0.85rem;
+                }
+
+                .candidate-key {
+                    color: #f5d061;
+                }
+
+                .candidate-ring {
+                    width: 18px;
+                    height: 18px;
+                    border: 2px dashed #fbbf24;
+                    border-radius: 50%;
+                    display: inline-block;
+                    background: rgba(251, 191, 36, 0.12);
                 }
 
                 .legend-dot {

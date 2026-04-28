@@ -1315,7 +1315,7 @@ a:hover {
 
 .search-explainer {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
   margin-bottom: 14px;
 }
@@ -1419,6 +1419,20 @@ a:hover {
   gap: 4px;
   color: var(--text-secondary);
   list-style: none;
+}
+
+.result-structures span {
+  display: inline-block;
+  margin-left: 8px;
+  color: var(--gold-yellow);
+  font-size: 0.82rem;
+}
+
+.result-note {
+  border-left: 3px solid var(--gold-yellow);
+  padding-left: 10px;
+  color: var(--text-muted);
+  font-size: 0.92rem;
 }
 
 .result-cluster {
