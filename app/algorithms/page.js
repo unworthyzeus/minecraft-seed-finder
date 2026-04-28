@@ -20,15 +20,15 @@ const versionRows = [
   ['1.0 - 1.17', 'Layer stack, rivers, shores, hills, oceans', 'Scale-4 parity'],
   ['1.18+', 'Multi-noise biome source', 'Cubiomes GT fixture coverage for sampled biomes'],
   ['Java 26.x', 'Mapped to the 1.21+ worldgen family', 'Supported as current-family; 26.x-specific worldgen changes still need fixtures'],
-  ['Bedrock', 'Edition-aware biome renderer + MCBE-style structure placement', 'Candidate model with Bedrock seed normalization']
+  ['Bedrock', 'cubiomes-bedrock JS port + optional BDS /locate verifier', 'Candidate model unless BDS confirms the survivor seed']
 ];
 
 const accuracyRows = [
   ['Java structure placement', 'Ground-truthed for region/chunk positions against local Cubiomes fixtures.', 'Strong for placement math, but still a candidate until biome, terrain, and generated-world checks all agree.'],
   ['Java B1.8 through 1.21 biomes', 'Covered by the Cubiomes ground-truth matrix when ../cubiomes-original/ground_truth.txt is present.', 'Beta 1.7 is intentionally excluded from the strict pass because its sea-level/noise path still needs separate work.'],
   ['Java 26.x', 'Selectable and mapped to the modern 1.21+ family.', 'Minecraft 26.x is a new release line; any subtle worldgen change needs explicit fixtures before a 100% claim.'],
-  ['Bedrock biomes', 'Covered by local Bedrock generation fixtures and version/seed normalization checks.', 'Good for the parity renderer, but not the same thing as final Bedrock structure proof.'],
-  ['Bedrock structures', 'Dedicated MCBE-style placement for villages, temples, monuments, mansions, outposts, shipwrecks, ocean ruins, buried treasure, and ruined portals.', 'Still candidate-only until checked against Bedrock Dedicated Server or in-game /locate fixtures; unsupported structures use a lower-confidence Java/parity fallback.'],
+  ['Bedrock biomes', 'Rendered through the cubiomes-bedrock JS port for supported modern profiles and covered by local golden fixtures.', 'Patch versions without exact cubiomes-bedrock profiles map to the nearest known profile and stay candidate-labeled.'],
+  ['Bedrock structures', 'Dedicated cubiomes-bedrock-style candidates for villages, temples, monuments, mansions, outposts, shipwrecks, ocean ruins, buried treasure, ruined portals, ancient cities, trail ruins, and trial chambers.', 'Still candidate-only until checked against Bedrock Dedicated Server or in-game /locate fixtures.'],
   ['Catalog categories and rare decorations', 'Seeds such as end portal eyes, cacti, fossils, spawners, or community discoveries can be stored and searched.', 'Unless a category has a dedicated validator, it is catalog evidence or heuristic data, not generated proof.']
 ];
 
@@ -73,7 +73,7 @@ export default function AlgorithmsPage() {
           </div>
           <div>
             <span className="status-label">Bedrock scope</span>
-            <strong>Bedrock uses edition-specific seed normalization, parity-era biome rendering, and MCBE-style structure placement; hits are candidates until checked with BDS or in-game.</strong>
+            <strong>Bedrock uses edition-specific seed normalization, a cubiomes-bedrock JS port, and optional BDS /locate verification for survivor seeds.</strong>
           </div>
         </section>
 
@@ -149,8 +149,8 @@ export default function AlgorithmsPage() {
               layout, letting tools search the lower bits first and resolve biome or terrain
               validity later. The visualizer treats rendered structure hits as candidates:
               Java can have verified placement math while still needing terrain/start checks.
-              Bedrock now uses MCBE-style placement rules where implemented, but needs
-              Bedrock Dedicated Server or in-game fixtures for final proof.
+              Bedrock now uses cubiomes-bedrock-style placement candidates and can call
+              Bedrock Dedicated Server for /locate confirmation when the local verifier is configured.
             </p>
           </div>
           <div className="code-block compact">
@@ -203,11 +203,11 @@ candidate = randomChunkInRegion(regionSeed)`}</pre>
             </a>
             <a
               className="research-link"
-              href="https://github.com/bedrock-dev/MCBEStructureFinder"
+              href="https://github.com/FragrantResult186/cubiomes-bedrock"
               target="_blank"
               rel="noreferrer"
             >
-              Bedrock structure reference
+              cubiomes-bedrock reference
             </a>
           </div>
         </section>

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { LegacyBiomeGenerator } from '../lib/cubiomes/layers';
 import { Generator } from '../lib/cubiomes/generator';
 import { BedrockBiomeGenerator } from '../lib/cubiomes/bedrock';
+import { getBedrockVersionProfile } from '../lib/cubiomes/bedrock-profiles';
 import { generateStructureCandidates, getBedrockStructureConfig, getStructureConfig, getStructureLegend, toCubiomesMcVersion } from '../lib/cubiomes/structures';
 import { getSupportedGeneratorMinor } from '../lib/version-utils';
 
@@ -1137,13 +1138,14 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
 
     const versionNum = parseVersion(version);
     const editionLabel = edition === 'bedrock' ? 'Bedrock Edition' : 'Java Edition';
+    const bedrockProfile = edition === 'bedrock' ? getBedrockVersionProfile(version) : null;
     const algorithmLabel = edition === 'bedrock'
-        ? (versionNum >= 18 ? 'Parity Biomes' : 'Legacy Bedrock Seed')
+        ? (versionNum >= 18 ? `cubiomes-bedrock JS (${bedrockProfile?.biomeTreeKey || 'legacy'})` : 'Legacy Bedrock Seed')
         : (versionNum >= 18 ? 'Multi-Noise' : 'Layer-Based');
     const mcVersion = toCubiomesMcVersion(version);
     const availableStructureEntries = Object.entries(STRUCTURE_CONFIG).filter(([type, config]) => {
         const hasPlacementConfig = edition === 'bedrock'
-            ? (getBedrockStructureConfig(config.type) || getStructureConfig(config.type, mcVersion))
+            ? (getBedrockStructureConfig(config.type, version) || getStructureConfig(config.type, mcVersion))
             : getStructureConfig(config.type, mcVersion);
         if (!hasPlacementConfig) return false;
         if (!showCommonStructures && COMMON_STRUCTURE_KEYS.has(type)) return false;
@@ -1272,7 +1274,7 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
             {/* Footer */}
             <div className="viz-footer">
                 <span>
-                    Biome algorithms by <a href="https://github.com/Cubitect/cubiomes" target="_blank" rel="noopener noreferrer">Cubiomes</a> (MIT License). Structure overlays are candidates: Java uses Cubiomes-style placement/biome checks; Bedrock uses MCBE-style placement where implemented and Java/parity fallback otherwise, with final proof still requiring Minecraft/BDS verification.
+                    Biome algorithms by <a href="https://github.com/Cubitect/cubiomes" target="_blank" rel="noopener noreferrer">Cubiomes</a> and Bedrock profiles from <a href="https://github.com/FragrantResult186/cubiomes-bedrock" target="_blank" rel="noopener noreferrer">cubiomes-bedrock</a> (MIT License). Structure overlays are candidates unless marked by BDS: Java uses Cubiomes-style placement/biome checks; Bedrock uses the cubiomes-bedrock JS port with final proof still requiring Minecraft/BDS verification.
                 </span>
             </div>
 

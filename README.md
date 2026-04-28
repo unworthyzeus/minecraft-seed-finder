@@ -20,7 +20,11 @@ The fun part: this is also a JavaScript/TypeScript port of Minecraft seed genera
 
 Java worldgen is treated as a Cubiomes port. The strict local GT test `npm run test:java:cubiomes` compares sampled Java B1.8 through 1.21 biome output against Cubiomes' `ground_truth.txt` when `../cubiomes-original/ground_truth.txt` or `CUBIOMES_GT_FILE` is available, and also checks Java structure placement against the bundled Cubiomes structure fixture. Beta 1.7 is intentionally not included in that strict pass yet because its older sea-level/noise path still needs separate parity work.
 
-Bedrock is a different accuracy track. The app has Bedrock seed normalization, parity-era biome rendering, and MCBE-style structure placement for villages, temples, monuments, mansions, outposts, shipwrecks, ocean ruins, buried treasure, and ruined portals. Those Bedrock structures are still labeled as candidates: final proof should come from Minecraft Bedrock itself, Bedrock Dedicated Server, or `/locate`-based fixtures. Bedrock structures without a dedicated rule use a lower-confidence Java/parity fallback.
+Bedrock is a different accuracy track. The app now uses a JavaScript port/adaptation of [FragrantResult186/cubiomes-bedrock](https://github.com/FragrantResult186/cubiomes-bedrock) for modern Bedrock biome decision trees and dedicated Bedrock structure candidates including villages, temples, monuments, mansions, outposts, shipwrecks, ocean ruins, buried treasure, ruined portals, ancient cities, trail ruins, and trial chambers. These are still labeled as candidates unless a Bedrock Dedicated Server verifier confirms them: final proof should come from Minecraft Bedrock itself, BDS, or `/locate`-based fixtures.
+
+The Bedrock Search Lab therefore has two stages. The browser performs a fast cubiomes-bedrock JS prefilter. If `BEDROCK_BDS_ROOT` or `BDS_ROOT` points at a local/self-hosted Bedrock Dedicated Server folder, `/api/bedrock/verify` can launch BDS, run `/locate`, and promote surviving Bedrock results to `BDS confirmed`. This verifier is intentionally optional and is not expected to run inside Vercel serverless deployments.
+
+Known Bedrock version gap: cubiomes-bedrock has grouped profiles rather than one exact generator for every selectable patch. Bedrock `1.21.50` and `1.21.60` use the Wild Drop tree, and `26.x` currently maps to the nearest `26.2/26.20` cubiomes-bedrock profile unless an exact profile is added later. The UI and README keep those mapped versions candidate-labeled.
 
 ## Tech Stack
 
@@ -39,6 +43,18 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view the application.
+
+### Optional Bedrock Dedicated Server verifier
+
+The Bedrock verifier is disabled by default. To enable local/self-hosted BDS checks, download Bedrock Dedicated Server from Mojang, extract it, and point the app at that folder:
+
+```bash
+BEDROCK_BDS_ROOT=C:\path\to\bedrock-server
+# or
+BDS_ROOT=C:\path\to\bedrock-server
+```
+
+When configured, the Search Lab calls `/api/bedrock/verify` only for Bedrock seeds that already survived the fast JS prefilter. The API creates a temporary BDS world for that seed, runs `/locate biome` and `/locate structure`, and marks the result `BDS confirmed` only if the requested radius and cluster constraints match.
 
 ## Credits & Acknowledgments
 
@@ -62,8 +78,11 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 ```
 
+### Cubiomes-Bedrock
+Modern Bedrock biome trees and structure profiles are ported/adapted from [FragrantResult186/cubiomes-bedrock](https://github.com/FragrantResult186/cubiomes-bedrock), an MIT-licensed fork of Cubiomes.
+
 ### Bedrock Structure Reference
-Bedrock structure placement constants and RNG behavior are cross-checked against [bedrock-dev/MCBEStructureFinder](https://github.com/bedrock-dev/MCBEStructureFinder), an MIT-licensed Minecraft Bedrock Edition structure finder. This is not a substitute for Bedrock Dedicated Server or in-game ground truth, so Bedrock results stay candidate-labeled in the UI.
+Earlier Bedrock structure placement constants and RNG behavior were cross-checked against [bedrock-dev/MCBEStructureFinder](https://github.com/bedrock-dev/MCBEStructureFinder), an MIT-licensed Minecraft Bedrock Edition structure finder. This is not a substitute for Bedrock Dedicated Server or in-game ground truth, so Bedrock results stay candidate-labeled in the UI unless BDS confirms them.
 
 ### Community Data
 Community seed submissions are collected from public seed-sharing communities and direct submissions. Entries are best-effort catalog records and should be tested in the target Minecraft version before relying on them.
@@ -72,7 +91,7 @@ Community seed submissions are collected from public seed-sharing communities an
 
 This project is open source under the [Apache License 2.0](./LICENSE). Redistributors must preserve the copyright and attribution notices in [NOTICE](./NOTICE).
 
-Cubiomes-derived portions remain credited to Cubitect under the MIT License, as recorded in the NOTICE file.
+Cubiomes-derived and cubiomes-bedrock-derived portions remain credited to their upstream MIT-licensed projects, as recorded in the NOTICE file.
 
 ## Deploy
 

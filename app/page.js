@@ -25,7 +25,7 @@ const ALL_EDITION_VERSION_OPTIONS = [
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState(null);
-  const [editionFilter, setEditionFilter] = useState('java');
+  const [editionFilter, setEditionFilter] = useState('all');
   const [versionFilter, setVersionFilter] = useState('all');
   const [confidenceFilter, setConfidenceFilter] = useState('all');
   const [coordinatesFilter, setCoordinatesFilter] = useState('all');
@@ -514,7 +514,7 @@ export default function Home() {
             Community seeds are scraped from public forums and may not be fully verified. Always test seeds yourself.
           </p>
           <p style={{ marginTop: '12px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-            World-generation algorithms are ported or adapted from <a href="https://github.com/Cubitect/cubiomes" target="_blank" rel="noopener noreferrer">Cubiomes</a> by Cubitect (MIT License)
+            World-generation algorithms are ported or adapted from <a href="https://github.com/Cubitect/cubiomes" target="_blank" rel="noopener noreferrer">Cubiomes</a> and <a href="https://github.com/FragrantResult186/cubiomes-bedrock" target="_blank" rel="noopener noreferrer">cubiomes-bedrock</a> (MIT License)
           </p>
           <p style={{ marginTop: '12px', fontSize: '0.9rem' }}>
             Built for the Minecraft community

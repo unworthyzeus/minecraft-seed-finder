@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Header from '@/components/Header';
 import SubmitModal from '@/components/SubmitModal';
 import { BedrockBiomeGenerator } from '@/lib/cubiomes/bedrock';
+import { getBedrockVersionProfile } from '@/lib/cubiomes/bedrock-profiles';
 import { Generator } from '@/lib/cubiomes/generator';
 import { LegacyBiomeGenerator } from '@/lib/cubiomes/layers';
 import {
@@ -32,6 +33,7 @@ const DEFAULT_QUERY = {
   structures: [],
   maxStructureDistance: 0,
   maxBiomeStructureDistance: 0,
+  verifyBedrock: true,
 };
 
 const BIOME_OPTIONS = [
@@ -408,6 +410,87 @@ function confidenceBadges(query, structureReport) {
   return badges;
 }
 
+function bedrockProfileBadge(query) {
+  if (query.edition !== 'bedrock') return null;
+  const profile = getBedrockVersionProfile(query.version);
+  return {
+    label: profile.exactVersionProfile ? 'cubiomes-bedrock profile' : 'mapped Bedrock profile',
+    level: profile.exactVersionProfile ? 'biome' : 'approx',
+  };
+}
+
+async function verifyBedrockCandidate(query, seed) {
+  if (query.edition !== 'bedrock' || !query.verifyBedrock) return null;
+
+  try {
+    const response = await fetch('/api/bedrock/verify', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        seed,
+        version: query.version,
+        biome: query.biome,
+        structures: query.structures,
+        radius: Number(query.radius),
+        maxStructureDistance: Number(query.maxStructureDistance),
+        maxBiomeStructureDistance: Number(query.maxBiomeStructureDistance),
+      }),
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok && payload.status !== 'unavailable') {
+      return { status: 'error', reason: payload.reason || `BDS verifier returned ${response.status}` };
+    }
+    return payload;
+  } catch (error) {
+    return { status: 'unavailable', reason: error?.message || 'BDS verifier is not reachable from this deployment.' };
+  }
+}
+
+function applyBedrockVerification(result, verification) {
+  if (!verification) return result;
+
+  if (verification.status === 'confirmed') {
+    const verifiedStructures = verification.structures.map(item => {
+      const info = STRUCTURE_INFO[item.key] || {};
+      return {
+        ...info,
+        key: item.key,
+        x: item.x,
+        z: item.z,
+        status: 'bds-confirmed',
+        statusLabel: 'BDS confirmed',
+        finalVerified: true,
+      };
+    });
+
+    return {
+      ...result,
+      verification,
+      structures: verifiedStructures.length > 0 ? verifiedStructures : result.structures,
+      biomePoint: verification.biomePoint || result.biomePoint,
+      badges: [
+        { label: 'BDS confirmed', level: 'biome' },
+        ...result.badges.filter(badge => badge.label !== 'Bedrock structure candidate'),
+      ],
+    };
+  }
+
+  const label = verification.status === 'unavailable'
+    ? 'BDS unavailable'
+    : verification.status === 'error'
+      ? 'BDS error'
+      : 'BDS mismatch';
+
+  return {
+    ...result,
+    verification,
+    badges: [
+      ...result.badges,
+      { label, level: 'approx' },
+    ],
+  };
+}
+
 function encodeQuery(query) {
   const params = new URLSearchParams();
   params.set('edition', query.edition);
@@ -419,6 +502,7 @@ function encodeQuery(query) {
   if (query.structures.length) params.set('structures', query.structures.join(','));
   if (Number(query.maxStructureDistance) > 0) params.set('cluster', String(query.maxStructureDistance));
   if (Number(query.maxBiomeStructureDistance) > 0) params.set('biomeCluster', String(query.maxBiomeStructureDistance));
+  if (query.edition === 'bedrock' && !query.verifyBedrock) params.set('bds', '0');
   return params.toString();
 }
 
@@ -435,6 +519,7 @@ function decodeQuery(search) {
     structures: (params.get('structures') || '').split(',').filter(key => STRUCTURE_INFO[key]),
     maxStructureDistance: Number(params.get('cluster') || DEFAULT_QUERY.maxStructureDistance),
     maxBiomeStructureDistance: Number(params.get('biomeCluster') || DEFAULT_QUERY.maxBiomeStructureDistance),
+    verifyBedrock: params.get('bds') !== '0',
   };
 }
 
@@ -448,11 +533,13 @@ function normalizeQuery(query) {
     radius: Math.max(128, Math.min(5000, Number(query.radius) || DEFAULT_QUERY.radius)),
     maxStructureDistance: Math.max(0, Math.min(5000, Number(query.maxStructureDistance) || 0)),
     maxBiomeStructureDistance: Math.max(0, Math.min(5000, Number(query.maxBiomeStructureDistance) || 0)),
+    verifyBedrock: query.verifyBedrock !== false,
   };
 }
 
 export default function SearchPage() {
   const [query, setQuery] = useState(DEFAULT_QUERY);
+  const [queryHydrated, setQueryHydrated] = useState(false);
   const [status, setStatus] = useState(STATUS_IDLE);
   const [results, setResults] = useState([]);
   const [saved, setSaved] = useState([]);
@@ -463,6 +550,7 @@ export default function SearchPage() {
 
   useEffect(() => {
     setQuery(normalizeQuery(decodeQuery(window.location.search)));
+    setQueryHydrated(true);
     try {
       setSaved(JSON.parse(localStorage.getItem('seed-searches') || '[]'));
     } catch {
@@ -471,9 +559,10 @@ export default function SearchPage() {
   }, []);
 
   useEffect(() => {
+    if (!queryHydrated) return;
     const qs = encodeQuery(normalizeQuery(query));
     window.history.replaceState(null, '', `/search?${qs}`);
-  }, [query]);
+  }, [query, queryHydrated]);
 
   const updateQuery = useCallback((patch) => {
     setQuery(prev => normalizeQuery({ ...prev, ...patch }));
@@ -485,7 +574,11 @@ export default function SearchPage() {
   const strategyText = useMemo(() => {
     const seedCount = Number(query.maxSeeds).toLocaleString();
     const versionLabel = formatEditionVersion(query.edition, query.version);
-    return `Smart spread: ${seedCount} candidates sampled across the signed 64-bit seed space from key "${query.startSeed || DEFAULT_QUERY.startSeed}" for ${versionLabel}.`;
+    const profile = query.edition === 'bedrock' ? getBedrockVersionProfile(query.version) : null;
+    const suffix = profile
+      ? ` Bedrock prefilter uses ${profile.label}; BDS verification runs only on surviving candidates when available.`
+      : '';
+    return `Smart spread: ${seedCount} candidates sampled across the signed 64-bit seed space from key "${query.startSeed || DEFAULT_QUERY.startSeed}" for ${versionLabel}.${suffix}`;
   }, [query.edition, query.maxSeeds, query.startSeed, query.version]);
 
   useEffect(() => {
@@ -559,8 +652,10 @@ export default function SearchPage() {
         false
       ));
       const badges = reports.flatMap(report => confidenceBadges(report.query, report.structureReport));
+      const profileBadge = bedrockProfileBadge(activeQuery);
+      if (profileBadge) badges.push(profileBadge);
 
-      found.push({
+      let nextResult = {
         seed: seed.toString(),
         biomePoint: primaryReport.structureReport.cluster?.biomePoint || primaryReport.biomeReport.point,
         structures,
@@ -569,7 +664,18 @@ export default function SearchPage() {
         query: activeQuery,
         biomeLabel: biomeOption.label,
         biomeY: biomeOption.y,
-      });
+      };
+
+      if (activeQuery.edition === 'bedrock' && activeQuery.verifyBedrock) {
+        setStatus({ running: true, scanned, biomeMatches, structureMatches, stage: 'BDS verification' });
+        const verification = await verifyBedrockCandidate(activeQuery, seed.toString());
+        if (verification?.status === 'mismatch') {
+          continue;
+        }
+        nextResult = applyBedrockVerification(nextResult, verification);
+      }
+
+      found.push(nextResult);
       setResults([...found]);
 
       if (found.length >= 24) break;
@@ -670,7 +776,7 @@ export default function SearchPage() {
             <p>
               Stream smart seed candidates through biome, structure, and cluster gates, then keep
               the worlds that survive the version-specific checks. Results are candidates until
-              verified in Minecraft or against a trusted Java/C++ ground-truth generator.
+              verified in Minecraft, Cubiomes, or Bedrock Dedicated Server.
             </p>
           </div>
           <div className="search-lab-actions">
@@ -699,6 +805,7 @@ export default function SearchPage() {
               <select className="filter-select" value={query.edition} onChange={e => updateQuery({
                 edition: e.target.value,
                 version: getDefaultVersionForEdition(e.target.value),
+                verifyBedrock: e.target.value === 'bedrock',
               })}>
                 <option value="java">Java</option>
                 <option value="bedrock">Bedrock</option>
@@ -713,6 +820,18 @@ export default function SearchPage() {
                 ))}
               </select>
             </label>
+
+            {query.edition === 'bedrock' && (
+              <label className="control-checkbox">
+                <input
+                  type="checkbox"
+                  checked={query.verifyBedrock}
+                  onChange={e => updateQuery({ verifyBedrock: e.target.checked })}
+                />
+                <span>BDS verification for survivors</span>
+                <small className="control-help">Uses /api/bedrock/verify when a local/self-hosted Bedrock Dedicated Server is configured.</small>
+              </label>
+            )}
 
             <label>
               Search key
@@ -809,7 +928,7 @@ export default function SearchPage() {
               </div>
               <div>
                 <strong>Accuracy status</strong>
-                <p>Java biome/structure math is tested against Cubiomes GT for the covered versions. Bedrock uses MCBE-style placement candidates where implemented; final Bedrock proof still needs BDS or in-game verification.</p>
+                <p>Java biome/structure math is tested against Cubiomes GT for the covered versions. Bedrock uses a cubiomes-bedrock JS prefilter, then BDS can confirm survivor seeds when the verifier is configured.</p>
               </div>
             </div>
 
@@ -858,7 +977,9 @@ export default function SearchPage() {
                   {result.structures.length > 0 && (
                     <p className="result-note">
                       {result.query?.edition === 'bedrock'
-                        ? 'Bedrock candidate: MCBE-style placement/biome checks passed where implemented, but this is not a 100% BDS or in-game generated-world confirmation.'
+                        ? (result.verification?.status === 'confirmed'
+                          ? 'Bedrock confirmed: BDS locate checks matched the selected radius and cluster constraints for this search.'
+                          : 'Bedrock candidate: cubiomes-bedrock JS prefilter passed, but this is not a 100% generated-world confirmation unless BDS is configured and confirms it.')
                         : 'Java candidate: Cubiomes-style placement/biome checks passed, but this is not a final generated-world terrain/start confirmation.'}
                     </p>
                   )}

@@ -61,7 +61,7 @@ const bedrockVillage = firstCandidate({
     structureKeys: ['village'],
 });
 assert.equal(bedrockVillage.status, 'bedrock-placement-candidate');
-assert.equal(bedrockVillage.placementSource, 'mcbe-structure-finder');
+assert.equal(bedrockVillage.placementSource, 'cubiomes-bedrock');
 assert.equal(bedrockVillage.finalVerified, false);
 
 const allStatuses = [javaVillage, javaAncientCity, bedrockVillage].map(item => item.status);

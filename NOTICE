@@ -46,6 +46,14 @@ SOFTWARE.
 Bedrock Structure Reference Attribution
 ---------------------------------------
 
+Modern Bedrock biome-tree and structure-profile code is ported or adapted
+from cubiomes-bedrock by FragrantResult186:
+
+  https://github.com/FragrantResult186/cubiomes-bedrock
+
+cubiomes-bedrock is licensed under the MIT License and preserves Cubiomes'
+2020 Cubitect copyright notice.
+
 Bedrock structure placement constants and RNG behavior are cross-checked
 against MCBEStructureFinder by bedrock-dev:
 

@@ -18,17 +18,22 @@ const plainsGenerator = {
 };
 
 const cases = [
-    [STRUCTURE_TYPES.Village, '0', 0, 0, { x: 144, z: 160 }],
-    [STRUCTURE_TYPES.Ruined_Portal, '0', 0, 0, { x: 320, z: 160 }],
-    [STRUCTURE_TYPES.Desert_Pyramid, '12345', 0, 0, { x: 96, z: 48 }],
-    [STRUCTURE_TYPES.Village, '12345', -1, 0, { x: -384, z: 144 }],
-    [STRUCTURE_TYPES.Village, '12345', 0, -1, { x: 80, z: -304 }],
+    [STRUCTURE_TYPES.Village, '0', 0, 0, { x: 136, z: 280 }],
+    [STRUCTURE_TYPES.Ruined_Portal, '0', 0, 0, { x: 40, z: 24 }],
+    [STRUCTURE_TYPES.Desert_Pyramid, '12345', 0, 0, { x: 280, z: 88 }],
+    [STRUCTURE_TYPES.Village, '12345', -1, 0, { x: -168, z: 168 }],
+    [STRUCTURE_TYPES.Village, '12345', 0, -1, { x: 344, z: -264 }],
 ];
 
 assert.deepEqual(
-    getBedrockStructureConfig(STRUCTURE_TYPES.Village),
-    { spacing: 27, spawnRange: 17, salt: 10387312, num: 4, source: 'mcbe-structure-finder' },
-    'Bedrock village config should use MCBE spacing/spawn range, not Java structure config'
+    {
+        spacing: getBedrockStructureConfig(STRUCTURE_TYPES.Village).spacing,
+        spawnRange: getBedrockStructureConfig(STRUCTURE_TYPES.Village).spawnRange,
+        salt: getBedrockStructureConfig(STRUCTURE_TYPES.Village).salt,
+        source: getBedrockStructureConfig(STRUCTURE_TYPES.Village).source,
+    },
+    { spacing: 34, spawnRange: 26, salt: 10387312, source: 'cubiomes-bedrock' },
+    'Bedrock current village config should use the cubiomes-bedrock 1.18+ spacing/spawn range'
 );
 
 for (const [type, seed, areaX, areaZ, expected] of cases) {
@@ -45,7 +50,7 @@ const candidates = generateStructureCandidates({
     edition: 'bedrock',
     centerX: 0,
     centerZ: 0,
-    range: 256,
+    range: 320,
     generator: plainsGenerator,
     structureKeys: ['village'],
 });
@@ -53,12 +58,12 @@ const candidates = generateStructureCandidates({
 assert.ok(
     candidates.some(candidate =>
         candidate.key === 'village' &&
-        candidate.x === 144 &&
-        candidate.z === 160 &&
+        candidate.x === 136 &&
+        candidate.z === 280 &&
         candidate.status === 'bedrock-placement-candidate' &&
-        candidate.placementSource === 'mcbe-structure-finder'
+        candidate.placementSource === 'cubiomes-bedrock'
     ),
-    'Bedrock candidate generation should use MCBE placement and expose its candidate status/source'
+    'Bedrock candidate generation should use cubiomes-bedrock placement and expose its candidate status/source'
 );
 
 console.log(`Bedrock structure placement: ${cases.length} reference cases`);

@@ -1268,6 +1268,22 @@ a:hover {
   line-height: 1.25;
 }
 
+.control-checkbox {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.control-checkbox input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--grass-green);
+}
+
+.control-checkbox .control-help {
+  grid-column: 1 / -1;
+}
+
 .control-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
