@@ -205,7 +205,7 @@ export default function Home() {
   };
 
   const handleCopySuccess = () => {
-    showToast('âœ“ Seed copied to clipboard!');
+    showToast('Seed copied to clipboard!');
   };
 
   // Categories to display
@@ -237,7 +237,7 @@ export default function Home() {
 
             {/* Search */}
             <div className="search-container">
-              <span className="search-icon">ðŸ”</span>
+              <span className="search-icon">&gt;</span>
               <input
                 type="text"
                 className="search-input"
@@ -358,7 +358,7 @@ export default function Home() {
                 className={`category-pill ${!activeCategory ? 'active' : ''}`}
                 onClick={() => handleFilterChange(setActiveCategory)(null)}
               >
-                <span className="category-icon">âœ¨</span>
+                <span className="category-icon">*</span>
                 All ({preCategoryFilteredSeeds.length.toLocaleString()})
               </button>
               {displayedCategories.map(category => {
@@ -380,7 +380,7 @@ export default function Home() {
                   className="category-pill category-more"
                   onClick={() => setShowAllCategories(!showAllCategories)}
                 >
-                  {showAllCategories ? 'â† Show Less' : `+${hiddenCount} more`}
+                  {showAllCategories ? 'Show Less' : `+${hiddenCount} more`}
                 </button>
               )}
             </div>
@@ -440,7 +440,7 @@ export default function Home() {
             </div>
           ) : (
             <div className="empty-state">
-              <div className="empty-icon">ðŸ”</div>
+              <div className="empty-icon">*</div>
               <h3>No seeds found</h3>
               <p>Try adjusting your search or filters</p>
               <Link href="/search" className="search-inline-btn">Search procedurally instead</Link>
@@ -455,14 +455,14 @@ export default function Home() {
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage(1)}
               >
-                Â«Â«
+                &lt;&lt;
               </button>
               <button
                 className="pagination-btn"
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
               >
-                â€¹ Prev
+                &lt; Prev
               </button>
 
               <div className="pagination-info">
@@ -474,14 +474,14 @@ export default function Home() {
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
               >
-                Next â€º
+                Next &gt;
               </button>
               <button
                 className="pagination-btn"
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage(totalPages)}
               >
-                Â»Â»
+                &gt;&gt;
               </button>
             </div>
           )}
@@ -503,7 +503,7 @@ export default function Home() {
             World-generation algorithms are ported or adapted from <a href="https://github.com/Cubitect/cubiomes" target="_blank" rel="noopener noreferrer">Cubiomes</a> by Cubitect (MIT License)
           </p>
           <p style={{ marginTop: '12px', fontSize: '0.9rem' }}>
-            Built with â¤ï¸ for the Minecraft community
+            Built for the Minecraft community
           </p>
         </footer>
       </main>

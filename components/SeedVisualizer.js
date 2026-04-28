@@ -479,16 +479,13 @@ function drawStructureIcon(ctx, type, x, y, size, color) {
             break;
 
         case 'ruined_portal':
-            ctx.fillStyle = '#4a044e'; // Obsidian color
-            ctx.beginPath();
-            ctx.arc(x, y, size / 2, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.stroke();
-            // Portal Purple
+            ctx.fillStyle = '#1f1028';
+            ctx.fillRect(x - size / 2, y - size / 1.4, size, size * 1.35);
+            ctx.strokeRect(x - size / 2, y - size / 1.4, size, size * 1.35);
             ctx.fillStyle = '#d946ef';
-            ctx.beginPath();
-            ctx.arc(x, y, size / 3, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.fillRect(x - size / 3, y - size / 2, size * 0.66, size);
+            ctx.strokeStyle = '#f0abfc';
+            ctx.strokeRect(x - size / 3, y - size / 2, size * 0.66, size);
             break;
 
         case 'outpost':
@@ -505,6 +502,108 @@ function drawStructureIcon(ctx, type, x, y, size, color) {
             ctx.moveTo(x, y - size / 2);
             ctx.lineTo(x + size / 2, y - size);
             ctx.stroke();
+            break;
+
+        case 'shipwreck':
+            ctx.fillStyle = '#7c2d12';
+            ctx.beginPath();
+            ctx.moveTo(x - size / 1.4, y - size / 8);
+            ctx.lineTo(x + size / 1.4, y - size / 8);
+            ctx.lineTo(x + size / 3, y + size / 2);
+            ctx.lineTo(x - size / 3, y + size / 2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            ctx.strokeStyle = '#f8fafc';
+            ctx.beginPath();
+            ctx.moveTo(x, y - size / 1.1);
+            ctx.lineTo(x, y + size / 2);
+            ctx.moveTo(x, y - size / 1.1);
+            ctx.lineTo(x + size / 2, y - size / 2);
+            ctx.stroke();
+            break;
+
+        case 'ocean_ruin':
+            ctx.fillStyle = '#0e7490';
+            ctx.fillRect(x - size / 2, y - size / 3, size, size / 1.1);
+            ctx.strokeRect(x - size / 2, y - size / 3, size, size / 1.1);
+            ctx.fillStyle = '#67e8f9';
+            ctx.fillRect(x - size / 4, y - size / 1.7, size / 2, size / 4);
+            ctx.strokeRect(x - size / 4, y - size / 1.7, size / 2, size / 4);
+            ctx.strokeStyle = '#cffafe';
+            ctx.beginPath();
+            ctx.moveTo(x - size / 2, y + size / 8);
+            ctx.lineTo(x + size / 2, y + size / 8);
+            ctx.stroke();
+            break;
+
+        case 'buried_treasure':
+            ctx.fillStyle = '#92400e';
+            ctx.fillRect(x - size / 2, y - size / 4, size, size / 1.6);
+            ctx.strokeRect(x - size / 2, y - size / 4, size, size / 1.6);
+            ctx.fillStyle = '#facc15';
+            ctx.fillRect(x - size / 2, y - size / 3, size, size / 5);
+            ctx.strokeRect(x - size / 2, y - size / 3, size, size / 5);
+            ctx.fillStyle = '#fde68a';
+            ctx.fillRect(x - size / 10, y - size / 8, size / 5, size / 2.5);
+            break;
+
+        case 'ancient_city':
+            ctx.fillStyle = '#111827';
+            ctx.beginPath();
+            ctx.moveTo(x, y - size / 1.2);
+            ctx.lineTo(x + size / 1.4, y - size / 4);
+            ctx.lineTo(x + size / 2, y + size / 1.8);
+            ctx.lineTo(x - size / 2, y + size / 1.8);
+            ctx.lineTo(x - size / 1.4, y - size / 4);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(x - size / 4, y);
+            ctx.quadraticCurveTo(x, y + size / 3, x + size / 4, y);
+            ctx.moveTo(x - size / 4, y);
+            ctx.quadraticCurveTo(x, y - size / 3, x + size / 4, y);
+            ctx.stroke();
+            break;
+
+        case 'trail_ruins':
+            ctx.fillStyle = '#a16207';
+            ctx.beginPath();
+            ctx.moveTo(x - size / 1.8, y + size / 2);
+            ctx.lineTo(x - size / 3, y - size / 3);
+            ctx.lineTo(x + size / 6, y - size / 2);
+            ctx.lineTo(x + size / 1.8, y + size / 2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = '#fef3c7';
+            ctx.fillRect(x - size / 8, y - size / 8, size / 4, size / 2);
+            break;
+
+        case 'trial_chambers':
+            ctx.fillStyle = '#475569';
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+                const angle = Math.PI / 6 + i * Math.PI / 3;
+                const px = x + Math.cos(angle) * size / 1.5;
+                const py = y + Math.sin(angle) * size / 1.5;
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = '#f59e0b';
+            ctx.beginPath();
+            ctx.moveTo(x, y - size / 2.2);
+            ctx.lineTo(x + size / 3, y);
+            ctx.lineTo(x, y + size / 2.2);
+            ctx.lineTo(x - size / 3, y);
+            ctx.closePath();
+            ctx.fill();
             break;
 
         default:

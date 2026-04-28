@@ -59,11 +59,11 @@ export default function AlgorithmsPage() {
         <section className="status-band">
           <div>
             <span className="status-label">Current verification</span>
-            <strong>0 fixture errors across Beta, legacy Java, modern Java, and structure placement tests.</strong>
+            <strong>Local fixtures cover structure placement, Bedrock rendering, and seed metadata; full Java C-cubiomes parity needs the external ground-truth files.</strong>
           </div>
           <div>
             <span className="status-label">Bedrock scope</span>
-            <strong>Current Bedrock renders through parity-era biomes and edition-specific seed normalization.</strong>
+            <strong>Bedrock uses edition-specific seed normalization and parity-era biome rendering; structure hits are candidates until checked in-game.</strong>
           </div>
         </section>
 

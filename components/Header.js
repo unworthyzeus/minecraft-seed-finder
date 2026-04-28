@@ -25,6 +25,16 @@ export default function Header({ onSubmitClick }) {
                         <span className="desktop-only">Algorithms</span>
                         <span className="mobile-only">Algos</span>
                     </Link>
+                    <a
+                        href="https://github.com/unworthyzeus/minecraft-seed-finder"
+                        className="nav-link"
+                        title="Open GitHub repository"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <span className="desktop-only">GitHub</span>
+                        <span className="mobile-only">GH</span>
+                    </a>
                     <button className="submit-btn" onClick={onSubmitClick} title="Submit Discovery">
                         <span className="desktop-only">➕ Submit</span>
                         <span className="mobile-only">➕</span>
