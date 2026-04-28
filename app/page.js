@@ -2,7 +2,8 @@
 
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import { SEEDS_DATABASE, searchSeeds, filterSeeds, getDatabaseStats } from '@/lib/seeds-database';
+import { SEEDS_DATABASE, getDatabaseStats } from '@/lib/seeds-database';
+import { seedMatchesSourceFilter } from '@/lib/source-utils';
 import { CATEGORIES, getConfidenceLevel, CONFIDENCE_LEVELS, parseProbability } from '@/lib/categories';
 import { getVersionFilterOptions, seedMatchesVersionFilter } from '@/lib/version-utils';
 import Header from '@/components/Header';
@@ -13,8 +14,12 @@ const SEEDS_PER_PAGE = 24;
 
 // Available editions for filtering
 const EDITION_OPTIONS = [
+  { value: 'all', label: 'All Editions' },
   { value: 'java', label: 'Java Edition' },
   { value: 'bedrock', label: 'Bedrock Edition' }
+];
+const ALL_EDITION_VERSION_OPTIONS = [
+  { value: 'all', label: 'All Versions' }
 ];
 
 export default function Home() {
@@ -24,7 +29,7 @@ export default function Home() {
   const [versionFilter, setVersionFilter] = useState('all');
   const [confidenceFilter, setConfidenceFilter] = useState('all');
   const [coordinatesFilter, setCoordinatesFilter] = useState('all');
-  const [showGeneratedOnly, setShowGeneratedOnly] = useState(null);
+  const [sourceFilter, setSourceFilter] = useState('all');
   const [showSubmitModal, setShowSubmitModal] = useState(false);
   const [toast, setToast] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,7 +37,9 @@ export default function Home() {
   const [showAllCategories, setShowAllCategories] = useState(false);
 
   const stats = useMemo(() => getDatabaseStats(), []);
-  const versionOptions = useMemo(() => getVersionFilterOptions(editionFilter), [editionFilter]);
+  const versionOptions = useMemo(() => (
+    editionFilter === 'all' ? ALL_EDITION_VERSION_OPTIONS : getVersionFilterOptions(editionFilter)
+  ), [editionFilter]);
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search).get('q');
@@ -68,7 +75,8 @@ export default function Home() {
         (seed.title || '').toLowerCase().includes(lowerQuery) ||
         (seed.seed || '').includes(searchQuery) ||
         (seed.description || '').toLowerCase().includes(lowerQuery) ||
-        (seed.discoveredBy || '').toLowerCase().includes(lowerQuery)
+        (seed.discoveredBy || '').toLowerCase().includes(lowerQuery) ||
+        (seed.source || '').toLowerCase().includes(lowerQuery)
       );
     }
 
@@ -101,12 +109,8 @@ export default function Home() {
       });
     }
 
-    // Apply generated/verified filter
-    if (showGeneratedOnly === true) {
-      results = results.filter(seed => seed.isGenerated);
-    } else if (showGeneratedOnly === false) {
-      results = results.filter(seed => !seed.isGenerated);
-    }
+    // Apply source filter
+    results = results.filter(seed => seedMatchesSourceFilter(seed, sourceFilter));
 
     // Apply coordinates filter
     if (coordinatesFilter !== 'all') {
@@ -118,7 +122,7 @@ export default function Home() {
     }
 
     return results;
-  }, [searchQuery, editionFilter, versionFilter, confidenceFilter, showGeneratedOnly, coordinatesFilter]);
+  }, [searchQuery, editionFilter, versionFilter, confidenceFilter, sourceFilter, coordinatesFilter]);
 
   // Calculate category counts based on pre-filtered seeds
   const categoryCounts = useMemo(() => {
@@ -310,16 +314,16 @@ export default function Home() {
               <div className="filter-group">
                 <label>Source:</label>
                 <select
-                  value={showGeneratedOnly === null ? 'all' : showGeneratedOnly ? 'generated' : 'verified'}
+                  value={sourceFilter}
                   onChange={(e) => {
-                    const v = e.target.value;
-                    handleFilterChange(setShowGeneratedOnly)(v === 'all' ? null : v === 'generated');
+                    handleFilterChange(setSourceFilter)(e.target.value);
                   }}
                   className="filter-select"
                 >
                   <option value="all">All Sources</option>
-                  <option value="verified">Human Verified</option>
+                  <option value="human">Human Verified</option>
                   <option value="generated">Generated</option>
+                  <option value="website_submission">Submitted to this website ({stats.websiteSubmissions})</option>
                 </select>
               </div>
 

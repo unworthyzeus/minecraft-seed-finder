@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { isWebsiteSubmission } from '@/lib/source-utils';
 import { CATEGORIES, getConfidenceLevel } from '@/lib/categories';
 import { getSeedEditions } from '@/lib/version-utils';
 
@@ -12,6 +13,7 @@ export default function SeedCard({ seed, onCopySuccess }) {
     };
     const confidence = getConfidenceLevel(seed.confidence);
     const editions = getSeedEditions(seed);
+    const submittedToWebsite = isWebsiteSubmission(seed);
 
     const handleCopy = async (e) => {
         e.preventDefault();
@@ -37,6 +39,11 @@ export default function SeedCard({ seed, onCopySuccess }) {
                     {category.icon} {category.name.split(' ')[0]}
                 </span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    {submittedToWebsite && (
+                        <span className="submitted-badge" title="Submitted to this website">
+                            WEB
+                        </span>
+                    )}
                     {seed.isGenerated && (
                         <span className="generated-badge" title="Algorithmically generated">
                             ⚙️

@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { getSeedById } from '@/lib/seeds-database';
 import { CATEGORIES, getConfidenceLevel } from '@/lib/categories';
+import { isWebsiteSubmission } from '@/lib/source-utils';
 import { getPreferredSeedEdition, getSeedEditions } from '@/lib/version-utils';
 import SeedVisualizer from '@/components/SeedVisualizer';
 
@@ -37,6 +38,7 @@ export default function SeedDetailPage() {
         probability: 'Unknown',
     };
     const confidence = getConfidenceLevel(seed.confidence);
+    const submittedToWebsite = isWebsiteSubmission(seed);
 
     const handleCopy = async () => {
         try {
@@ -67,6 +69,11 @@ export default function SeedDetailPage() {
                     <span className={`confidence-badge confidence-${confidence.label.toLowerCase()}`}>
                         {confidence.icon} {confidence.label} ({Math.round(seed.confidence * 100)}%)
                     </span>
+                    {submittedToWebsite && (
+                        <span className="submitted-badge" title="Submitted to this website">
+                            Submitted
+                        </span>
+                    )}
                     {seed.isGenerated && (
                         <span className="generated-indicator">
                             Algorithmically Generated - Verify Before Use
@@ -171,6 +178,18 @@ export default function SeedDetailPage() {
                         <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '4px' }}>Discovered By</div>
                         <div style={{ fontSize: '1.1rem' }}>{seed.discoveredBy}</div>
                     </div>
+                    {seed.source && (
+                        <div>
+                            <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '4px' }}>Source</div>
+                            <div style={{ fontSize: '1.1rem' }}>
+                                {seed.sourceUrl ? (
+                                    <a href={seed.sourceUrl} target="_blank" rel="noopener noreferrer">
+                                        {seed.source}
+                                    </a>
+                                ) : seed.source}
+                            </div>
+                        </div>
+                    )}
                     <div>
                         <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '4px' }}>Discovery Date</div>
                         <div style={{ fontSize: '1.1rem' }}>{(() => {
@@ -206,6 +225,15 @@ export default function SeedDetailPage() {
                     Typical probability: {category.probability}
                 </p>
             </section>
+
+            {submittedToWebsite && (
+                <section className="seed-detail-section" style={{ borderLeft: '4px solid var(--diamond-blue)', background: 'rgba(96, 165, 250, 0.08)' }}>
+                    <h2>Website Submission Notice</h2>
+                    <p style={{ color: 'var(--text-secondary)' }}>
+                        This seed was submitted directly to this website by the community. The app keeps the submitted coordinates and runs the checks available for the reported edition, but it is not treated as a fully verified seed unless the exact in-game feature has been manually confirmed.
+                    </p>
+                </section>
+            )}
 
             {seed.isGenerated && (
                 <section className="seed-detail-section" style={{ borderLeft: '4px solid var(--accent-amber)', background: 'rgba(249, 115, 22, 0.1)' }}>
