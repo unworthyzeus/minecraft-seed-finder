@@ -158,6 +158,12 @@ const STATUS_IDLE = {
   stage: 'Idle',
 };
 
+const BEDROCK_VERIFIER_UNKNOWN = {
+  checked: false,
+  available: false,
+  reason: 'BDS verifier status has not been checked yet.',
+};
+
 const MASK64 = (1n << 64n) - 1n;
 const GOLDEN_GAMMA = 0x9e3779b97f4a7c15n;
 const JAVA_STREAM_SALT = 0x4f1bbcdc67625d45n;
@@ -419,6 +425,27 @@ function bedrockProfileBadge(query) {
   };
 }
 
+async function fetchBedrockVerifierStatus() {
+  try {
+    const response = await fetch('/api/bedrock/verify', { method: 'GET' });
+    const payload = await response.json().catch(() => ({}));
+    const available = Boolean(response.ok && payload.available);
+    return {
+      checked: true,
+      available,
+      reason: payload.reason || (available
+        ? 'BDS verifier is available.'
+        : `BDS verifier returned ${response.status}.`),
+    };
+  } catch (error) {
+    return {
+      checked: true,
+      available: false,
+      reason: error?.message || 'BDS verifier is not reachable from this deployment.',
+    };
+  }
+}
+
 async function verifyBedrockCandidate(query, seed) {
   if (query.edition !== 'bedrock' || !query.verifyBedrock) return null;
 
@@ -546,6 +573,7 @@ export default function SearchPage() {
   const [shareState, setShareState] = useState('Copy URL');
   const [submitSeed, setSubmitSeed] = useState(null);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
+  const [bedrockVerifierStatus, setBedrockVerifierStatus] = useState(BEDROCK_VERIFIER_UNKNOWN);
   const cancelRef = useRef(false);
 
   useEffect(() => {
@@ -563,6 +591,22 @@ export default function SearchPage() {
     const qs = encodeQuery(normalizeQuery(query));
     window.history.replaceState(null, '', `/search?${qs}`);
   }, [query, queryHydrated]);
+
+  useEffect(() => {
+    if (!queryHydrated || query.edition !== 'bedrock' || !query.verifyBedrock) return undefined;
+
+    let cancelled = false;
+    setBedrockVerifierStatus(prev => prev.checked
+      ? prev
+      : { ...BEDROCK_VERIFIER_UNKNOWN, reason: 'Checking BDS verifier...' });
+    fetchBedrockVerifierStatus().then(next => {
+      if (!cancelled) setBedrockVerifierStatus(next);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [query.edition, query.verifyBedrock, queryHydrated]);
 
   const updateQuery = useCallback((patch) => {
     setQuery(prev => normalizeQuery({ ...prev, ...patch }));
@@ -608,6 +652,16 @@ export default function SearchPage() {
     let biomeMatches = 0;
     let structureMatches = 0;
     const found = [];
+    let activeVerifierStatus = null;
+
+    if (activeQuery.edition === 'bedrock' && activeQuery.verifyBedrock) {
+      activeVerifierStatus = bedrockVerifierStatus.checked
+        ? bedrockVerifierStatus
+        : await fetchBedrockVerifierStatus();
+      if (!bedrockVerifierStatus.checked) {
+        setBedrockVerifierStatus(activeVerifierStatus);
+      }
+    }
 
     for (let i = 0; i < maxSeeds; i++) {
       if (cancelRef.current) break;
@@ -667,12 +721,19 @@ export default function SearchPage() {
       };
 
       if (activeQuery.edition === 'bedrock' && activeQuery.verifyBedrock) {
-        setStatus({ running: true, scanned, biomeMatches, structureMatches, stage: 'BDS verification' });
-        const verification = await verifyBedrockCandidate(activeQuery, seed.toString());
-        if (verification?.status === 'mismatch') {
-          continue;
+        if (activeVerifierStatus?.available) {
+          setStatus({ running: true, scanned, biomeMatches, structureMatches, stage: 'BDS verification' });
+          const verification = await verifyBedrockCandidate(activeQuery, seed.toString());
+          if (verification?.status === 'mismatch') {
+            continue;
+          }
+          nextResult = applyBedrockVerification(nextResult, verification);
+        } else {
+          nextResult = applyBedrockVerification(nextResult, {
+            status: 'unavailable',
+            reason: activeVerifierStatus?.reason || 'BDS verifier is not configured for this deployment.',
+          });
         }
-        nextResult = applyBedrockVerification(nextResult, verification);
       }
 
       found.push(nextResult);
@@ -829,7 +890,13 @@ export default function SearchPage() {
                   onChange={e => updateQuery({ verifyBedrock: e.target.checked })}
                 />
                 <span>BDS verification for survivors</span>
-                <small className="control-help">Uses /api/bedrock/verify when a local/self-hosted Bedrock Dedicated Server is configured.</small>
+                <small className="control-help">
+                  {bedrockVerifierStatus.checked
+                    ? (bedrockVerifierStatus.available
+                      ? 'BDS verifier available: survivor seeds will be POST-checked.'
+                      : `BDS verifier unavailable: ${bedrockVerifierStatus.reason}`)
+                    : 'Checks /api/bedrock/verify first; survivor POST checks only run when BDS is available.'}
+                </small>
               </label>
             )}
 

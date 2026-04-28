@@ -22,7 +22,7 @@ Java worldgen is treated as a Cubiomes port. The strict local GT test `npm run t
 
 Bedrock is a different accuracy track. The app now uses a JavaScript port/adaptation of [FragrantResult186/cubiomes-bedrock](https://github.com/FragrantResult186/cubiomes-bedrock) for modern Bedrock biome decision trees and dedicated Bedrock structure candidates including villages, temples, monuments, mansions, outposts, shipwrecks, ocean ruins, buried treasure, ruined portals, ancient cities, trail ruins, and trial chambers. These are still labeled as candidates unless a Bedrock Dedicated Server verifier confirms them: final proof should come from Minecraft Bedrock itself, BDS, or `/locate`-based fixtures.
 
-The Bedrock Search Lab therefore has two stages. The browser performs a fast cubiomes-bedrock JS prefilter. If `BEDROCK_BDS_ROOT` or `BDS_ROOT` points at a local/self-hosted Bedrock Dedicated Server folder, `/api/bedrock/verify` can launch BDS, run `/locate`, and promote surviving Bedrock results to `BDS confirmed`. This verifier is intentionally optional and is not expected to run inside Vercel serverless deployments.
+The Bedrock Search Lab therefore has two stages. The browser performs a fast cubiomes-bedrock JS prefilter. It probes `/api/bedrock/verify` with a cheap status request first; survivor seeds are POST-checked only when the route reports that a local/self-hosted BDS verifier is available. If `BEDROCK_BDS_ROOT` or `BDS_ROOT` points at a Bedrock Dedicated Server folder, `/api/bedrock/verify` can launch BDS, run `/locate`, and promote surviving Bedrock results to `BDS confirmed`. This verifier is intentionally optional and is not expected to run inside Vercel serverless deployments.
 
 Known Bedrock version gap: cubiomes-bedrock has grouped profiles rather than one exact generator for every selectable patch. Bedrock `1.21.50` and `1.21.60` use the Wild Drop tree, and `26.x` currently maps to the nearest `26.2/26.20` cubiomes-bedrock profile unless an exact profile is added later. The UI and README keep those mapped versions candidate-labeled.
 
@@ -54,7 +54,7 @@ BEDROCK_BDS_ROOT=C:\path\to\bedrock-server
 BDS_ROOT=C:\path\to\bedrock-server
 ```
 
-When configured, the Search Lab calls `/api/bedrock/verify` only for Bedrock seeds that already survived the fast JS prefilter. The API creates a temporary BDS world for that seed, runs `/locate biome` and `/locate structure`, and marks the result `BDS confirmed` only if the requested radius and cluster constraints match.
+When configured, the Search Lab calls `/api/bedrock/verify` only for Bedrock seeds that already survived the fast JS prefilter. When not configured, the UI keeps those results as Bedrock candidates and skips the survivor POST calls. The API creates a temporary BDS world for that seed, runs `/locate biome` and `/locate structure`, and marks the result `BDS confirmed` only if the requested radius and cluster constraints match.
 
 ## Credits & Acknowledgments
 
