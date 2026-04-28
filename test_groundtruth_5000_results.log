@@ -1,0 +1,741 @@
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+CUBIOMES GROUND TRUTH VERIFICATION - 5000 SEEDS EDITION
+Testing JS implementation against C cubiomes library
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+
+Loading ground truth from: C:\antigravity-projects\minecraft-seed-finder\data\ground_truth_5000.tsv
+
+  Processed 50.000 lines (36.4s)...
+  Processed 100.000 lines (74.8s)...
+  Processed 150.000 lines (120.9s)...
+  Processed 200.000 lines (170.4s)...
+  Processed 250.000 lines (308.4s)...
+  Processed 300.000 lines (528.3s)...
+  Processed 350.000 lines (715.9s)...
+  Processed 400.000 lines (940.8s)...
+  Processed 450.000 lines (1133.4s)...
+  Processed 500.000 lines (1350.4s)...
+  Processed 550.000 lines (1557.4s)...
+  Processed 600.000 lines (1748.5s)...
+  Processed 650.000 lines (1936.9s)...
+
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+RESULTS BY VERSION AND COORDINATE
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+
+MC B1.7     Ô£ù    16.11%  (4028/25000)
+           ÔööÔöÇ origin       16.7%  (834/5000)
+           ÔööÔöÇ near         16.3%  (816/5000)
+           ÔööÔöÇ far          15.4%  (770/5000)
+           ÔööÔöÇ very_far     16.6%  (831/5000)
+           ÔööÔöÇ negative     15.5%  (777/5000)
+MC B1.8     Ô£ù    43.01%  (10752/25000)
+           ÔööÔöÇ origin       95.1%  (4756/5000)
+           ÔööÔöÇ near         26.1%  (1307/5000)
+           ÔööÔöÇ far          26.6%  (1331/5000)
+           ÔööÔöÇ very_far     41.5%  (2076/5000)
+           ÔööÔöÇ negative     25.6%  (1282/5000)
+MC 1.0      Ô£ù    42.86%  (10716/25000)
+           ÔööÔöÇ near         25.1%  (1254/5000)
+           ÔööÔöÇ far          25.7%  (1285/5000)
+           ÔööÔöÇ very_far     39.2%  (1959/5000)
+           ÔööÔöÇ negative     24.4%  (1218/5000)
+MC 1.1      Ô£ù    42.07%  (10518/25000)
+           ÔööÔöÇ near         22.1%  (1107/5000)
+           ÔööÔöÇ far          25.3%  (1263/5000)
+           ÔööÔöÇ very_far     39.1%  (1955/5000)
+           ÔööÔöÇ negative     23.9%  (1193/5000)
+MC 1.2      Ô£ù    41.91%  (10478/25000)
+           ÔööÔöÇ near         22.1%  (1103/5000)
+           ÔööÔöÇ far          25.0%  (1250/5000)
+           ÔööÔöÇ very_far     38.5%  (1927/5000)
+           ÔööÔöÇ negative     24.0%  (1198/5000)
+MC 1.3      Ô£ù    42.01%  (10503/25000)
+           ÔööÔöÇ near         21.9%  (1094/5000)
+           ÔööÔöÇ far          25.2%  (1261/5000)
+           ÔööÔöÇ very_far     38.8%  (1940/5000)
+           ÔööÔöÇ negative     24.2%  (1208/5000)
+MC 1.4      Ô£ù    42.01%  (10503/25000)
+           ÔööÔöÇ near         21.9%  (1094/5000)
+           ÔööÔöÇ far          25.2%  (1261/5000)
+           ÔööÔöÇ very_far     38.8%  (1940/5000)
+           ÔööÔöÇ negative     24.2%  (1208/5000)
+MC 1.5      Ô£ù    42.01%  (10503/25000)
+           ÔööÔöÇ near         21.9%  (1094/5000)
+           ÔööÔöÇ far          25.2%  (1261/5000)
+           ÔööÔöÇ very_far     38.8%  (1940/5000)
+           ÔööÔöÇ negative     24.2%  (1208/5000)
+MC 1.6      Ô£ù    42.01%  (10503/25000)
+           ÔööÔöÇ near         21.9%  (1094/5000)
+           ÔööÔöÇ far          25.2%  (1261/5000)
+           ÔööÔöÇ very_far     38.8%  (1940/5000)
+           ÔööÔöÇ negative     24.2%  (1208/5000)
+MC 1.7      Ô£ù    27.85%  (6962/25000)
+           ÔööÔöÇ near         16.9%  (843/5000)
+           ÔööÔöÇ far          7.9%  (397/5000)
+           ÔööÔöÇ very_far     7.4%  (370/5000)
+           ÔööÔöÇ negative     7.0%  (352/5000)
+MC 1.8      Ô£ù    27.85%  (6962/25000)
+           ÔööÔöÇ near         16.9%  (843/5000)
+           ÔööÔöÇ far          7.9%  (397/5000)
+           ÔööÔöÇ very_far     7.4%  (370/5000)
+           ÔööÔöÇ negative     7.0%  (352/5000)
+MC 1.9      Ô£ù    27.85%  (6962/25000)
+           ÔööÔöÇ near         16.9%  (843/5000)
+           ÔööÔöÇ far          7.9%  (397/5000)
+           ÔööÔöÇ very_far     7.4%  (370/5000)
+           ÔööÔöÇ negative     7.0%  (352/5000)
+MC 1.10     Ô£ù    27.85%  (6962/25000)
+           ÔööÔöÇ near         16.9%  (843/5000)
+           ÔööÔöÇ far          7.9%  (397/5000)
+           ÔööÔöÇ very_far     7.4%  (370/5000)
+           ÔööÔöÇ negative     7.0%  (352/5000)
+MC 1.11     Ô£ù    27.85%  (6962/25000)
+           ÔööÔöÇ near         16.9%  (843/5000)
+           ÔööÔöÇ far          7.9%  (397/5000)
+           ÔööÔöÇ very_far     7.4%  (370/5000)
+           ÔööÔöÇ negative     7.0%  (352/5000)
+MC 1.12     Ô£ù    27.85%  (6962/25000)
+           ÔööÔöÇ near         16.9%  (843/5000)
+           ÔööÔöÇ far          7.9%  (397/5000)
+           ÔööÔöÇ very_far     7.4%  (370/5000)
+           ÔööÔöÇ negative     7.0%  (352/5000)
+MC 1.13     Ô£ù    25.47%  (6367/25000)
+           ÔööÔöÇ origin       100.0%  (4999/5000)
+           ÔööÔöÇ near         13.4%  (672/5000)
+           ÔööÔöÇ far          4.9%  (244/5000)
+           ÔööÔöÇ very_far     4.5%  (226/5000)
+           ÔööÔöÇ negative     4.5%  (226/5000)
+MC 1.14     Ô£ù    25.45%  (6363/25000)
+           ÔööÔöÇ origin       100.0%  (4999/5000)
+           ÔööÔöÇ near         13.4%  (668/5000)
+           ÔööÔöÇ far          4.9%  (244/5000)
+           ÔööÔöÇ very_far     4.5%  (226/5000)
+           ÔööÔöÇ negative     4.5%  (226/5000)
+MC 1.15     Ô£ù    25.45%  (6363/25000)
+           ÔööÔöÇ origin       100.0%  (4999/5000)
+           ÔööÔöÇ near         13.4%  (668/5000)
+           ÔööÔöÇ far          4.9%  (244/5000)
+           ÔööÔöÇ very_far     4.5%  (226/5000)
+           ÔööÔöÇ negative     4.5%  (226/5000)
+MC 1.16.1   Ô£ù    25.45%  (6363/25000)
+           ÔööÔöÇ near         13.3%  (667/5000)
+           ÔööÔöÇ far          4.9%  (244/5000)
+           ÔööÔöÇ very_far     4.5%  (226/5000)
+           ÔööÔöÇ negative     4.5%  (226/5000)
+MC 1.16     Ô£ù    25.45%  (6363/25000)
+           ÔööÔöÇ near         13.3%  (667/5000)
+           ÔööÔöÇ far          4.9%  (244/5000)
+           ÔööÔöÇ very_far     4.5%  (226/5000)
+           ÔööÔöÇ negative     4.5%  (226/5000)
+MC 1.17     Ô£ù    25.45%  (6363/25000)
+           ÔööÔöÇ near         13.3%  (667/5000)
+           ÔööÔöÇ far          4.9%  (244/5000)
+           ÔööÔöÇ very_far     4.5%  (226/5000)
+           ÔööÔöÇ negative     4.5%  (226/5000)
+MC 1.18     Ô£ù    25.78%  (6444/25000)
+           ÔööÔöÇ origin       95.2%  (4758/5000)
+           ÔööÔöÇ near         18.9%  (944/5000)
+           ÔööÔöÇ far          5.0%  (248/5000)
+           ÔööÔöÇ very_far     5.1%  (255/5000)
+           ÔööÔöÇ negative     4.8%  (239/5000)
+MC 1.19.2   Ô£ù    25.76%  (6441/25000)
+           ÔööÔöÇ origin       95.2%  (4758/5000)
+           ÔööÔöÇ near         18.8%  (940/5000)
+           ÔööÔöÇ far          5.0%  (248/5000)
+           ÔööÔöÇ very_far     5.1%  (256/5000)
+           ÔööÔöÇ negative     4.8%  (239/5000)
+MC 1.19     Ô£ù    25.76%  (6441/25000)
+           ÔööÔöÇ origin       95.2%  (4758/5000)
+           ÔööÔöÇ near         18.8%  (940/5000)
+           ÔööÔöÇ far          5.0%  (248/5000)
+           ÔööÔöÇ very_far     5.1%  (256/5000)
+           ÔööÔöÇ negative     4.8%  (239/5000)
+MC 1.20     Ô£ù    25.76%  (6441/25000)
+           ÔööÔöÇ origin       95.2%  (4758/5000)
+           ÔööÔöÇ near         18.8%  (940/5000)
+           ÔööÔöÇ far          5.0%  (248/5000)
+           ÔööÔöÇ very_far     5.1%  (256/5000)
+           ÔööÔöÇ negative     4.8%  (239/5000)
+MC 1.21     Ô£ù    25.76%  (6439/25000)
+           ÔööÔöÇ origin       95.2%  (4758/5000)
+           ÔööÔöÇ near         18.8%  (938/5000)
+           ÔööÔöÇ far          5.0%  (248/5000)
+           ÔööÔöÇ very_far     5.1%  (256/5000)
+           ÔööÔöÇ negative     4.8%  (239/5000)
+
+ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+OVERALL: Ô£ù FAILURES DETECTED
+Total:   200.664 / 650.000 (30.871%)
+Time:    1936.87s
+ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+SAMPLE FAILURES (for debugging)
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+
+MC B1.7 @ origin:
+  Seed 18446744073709551615 @ (0, 0): got 0 (ocean), expected 35 (savanna)
+  Seed 9223372036854775807 @ (0, 0): got 0 (ocean), expected 35 (savanna)
+  Seed 12345 @ (0, 0): got 51 (biome_51), expected 2 (desert)
+
+MC B1.7 @ near:
+  Seed 0 @ (100, 100): got 53 (biome_53), expected 0 (ocean)
+  Seed 18446744073709551615 @ (100, 100): got 0 (ocean), expected 51 (biome_51)
+  Seed 9223372036854775808 @ (100, 100): got 53 (biome_53), expected 0 (ocean)
+
+MC B1.7 @ far:
+  Seed 0 @ (5000, 5000): got 53 (biome_53), expected 4 (forest)
+  Seed 1 @ (5000, 5000): got 4 (forest), expected 0 (ocean)
+  Seed 18446744073709551615 @ (5000, 5000): got 53 (biome_53), expected 4 (forest)
+
+MC B1.7 @ very_far:
+  Seed 0 @ (12000, -8000): got 2 (desert), expected 52 (biome_52)
+  Seed 1 @ (12000, -8000): got 51 (biome_51), expected 0 (ocean)
+  Seed 18446744073709551615 @ (12000, -8000): got 4 (forest), expected 1 (plains)
+
+MC B1.7 @ negative:
+  Seed 0 @ (-3000, -4500): got 53 (biome_53), expected 0 (ocean)
+  Seed 18446744073709551615 @ (-3000, -4500): got 2 (desert), expected 5 (taiga)
+  Seed 9223372036854775808 @ (-3000, -4500): got 53 (biome_53), expected 0 (ocean)
+
+MC B1.8 @ origin:
+  Seed 4084542993614356169 @ (0, 0): got 0 (ocean), expected 2 (desert)
+  Seed 1321197159072711076 @ (0, 0): got 1 (plains), expected 0 (ocean)
+  Seed 11539619033687052006 @ (0, 0): got 6 (swamp), expected 0 (ocean)
+
+MC B1.8 @ near:
+  Seed 0 @ (100, 100): got 6 (swamp), expected 3 (mountains)
+  Seed 1 @ (100, 100): got 5 (taiga), expected 2 (desert)
+  Seed 18446744073709551615 @ (100, 100): got 3 (mountains), expected 0 (ocean)
+
+MC B1.8 @ far:
+  Seed 0 @ (5000, 5000): got 2 (desert), expected 0 (ocean)
+  Seed 1 @ (5000, 5000): got 1 (plains), expected 0 (ocean)
+  Seed 9223372036854775808 @ (5000, 5000): got 3 (mountains), expected 0 (ocean)
+
+MC B1.8 @ very_far:
+  Seed 1 @ (12000, -8000): got 4 (forest), expected 0 (ocean)
+  Seed 18446744073709551615 @ (12000, -8000): got 1 (plains), expected 0 (ocean)
+  Seed 9223372036854775808 @ (12000, -8000): got 3 (mountains), expected 0 (ocean)
+
+MC B1.8 @ negative:
+  Seed 0 @ (-3000, -4500): got 5 (taiga), expected 0 (ocean)
+  Seed 9223372036854775808 @ (-3000, -4500): got 4 (forest), expected 0 (ocean)
+  Seed 9223372036854775807 @ (-3000, -4500): got 1 (plains), expected 0 (ocean)
+
+MC 1.0 @ near:
+  Seed 1 @ (100, 100): got 5 (taiga), expected 2 (desert)
+  Seed 18446744073709551615 @ (100, 100): got 0 (ocean), expected 4 (forest)
+  Seed 9223372036854775808 @ (100, 100): got 0 (ocean), expected 12 (snowy_tundra)
+
+MC 1.0 @ far:
+  Seed 1 @ (5000, 5000): got 1 (plains), expected 4 (forest)
+  Seed 18446744073709551615 @ (5000, 5000): got 4 (forest), expected 0 (ocean)
+  Seed 9223372036854775808 @ (5000, 5000): got 12 (snowy_tundra), expected 3 (mountains)
+
+MC 1.0 @ very_far:
+  Seed 0 @ (12000, -8000): got 1 (plains), expected 0 (ocean)
+  Seed 1 @ (12000, -8000): got 0 (ocean), expected 6 (swamp)
+  Seed 18446744073709551615 @ (12000, -8000): got 1 (plains), expected 4 (forest)
+
+MC 1.0 @ negative:
+  Seed 1 @ (-3000, -4500): got 6 (swamp), expected 0 (ocean)
+  Seed 18446744073709551615 @ (-3000, -4500): got 3 (mountains), expected 0 (ocean)
+  Seed 9223372036854775807 @ (-3000, -4500): got 1 (plains), expected 0 (ocean)
+
+MC 1.1 @ near:
+  Seed 1 @ (100, 100): got 5 (taiga), expected 2 (desert)
+  Seed 18446744073709551615 @ (100, 100): got 0 (ocean), expected 4 (forest)
+  Seed 9223372036854775808 @ (100, 100): got 0 (ocean), expected 12 (snowy_tundra)
+
+MC 1.1 @ far:
+  Seed 1 @ (5000, 5000): got 1 (plains), expected 4 (forest)
+  Seed 18446744073709551615 @ (5000, 5000): got 4 (forest), expected 0 (ocean)
+  Seed 9223372036854775808 @ (5000, 5000): got 12 (snowy_tundra), expected 20 (mountain_edge)
+
+MC 1.1 @ very_far:
+  Seed 0 @ (12000, -8000): got 1 (plains), expected 0 (ocean)
+  Seed 1 @ (12000, -8000): got 0 (ocean), expected 6 (swamp)
+  Seed 18446744073709551615 @ (12000, -8000): got 1 (plains), expected 4 (forest)
+
+MC 1.1 @ negative:
+  Seed 1 @ (-3000, -4500): got 6 (swamp), expected 0 (ocean)
+  Seed 18446744073709551615 @ (-3000, -4500): got 20 (mountain_edge), expected 0 (ocean)
+  Seed 9223372036854775807 @ (-3000, -4500): got 1 (plains), expected 0 (ocean)
+
+MC 1.2 @ near:
+  Seed 1 @ (100, 100): got 2 (desert), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 0 (ocean), expected 1 (plains)
+  Seed 9223372036854775808 @ (100, 100): got 0 (ocean), expected 12 (snowy_tundra)
+
+MC 1.2 @ far:
+  Seed 1 @ (5000, 5000): got 3 (mountains), expected 21 (jungle)
+  Seed 18446744073709551615 @ (5000, 5000): got 1 (plains), expected 0 (ocean)
+  Seed 9223372036854775808 @ (5000, 5000): got 12 (snowy_tundra), expected 16 (beach)
+
+MC 1.2 @ very_far:
+  Seed 0 @ (12000, -8000): got 6 (swamp), expected 0 (ocean)
+  Seed 1 @ (12000, -8000): got 16 (beach), expected 5 (taiga)
+  Seed 18446744073709551615 @ (12000, -8000): got 5 (taiga), expected 4 (forest)
+
+MC 1.2 @ negative:
+  Seed 1 @ (-3000, -4500): got 2 (desert), expected 0 (ocean)
+  Seed 18446744073709551615 @ (-3000, -4500): got 16 (beach), expected 0 (ocean)
+  Seed 9223372036854775807 @ (-3000, -4500): got 5 (taiga), expected 0 (ocean)
+
+MC 1.3 @ near:
+  Seed 1 @ (100, 100): got 2 (desert), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 0 (ocean), expected 1 (plains)
+  Seed 9223372036854775808 @ (100, 100): got 0 (ocean), expected 12 (snowy_tundra)
+
+MC 1.3 @ far:
+  Seed 1 @ (5000, 5000): got 3 (mountains), expected 21 (jungle)
+  Seed 18446744073709551615 @ (5000, 5000): got 1 (plains), expected 0 (ocean)
+  Seed 9223372036854775808 @ (5000, 5000): got 12 (snowy_tundra), expected 16 (beach)
+
+MC 1.3 @ very_far:
+  Seed 0 @ (12000, -8000): got 6 (swamp), expected 0 (ocean)
+  Seed 1 @ (12000, -8000): got 16 (beach), expected 5 (taiga)
+  Seed 18446744073709551615 @ (12000, -8000): got 5 (taiga), expected 4 (forest)
+
+MC 1.3 @ negative:
+  Seed 1 @ (-3000, -4500): got 2 (desert), expected 0 (ocean)
+  Seed 18446744073709551615 @ (-3000, -4500): got 16 (beach), expected 0 (ocean)
+  Seed 9223372036854775807 @ (-3000, -4500): got 5 (taiga), expected 0 (ocean)
+
+MC 1.4 @ near:
+  Seed 1 @ (100, 100): got 2 (desert), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 0 (ocean), expected 1 (plains)
+  Seed 9223372036854775808 @ (100, 100): got 0 (ocean), expected 12 (snowy_tundra)
+
+MC 1.4 @ far:
+  Seed 1 @ (5000, 5000): got 3 (mountains), expected 21 (jungle)
+  Seed 18446744073709551615 @ (5000, 5000): got 1 (plains), expected 0 (ocean)
+  Seed 9223372036854775808 @ (5000, 5000): got 12 (snowy_tundra), expected 16 (beach)
+
+MC 1.4 @ very_far:
+  Seed 0 @ (12000, -8000): got 6 (swamp), expected 0 (ocean)
+  Seed 1 @ (12000, -8000): got 16 (beach), expected 5 (taiga)
+  Seed 18446744073709551615 @ (12000, -8000): got 5 (taiga), expected 4 (forest)
+
+MC 1.4 @ negative:
+  Seed 1 @ (-3000, -4500): got 2 (desert), expected 0 (ocean)
+  Seed 18446744073709551615 @ (-3000, -4500): got 16 (beach), expected 0 (ocean)
+  Seed 9223372036854775807 @ (-3000, -4500): got 5 (taiga), expected 0 (ocean)
+
+MC 1.5 @ near:
+  Seed 1 @ (100, 100): got 2 (desert), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 0 (ocean), expected 1 (plains)
+  Seed 9223372036854775808 @ (100, 100): got 0 (ocean), expected 12 (snowy_tundra)
+
+MC 1.5 @ far:
+  Seed 1 @ (5000, 5000): got 3 (mountains), expected 21 (jungle)
+  Seed 18446744073709551615 @ (5000, 5000): got 1 (plains), expected 0 (ocean)
+  Seed 9223372036854775808 @ (5000, 5000): got 12 (snowy_tundra), expected 16 (beach)
+
+MC 1.5 @ very_far:
+  Seed 0 @ (12000, -8000): got 6 (swamp), expected 0 (ocean)
+  Seed 1 @ (12000, -8000): got 16 (beach), expected 5 (taiga)
+  Seed 18446744073709551615 @ (12000, -8000): got 5 (taiga), expected 4 (forest)
+
+MC 1.5 @ negative:
+  Seed 1 @ (-3000, -4500): got 2 (desert), expected 0 (ocean)
+  Seed 18446744073709551615 @ (-3000, -4500): got 16 (beach), expected 0 (ocean)
+  Seed 9223372036854775807 @ (-3000, -4500): got 5 (taiga), expected 0 (ocean)
+
+MC 1.6 @ near:
+  Seed 1 @ (100, 100): got 2 (desert), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 0 (ocean), expected 1 (plains)
+  Seed 9223372036854775808 @ (100, 100): got 0 (ocean), expected 12 (snowy_tundra)
+
+MC 1.6 @ far:
+  Seed 1 @ (5000, 5000): got 3 (mountains), expected 21 (jungle)
+  Seed 18446744073709551615 @ (5000, 5000): got 1 (plains), expected 0 (ocean)
+  Seed 9223372036854775808 @ (5000, 5000): got 12 (snowy_tundra), expected 16 (beach)
+
+MC 1.6 @ very_far:
+  Seed 0 @ (12000, -8000): got 6 (swamp), expected 0 (ocean)
+  Seed 1 @ (12000, -8000): got 16 (beach), expected 5 (taiga)
+  Seed 18446744073709551615 @ (12000, -8000): got 5 (taiga), expected 4 (forest)
+
+MC 1.6 @ negative:
+  Seed 1 @ (-3000, -4500): got 2 (desert), expected 0 (ocean)
+  Seed 18446744073709551615 @ (-3000, -4500): got 16 (beach), expected 0 (ocean)
+  Seed 9223372036854775807 @ (-3000, -4500): got 5 (taiga), expected 0 (ocean)
+
+MC 1.7 @ near:
+  Seed 0 @ (100, 100): got 4 (forest), expected 0 (ocean)
+  Seed 1 @ (100, 100): got 24 (deep_ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 0 (ocean)
+
+MC 1.7 @ far:
+  Seed 0 @ (5000, 5000): got 2 (desert), expected 0 (ocean)
+  Seed 1 @ (5000, 5000): got 5 (taiga), expected 25 (stone_shore)
+  Seed 18446744073709551615 @ (5000, 5000): got 0 (ocean), expected 2 (desert)
+
+MC 1.7 @ very_far:
+  Seed 0 @ (12000, -8000): got 19 (taiga_hills), expected 24 (deep_ocean)
+  Seed 1 @ (12000, -8000): got 0 (ocean), expected 34 (wooded_mountains)
+  Seed 18446744073709551615 @ (12000, -8000): got 4 (forest), expected 1 (plains)
+
+MC 1.7 @ negative:
+  Seed 1 @ (-3000, -4500): got 0 (ocean), expected 1 (plains)
+  Seed 18446744073709551615 @ (-3000, -4500): got 4 (forest), expected 7 (river)
+  Seed 9223372036854775807 @ (-3000, -4500): got 24 (deep_ocean), expected 19 (taiga_hills)
+
+MC 1.8 @ near:
+  Seed 0 @ (100, 100): got 4 (forest), expected 0 (ocean)
+  Seed 1 @ (100, 100): got 24 (deep_ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 0 (ocean)
+
+MC 1.8 @ far:
+  Seed 0 @ (5000, 5000): got 2 (desert), expected 0 (ocean)
+  Seed 1 @ (5000, 5000): got 5 (taiga), expected 25 (stone_shore)
+  Seed 18446744073709551615 @ (5000, 5000): got 0 (ocean), expected 2 (desert)
+
+MC 1.8 @ very_far:
+  Seed 0 @ (12000, -8000): got 19 (taiga_hills), expected 24 (deep_ocean)
+  Seed 1 @ (12000, -8000): got 0 (ocean), expected 34 (wooded_mountains)
+  Seed 18446744073709551615 @ (12000, -8000): got 4 (forest), expected 1 (plains)
+
+MC 1.8 @ negative:
+  Seed 1 @ (-3000, -4500): got 0 (ocean), expected 1 (plains)
+  Seed 18446744073709551615 @ (-3000, -4500): got 4 (forest), expected 7 (river)
+  Seed 9223372036854775807 @ (-3000, -4500): got 24 (deep_ocean), expected 19 (taiga_hills)
+
+MC 1.9 @ near:
+  Seed 0 @ (100, 100): got 4 (forest), expected 0 (ocean)
+  Seed 1 @ (100, 100): got 24 (deep_ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 0 (ocean)
+
+MC 1.9 @ far:
+  Seed 0 @ (5000, 5000): got 2 (desert), expected 0 (ocean)
+  Seed 1 @ (5000, 5000): got 5 (taiga), expected 25 (stone_shore)
+  Seed 18446744073709551615 @ (5000, 5000): got 0 (ocean), expected 2 (desert)
+
+MC 1.9 @ very_far:
+  Seed 0 @ (12000, -8000): got 19 (taiga_hills), expected 24 (deep_ocean)
+  Seed 1 @ (12000, -8000): got 0 (ocean), expected 34 (wooded_mountains)
+  Seed 18446744073709551615 @ (12000, -8000): got 4 (forest), expected 1 (plains)
+
+MC 1.9 @ negative:
+  Seed 1 @ (-3000, -4500): got 0 (ocean), expected 1 (plains)
+  Seed 18446744073709551615 @ (-3000, -4500): got 4 (forest), expected 7 (river)
+  Seed 9223372036854775807 @ (-3000, -4500): got 24 (deep_ocean), expected 19 (taiga_hills)
+
+MC 1.10 @ near:
+  Seed 0 @ (100, 100): got 4 (forest), expected 0 (ocean)
+  Seed 1 @ (100, 100): got 24 (deep_ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 0 (ocean)
+
+MC 1.10 @ far:
+  Seed 0 @ (5000, 5000): got 2 (desert), expected 0 (ocean)
+  Seed 1 @ (5000, 5000): got 5 (taiga), expected 25 (stone_shore)
+  Seed 18446744073709551615 @ (5000, 5000): got 0 (ocean), expected 2 (desert)
+
+MC 1.10 @ very_far:
+  Seed 0 @ (12000, -8000): got 19 (taiga_hills), expected 24 (deep_ocean)
+  Seed 1 @ (12000, -8000): got 0 (ocean), expected 34 (wooded_mountains)
+  Seed 18446744073709551615 @ (12000, -8000): got 4 (forest), expected 1 (plains)
+
+MC 1.10 @ negative:
+  Seed 1 @ (-3000, -4500): got 0 (ocean), expected 1 (plains)
+  Seed 18446744073709551615 @ (-3000, -4500): got 4 (forest), expected 7 (river)
+  Seed 9223372036854775807 @ (-3000, -4500): got 24 (deep_ocean), expected 19 (taiga_hills)
+
+MC 1.11 @ near:
+  Seed 0 @ (100, 100): got 4 (forest), expected 0 (ocean)
+  Seed 1 @ (100, 100): got 24 (deep_ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 0 (ocean)
+
+MC 1.11 @ far:
+  Seed 0 @ (5000, 5000): got 2 (desert), expected 0 (ocean)
+  Seed 1 @ (5000, 5000): got 5 (taiga), expected 25 (stone_shore)
+  Seed 18446744073709551615 @ (5000, 5000): got 0 (ocean), expected 2 (desert)
+
+MC 1.11 @ very_far:
+  Seed 0 @ (12000, -8000): got 19 (taiga_hills), expected 24 (deep_ocean)
+  Seed 1 @ (12000, -8000): got 0 (ocean), expected 34 (wooded_mountains)
+  Seed 18446744073709551615 @ (12000, -8000): got 4 (forest), expected 1 (plains)
+
+MC 1.11 @ negative:
+  Seed 1 @ (-3000, -4500): got 0 (ocean), expected 1 (plains)
+  Seed 18446744073709551615 @ (-3000, -4500): got 4 (forest), expected 7 (river)
+  Seed 9223372036854775807 @ (-3000, -4500): got 24 (deep_ocean), expected 19 (taiga_hills)
+
+MC 1.12 @ near:
+  Seed 0 @ (100, 100): got 4 (forest), expected 0 (ocean)
+  Seed 1 @ (100, 100): got 24 (deep_ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 0 (ocean)
+
+MC 1.12 @ far:
+  Seed 0 @ (5000, 5000): got 2 (desert), expected 0 (ocean)
+  Seed 1 @ (5000, 5000): got 5 (taiga), expected 25 (stone_shore)
+  Seed 18446744073709551615 @ (5000, 5000): got 0 (ocean), expected 2 (desert)
+
+MC 1.12 @ very_far:
+  Seed 0 @ (12000, -8000): got 19 (taiga_hills), expected 24 (deep_ocean)
+  Seed 1 @ (12000, -8000): got 0 (ocean), expected 34 (wooded_mountains)
+  Seed 18446744073709551615 @ (12000, -8000): got 4 (forest), expected 1 (plains)
+
+MC 1.12 @ negative:
+  Seed 1 @ (-3000, -4500): got 0 (ocean), expected 1 (plains)
+  Seed 18446744073709551615 @ (-3000, -4500): got 4 (forest), expected 7 (river)
+  Seed 9223372036854775807 @ (-3000, -4500): got 24 (deep_ocean), expected 19 (taiga_hills)
+
+MC 1.13 @ origin:
+  Seed 903300620693472475 @ (0, 0): got 39 (badlands_plateau), expected 37 (badlands)
+
+MC 1.13 @ near:
+  Seed 0 @ (100, 100): got 4 (forest), expected 46 (cold_ocean)
+  Seed 1 @ (100, 100): got 24 (deep_ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 45 (lukewarm_ocean)
+
+MC 1.13 @ far:
+  Seed 0 @ (5000, 5000): got 2 (desert), expected 46 (cold_ocean)
+  Seed 1 @ (5000, 5000): got 5 (taiga), expected 25 (stone_shore)
+  Seed 18446744073709551615 @ (5000, 5000): got 45 (lukewarm_ocean), expected 2 (desert)
+
+MC 1.13 @ very_far:
+  Seed 0 @ (12000, -8000): got 19 (taiga_hills), expected 24 (deep_ocean)
+  Seed 1 @ (12000, -8000): got 0 (ocean), expected 34 (wooded_mountains)
+  Seed 18446744073709551615 @ (12000, -8000): got 4 (forest), expected 1 (plains)
+
+MC 1.13 @ negative:
+  Seed 1 @ (-3000, -4500): got 0 (ocean), expected 1 (plains)
+  Seed 18446744073709551615 @ (-3000, -4500): got 46 (cold_ocean), expected 7 (river)
+  Seed 9223372036854775808 @ (-3000, -4500): got 46 (cold_ocean), expected 0 (ocean)
+
+MC 1.14 @ origin:
+  Seed 903300620693472475 @ (0, 0): got 39 (badlands_plateau), expected 37 (badlands)
+
+MC 1.14 @ near:
+  Seed 0 @ (100, 100): got 4 (forest), expected 46 (cold_ocean)
+  Seed 1 @ (100, 100): got 24 (deep_ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 45 (lukewarm_ocean)
+
+MC 1.14 @ far:
+  Seed 0 @ (5000, 5000): got 2 (desert), expected 46 (cold_ocean)
+  Seed 1 @ (5000, 5000): got 5 (taiga), expected 25 (stone_shore)
+  Seed 18446744073709551615 @ (5000, 5000): got 45 (lukewarm_ocean), expected 2 (desert)
+
+MC 1.14 @ very_far:
+  Seed 0 @ (12000, -8000): got 19 (taiga_hills), expected 24 (deep_ocean)
+  Seed 1 @ (12000, -8000): got 0 (ocean), expected 34 (wooded_mountains)
+  Seed 18446744073709551615 @ (12000, -8000): got 4 (forest), expected 1 (plains)
+
+MC 1.14 @ negative:
+  Seed 1 @ (-3000, -4500): got 0 (ocean), expected 1 (plains)
+  Seed 18446744073709551615 @ (-3000, -4500): got 46 (cold_ocean), expected 7 (river)
+  Seed 9223372036854775808 @ (-3000, -4500): got 46 (cold_ocean), expected 0 (ocean)
+
+MC 1.15 @ origin:
+  Seed 903300620693472475 @ (0, 0): got 39 (badlands_plateau), expected 37 (badlands)
+
+MC 1.15 @ near:
+  Seed 0 @ (100, 100): got 4 (forest), expected 46 (cold_ocean)
+  Seed 1 @ (100, 100): got 24 (deep_ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 45 (lukewarm_ocean)
+
+MC 1.15 @ far:
+  Seed 0 @ (5000, 5000): got 2 (desert), expected 46 (cold_ocean)
+  Seed 1 @ (5000, 5000): got 5 (taiga), expected 25 (stone_shore)
+  Seed 18446744073709551615 @ (5000, 5000): got 45 (lukewarm_ocean), expected 2 (desert)
+
+MC 1.15 @ very_far:
+  Seed 0 @ (12000, -8000): got 19 (taiga_hills), expected 24 (deep_ocean)
+  Seed 1 @ (12000, -8000): got 0 (ocean), expected 34 (wooded_mountains)
+  Seed 18446744073709551615 @ (12000, -8000): got 4 (forest), expected 1 (plains)
+
+MC 1.15 @ negative:
+  Seed 1 @ (-3000, -4500): got 0 (ocean), expected 1 (plains)
+  Seed 18446744073709551615 @ (-3000, -4500): got 46 (cold_ocean), expected 7 (river)
+  Seed 9223372036854775808 @ (-3000, -4500): got 46 (cold_ocean), expected 0 (ocean)
+
+MC 1.16.1 @ near:
+  Seed 0 @ (100, 100): got 4 (forest), expected 46 (cold_ocean)
+  Seed 1 @ (100, 100): got 24 (deep_ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 45 (lukewarm_ocean)
+
+MC 1.16.1 @ far:
+  Seed 0 @ (5000, 5000): got 2 (desert), expected 46 (cold_ocean)
+  Seed 1 @ (5000, 5000): got 5 (taiga), expected 25 (stone_shore)
+  Seed 18446744073709551615 @ (5000, 5000): got 45 (lukewarm_ocean), expected 2 (desert)
+
+MC 1.16.1 @ very_far:
+  Seed 0 @ (12000, -8000): got 19 (taiga_hills), expected 24 (deep_ocean)
+  Seed 1 @ (12000, -8000): got 0 (ocean), expected 34 (wooded_mountains)
+  Seed 18446744073709551615 @ (12000, -8000): got 4 (forest), expected 1 (plains)
+
+MC 1.16.1 @ negative:
+  Seed 1 @ (-3000, -4500): got 0 (ocean), expected 1 (plains)
+  Seed 18446744073709551615 @ (-3000, -4500): got 46 (cold_ocean), expected 7 (river)
+  Seed 9223372036854775808 @ (-3000, -4500): got 46 (cold_ocean), expected 0 (ocean)
+
+MC 1.16 @ near:
+  Seed 0 @ (100, 100): got 4 (forest), expected 46 (cold_ocean)
+  Seed 1 @ (100, 100): got 24 (deep_ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 45 (lukewarm_ocean)
+
+MC 1.16 @ far:
+  Seed 0 @ (5000, 5000): got 2 (desert), expected 46 (cold_ocean)
+  Seed 1 @ (5000, 5000): got 5 (taiga), expected 25 (stone_shore)
+  Seed 18446744073709551615 @ (5000, 5000): got 45 (lukewarm_ocean), expected 2 (desert)
+
+MC 1.16 @ very_far:
+  Seed 0 @ (12000, -8000): got 19 (taiga_hills), expected 24 (deep_ocean)
+  Seed 1 @ (12000, -8000): got 0 (ocean), expected 34 (wooded_mountains)
+  Seed 18446744073709551615 @ (12000, -8000): got 4 (forest), expected 1 (plains)
+
+MC 1.16 @ negative:
+  Seed 1 @ (-3000, -4500): got 0 (ocean), expected 1 (plains)
+  Seed 18446744073709551615 @ (-3000, -4500): got 46 (cold_ocean), expected 7 (river)
+  Seed 9223372036854775808 @ (-3000, -4500): got 46 (cold_ocean), expected 0 (ocean)
+
+MC 1.17 @ near:
+  Seed 0 @ (100, 100): got 4 (forest), expected 46 (cold_ocean)
+  Seed 1 @ (100, 100): got 24 (deep_ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 45 (lukewarm_ocean)
+
+MC 1.17 @ far:
+  Seed 0 @ (5000, 5000): got 2 (desert), expected 46 (cold_ocean)
+  Seed 1 @ (5000, 5000): got 5 (taiga), expected 25 (stone_shore)
+  Seed 18446744073709551615 @ (5000, 5000): got 45 (lukewarm_ocean), expected 2 (desert)
+
+MC 1.17 @ very_far:
+  Seed 0 @ (12000, -8000): got 19 (taiga_hills), expected 24 (deep_ocean)
+  Seed 1 @ (12000, -8000): got 0 (ocean), expected 34 (wooded_mountains)
+  Seed 18446744073709551615 @ (12000, -8000): got 4 (forest), expected 1 (plains)
+
+MC 1.17 @ negative:
+  Seed 1 @ (-3000, -4500): got 0 (ocean), expected 1 (plains)
+  Seed 18446744073709551615 @ (-3000, -4500): got 46 (cold_ocean), expected 7 (river)
+  Seed 9223372036854775808 @ (-3000, -4500): got 46 (cold_ocean), expected 0 (ocean)
+
+MC 1.18 @ origin:
+  Seed 17323933519386766693 @ (0, 0): got 174 (dripstone_caves), expected 4 (forest)
+  Seed 4515524280483206928 @ (0, 0): got 174 (dripstone_caves), expected 7 (river)
+  Seed 16268824184581898015 @ (0, 0): got 174 (dripstone_caves), expected 155 (tall_birch_forest)
+
+MC 1.18 @ near:
+  Seed 0 @ (100, 100): got 1 (plains), expected 35 (savanna)
+  Seed 1 @ (100, 100): got 0 (ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 0 (ocean)
+
+MC 1.18 @ far:
+  Seed 0 @ (5000, 5000): got 30 (snowy_taiga), expected 25 (stone_shore)
+  Seed 1 @ (5000, 5000): got 177 (meadow), expected 16 (beach)
+  Seed 18446744073709551615 @ (5000, 5000): got 16 (beach), expected 1 (plains)
+
+MC 1.18 @ very_far:
+  Seed 0 @ (12000, -8000): got 1 (plains), expected 0 (ocean)
+  Seed 1 @ (12000, -8000): got 45 (lukewarm_ocean), expected 16 (beach)
+  Seed 18446744073709551615 @ (12000, -8000): got 5 (taiga), expected 4 (forest)
+
+MC 1.18 @ negative:
+  Seed 0 @ (-3000, -4500): got 24 (deep_ocean), expected 7 (river)
+  Seed 1 @ (-3000, -4500): got 6 (swamp), expected 16 (beach)
+  Seed 18446744073709551615 @ (-3000, -4500): got 38 (wooded_badlands_plateau), expected 1 (plains)
+
+MC 1.19.2 @ origin:
+  Seed 17323933519386766693 @ (0, 0): got 174 (dripstone_caves), expected 4 (forest)
+  Seed 4515524280483206928 @ (0, 0): got 174 (dripstone_caves), expected 7 (river)
+  Seed 16268824184581898015 @ (0, 0): got 174 (dripstone_caves), expected 155 (tall_birch_forest)
+
+MC 1.19.2 @ near:
+  Seed 0 @ (100, 100): got 1 (plains), expected 35 (savanna)
+  Seed 1 @ (100, 100): got 0 (ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 0 (ocean)
+
+MC 1.19.2 @ far:
+  Seed 0 @ (5000, 5000): got 30 (snowy_taiga), expected 25 (stone_shore)
+  Seed 1 @ (5000, 5000): got 177 (meadow), expected 16 (beach)
+  Seed 18446744073709551615 @ (5000, 5000): got 16 (beach), expected 1 (plains)
+
+MC 1.19.2 @ very_far:
+  Seed 0 @ (12000, -8000): got 1 (plains), expected 0 (ocean)
+  Seed 1 @ (12000, -8000): got 45 (lukewarm_ocean), expected 16 (beach)
+  Seed 18446744073709551615 @ (12000, -8000): got 5 (taiga), expected 4 (forest)
+
+MC 1.19.2 @ negative:
+  Seed 0 @ (-3000, -4500): got 24 (deep_ocean), expected 7 (river)
+  Seed 1 @ (-3000, -4500): got 6 (swamp), expected 16 (beach)
+  Seed 18446744073709551615 @ (-3000, -4500): got 38 (wooded_badlands_plateau), expected 1 (plains)
+
+MC 1.19 @ origin:
+  Seed 17323933519386766693 @ (0, 0): got 174 (dripstone_caves), expected 4 (forest)
+  Seed 4515524280483206928 @ (0, 0): got 174 (dripstone_caves), expected 7 (river)
+  Seed 16268824184581898015 @ (0, 0): got 174 (dripstone_caves), expected 155 (tall_birch_forest)
+
+MC 1.19 @ near:
+  Seed 0 @ (100, 100): got 1 (plains), expected 35 (savanna)
+  Seed 1 @ (100, 100): got 0 (ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 0 (ocean)
+
+MC 1.19 @ far:
+  Seed 0 @ (5000, 5000): got 30 (snowy_taiga), expected 25 (stone_shore)
+  Seed 1 @ (5000, 5000): got 177 (meadow), expected 16 (beach)
+  Seed 18446744073709551615 @ (5000, 5000): got 16 (beach), expected 1 (plains)
+
+MC 1.19 @ very_far:
+  Seed 0 @ (12000, -8000): got 1 (plains), expected 0 (ocean)
+  Seed 1 @ (12000, -8000): got 45 (lukewarm_ocean), expected 16 (beach)
+  Seed 18446744073709551615 @ (12000, -8000): got 5 (taiga), expected 4 (forest)
+
+MC 1.19 @ negative:
+  Seed 0 @ (-3000, -4500): got 24 (deep_ocean), expected 7 (river)
+  Seed 1 @ (-3000, -4500): got 6 (swamp), expected 16 (beach)
+  Seed 18446744073709551615 @ (-3000, -4500): got 38 (wooded_badlands_plateau), expected 1 (plains)
+
+MC 1.20 @ origin:
+  Seed 17323933519386766693 @ (0, 0): got 174 (dripstone_caves), expected 4 (forest)
+  Seed 4515524280483206928 @ (0, 0): got 174 (dripstone_caves), expected 7 (river)
+  Seed 16268824184581898015 @ (0, 0): got 174 (dripstone_caves), expected 155 (tall_birch_forest)
+
+MC 1.20 @ near:
+  Seed 0 @ (100, 100): got 1 (plains), expected 35 (savanna)
+  Seed 1 @ (100, 100): got 0 (ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 0 (ocean)
+
+MC 1.20 @ far:
+  Seed 0 @ (5000, 5000): got 30 (snowy_taiga), expected 25 (stone_shore)
+  Seed 1 @ (5000, 5000): got 185 (old_growth_spruce_taiga), expected 16 (beach)
+  Seed 18446744073709551615 @ (5000, 5000): got 16 (beach), expected 1 (plains)
+
+MC 1.20 @ very_far:
+  Seed 0 @ (12000, -8000): got 1 (plains), expected 0 (ocean)
+  Seed 1 @ (12000, -8000): got 45 (lukewarm_ocean), expected 16 (beach)
+  Seed 18446744073709551615 @ (12000, -8000): got 5 (taiga), expected 4 (forest)
+
+MC 1.20 @ negative:
+  Seed 0 @ (-3000, -4500): got 24 (deep_ocean), expected 7 (river)
+  Seed 1 @ (-3000, -4500): got 6 (swamp), expected 16 (beach)
+  Seed 18446744073709551615 @ (-3000, -4500): got 38 (wooded_badlands_plateau), expected 1 (plains)
+
+MC 1.21 @ origin:
+  Seed 17323933519386766693 @ (0, 0): got 174 (dripstone_caves), expected 4 (forest)
+  Seed 4515524280483206928 @ (0, 0): got 174 (dripstone_caves), expected 7 (river)
+  Seed 16268824184581898015 @ (0, 0): got 174 (dripstone_caves), expected 155 (tall_birch_forest)
+
+MC 1.21 @ near:
+  Seed 0 @ (100, 100): got 1 (plains), expected 35 (savanna)
+  Seed 1 @ (100, 100): got 0 (ocean), expected 4 (forest)
+  Seed 18446744073709551615 @ (100, 100): got 24 (deep_ocean), expected 0 (ocean)
+
+MC 1.21 @ far:
+  Seed 0 @ (5000, 5000): got 30 (snowy_taiga), expected 25 (stone_shore)
+  Seed 1 @ (5000, 5000): got 185 (old_growth_spruce_taiga), expected 16 (beach)
+  Seed 18446744073709551615 @ (5000, 5000): got 16 (beach), expected 1 (plains)
+
+MC 1.21 @ very_far:
+  Seed 0 @ (12000, -8000): got 1 (plains), expected 0 (ocean)
+  Seed 1 @ (12000, -8000): got 45 (lukewarm_ocean), expected 16 (beach)
+  Seed 18446744073709551615 @ (12000, -8000): got 5 (taiga), expected 4 (forest)
+
+MC 1.21 @ negative:
+  Seed 0 @ (-3000, -4500): got 24 (deep_ocean), expected 7 (river)
+  Seed 1 @ (-3000, -4500): got 6 (swamp), expected 16 (beach)
+  Seed 18446744073709551615 @ (-3000, -4500): got 38 (wooded_badlands_plateau), expected 1 (plains)
+
