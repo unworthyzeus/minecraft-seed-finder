@@ -1224,6 +1224,10 @@ a:hover {
 .search-controls {
   position: sticky;
   top: calc(var(--header-height) + 18px);
+  max-height: calc(100svh - var(--header-height) - 36px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
   background: var(--bg-card);
   border: 4px solid var(--obsidian);
   padding: 16px;
@@ -1465,6 +1469,8 @@ a:hover {
 
   .search-controls {
     position: static;
+    max-height: none;
+    overflow: visible;
   }
 
   .pipeline,
