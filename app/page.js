@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { SEEDS_DATABASE, getDatabaseStats } from '@/lib/seeds-database';
-import { seedMatchesSourceFilter } from '@/lib/source-utils';
+import { normalizeFiltersForSource, seedMatchesSourceFilter, WEBSITE_SUBMISSION_SOURCE } from '@/lib/source-utils';
 import { CATEGORIES, getConfidenceLevel, CONFIDENCE_LEVELS, parseProbability } from '@/lib/categories';
 import { getVersionFilterOptions, seedMatchesVersionFilter } from '@/lib/version-utils';
 import Header from '@/components/Header';
@@ -203,6 +203,18 @@ export default function Home() {
     setCurrentPage(1);
   }, []);
 
+  const handleSourceFilterChange = useCallback((nextSource) => {
+    const normalizedFilters = normalizeFiltersForSource(nextSource, {
+      editionFilter,
+      versionFilter,
+    });
+
+    setSourceFilter(nextSource);
+    setEditionFilter(normalizedFilters.editionFilter);
+    setVersionFilter(normalizedFilters.versionFilter);
+    setCurrentPage(1);
+  }, [editionFilter, versionFilter]);
+
   const showToast = (message) => {
     setToast(message);
     setTimeout(() => setToast(null), 3000);
@@ -315,15 +327,13 @@ export default function Home() {
                 <label>Source:</label>
                 <select
                   value={sourceFilter}
-                  onChange={(e) => {
-                    handleFilterChange(setSourceFilter)(e.target.value);
-                  }}
+                  onChange={(e) => handleSourceFilterChange(e.target.value)}
                   className="filter-select"
                 >
                   <option value="all">All Sources</option>
                   <option value="human">Human Verified</option>
                   <option value="generated">Generated</option>
-                  <option value="website_submission">Submitted to this website ({stats.websiteSubmissions})</option>
+                  <option value={WEBSITE_SUBMISSION_SOURCE}>Submitted to this website ({stats.websiteSubmissions} total)</option>
                 </select>
               </div>
 
