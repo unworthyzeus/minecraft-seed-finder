@@ -6,6 +6,7 @@ import { SEEDS_DATABASE, getDatabaseStats } from '@/lib/seeds-database';
 import { normalizeFiltersForSource, seedMatchesSourceFilter, WEBSITE_SUBMISSION_SOURCE } from '@/lib/source-utils';
 import { CATEGORIES, getConfidenceLevel, CONFIDENCE_LEVELS, parseProbability } from '@/lib/categories';
 import { getVersionFilterOptions, seedMatchesVersionFilter } from '@/lib/version-utils';
+import { createHomeShuffleSeed, isDefaultHomeSeedView, randomizeHomeSeeds } from '@/lib/home-randomization';
 import Header from '@/components/Header';
 import SeedCard from '@/components/SeedCard';
 import SubmitModal from '@/components/SubmitModal';
@@ -35,6 +36,7 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState('confidence');
   const [showAllCategories, setShowAllCategories] = useState(false);
+  const [homeShuffleSeed, setHomeShuffleSeed] = useState(0);
 
   const stats = useMemo(() => getDatabaseStats(), []);
   const versionOptions = useMemo(() => (
@@ -47,6 +49,10 @@ export default function Home() {
       setSearchQuery(query);
       setCurrentPage(1);
     }
+  }, []);
+
+  useEffect(() => {
+    setHomeShuffleSeed(createHomeShuffleSeed());
   }, []);
 
   useEffect(() => {
@@ -187,8 +193,32 @@ export default function Home() {
       results = mixed;
     }
 
+    if (isDefaultHomeSeedView({
+      searchQuery,
+      activeCategory,
+      editionFilter,
+      versionFilter,
+      confidenceFilter,
+      coordinatesFilter,
+      sourceFilter,
+      sortBy,
+    })) {
+      results = randomizeHomeSeeds(results, homeShuffleSeed);
+    }
+
     return results;
-  }, [preCategoryFilteredSeeds, activeCategory, sortBy]);
+  }, [
+    preCategoryFilteredSeeds,
+    activeCategory,
+    sortBy,
+    searchQuery,
+    editionFilter,
+    versionFilter,
+    confidenceFilter,
+    coordinatesFilter,
+    sourceFilter,
+    homeShuffleSeed,
+  ]);
 
   // Pagination
   const totalPages = Math.ceil(filteredSeeds.length / SEEDS_PER_PAGE);
