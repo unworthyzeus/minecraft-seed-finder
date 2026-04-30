@@ -1,11 +1,12 @@
 'use client';
 
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { isWebsiteSubmission } from '@/lib/source-utils';
 import { CATEGORIES, getConfidenceLevel } from '@/lib/categories';
 import { getSeedEditions } from '@/lib/version-utils';
 
 export default function SeedCard({ seed, onCopySuccess }) {
+    const router = useRouter();
     const category = CATEGORIES[seed.category] || {
         name: seed.category,
         icon: '🌍',
@@ -14,6 +15,18 @@ export default function SeedCard({ seed, onCopySuccess }) {
     const confidence = getConfidenceLevel(seed.confidence);
     const editions = getSeedEditions(seed);
     const submittedToWebsite = isWebsiteSubmission(seed);
+    const seedHref = `/seeds/${encodeURIComponent(seed.id)}`;
+
+    const openSeed = () => {
+        router.push(seedHref);
+    };
+
+    const handleCardKeyDown = (e) => {
+        if (e.target?.closest?.('button')) return;
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        e.preventDefault();
+        openSeed();
+    };
 
     const handleCopy = async (e) => {
         e.preventDefault();
@@ -27,63 +40,73 @@ export default function SeedCard({ seed, onCopySuccess }) {
     };
 
     return (
-        <Link href={`/seeds/${seed.id}`} className="seed-card" style={{ '--card-accent': category.color }}>
-            <div className="seed-card-header">
-                <span
-                    className="seed-category-badge"
-                    style={{
-                        background: `${category.color}20`,
-                        '--badge-color': category.color
-                    }}
-                >
-                    {category.icon} {category.name.split(' ')[0]}
-                </span>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    {submittedToWebsite && (
-                        <span className="submitted-badge" title="Submitted to this website">
-                            WEB
-                        </span>
-                    )}
-                    {seed.isGenerated && (
-                        <span className="generated-badge" title="Algorithmically generated">
-                            ⚙️
-                        </span>
-                    )}
+        <article
+            className="seed-card"
+            style={{ '--card-accent': category.color }}
+            role="link"
+            tabIndex={0}
+            onClick={openSeed}
+            onKeyDown={handleCardKeyDown}
+            aria-label={`Open seed ${seed.title}`}
+        >
+            <div className="seed-card-body">
+                <div className="seed-card-header">
                     <span
-                        className={`confidence-badge confidence-${confidence.label.toLowerCase()}`}
-                        title={`${Math.round(seed.confidence * 100)}% confidence`}
+                        className="seed-category-badge"
+                        style={{
+                            background: `${category.color}20`,
+                            '--badge-color': category.color
+                        }}
                     >
-                        {confidence.icon} {Math.round(seed.confidence * 100)}%
+                        {category.icon} {category.name.split(' ')[0]}
                     </span>
-                </div>
-            </div>
-
-            <h3 className="seed-title">{seed.title}</h3>
-
-            <div className="seed-value">
-                <span>{seed.seed.length > 20 ? seed.seed.slice(0, 20) + '...' : seed.seed}</span>
-                <button
-                    className="seed-copy-btn"
-                    onClick={handleCopy}
-                    title="Copy seed"
-                >
-                    📋
-                </button>
-            </div>
-
-            <div className="seed-meta">
-                <div className="seed-meta-item">
-                    <span>📊</span>
-                    <span>{seed.probability}</span>
-                </div>
-                <div className="version-tags">
-                    {editions.map(({ edition, version }) => (
-                        <span className={`version-tag version-${edition}`} key={edition}>
-                            {edition === 'java' ? 'Java' : 'Bedrock'} {version}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        {submittedToWebsite && (
+                            <span className="submitted-badge" title="Submitted to this website">
+                                WEB
+                            </span>
+                        )}
+                        {seed.isGenerated && (
+                            <span className="generated-badge" title="Algorithmically generated">
+                                ⚙️
+                            </span>
+                        )}
+                        <span
+                            className={`confidence-badge confidence-${confidence.label.toLowerCase()}`}
+                            title={`${Math.round(seed.confidence * 100)}% confidence`}
+                        >
+                            {confidence.icon} {Math.round(seed.confidence * 100)}%
                         </span>
-                    ))}
+                    </div>
+                </div>
+
+                <h3 className="seed-title">{seed.title}</h3>
+
+                <div className="seed-value">
+                    <span>{seed.seed.length > 20 ? seed.seed.slice(0, 20) + '...' : seed.seed}</span>
+                    <button
+                        className="seed-copy-btn"
+                        onClick={handleCopy}
+                        title="Copy seed"
+                    >
+                        📋
+                    </button>
+                </div>
+
+                <div className="seed-meta">
+                    <div className="seed-meta-item">
+                        <span>📊</span>
+                        <span>{seed.probability}</span>
+                    </div>
+                    <div className="version-tags">
+                        {editions.map(({ edition, version }) => (
+                            <span className={`version-tag version-${edition}`} key={edition}>
+                                {edition === 'java' ? 'Java' : 'Bedrock'} {version}
+                            </span>
+                        ))}
+                    </div>
                 </div>
             </div>
-        </Link>
+        </article>
     );
 }
