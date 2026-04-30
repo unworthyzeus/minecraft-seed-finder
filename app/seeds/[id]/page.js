@@ -1,21 +1,13 @@
-'use client';
-
-import { useMemo, useState } from 'react';
-import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { getSeedById } from '@/lib/seeds-database';
 import { CATEGORIES, getConfidenceLevel } from '@/lib/categories';
 import { isWebsiteSubmission } from '@/lib/source-utils';
 import { getPreferredSeedEdition, getSeedEditions } from '@/lib/version-utils';
-import DeferredSeedVisualizer from '@/components/DeferredSeedVisualizer';
+import CopySeedButton from '@/components/CopySeedButton';
+import SeedDetailMapSection from '@/components/SeedDetailMapSection';
 
-export default function SeedDetailPage() {
-    const params = useParams();
-    const seed = getSeedById(params.id);
-    const editions = useMemo(() => seed ? getSeedEditions(seed) : [], [seed]);
-    const preferredEdition = seed ? getPreferredSeedEdition(seed) : null;
-    const [selectedEditionKey, setSelectedEditionKey] = useState(null);
-    const selectedEdition = editions.find(e => e.edition === selectedEditionKey) || preferredEdition;
+export default function SeedDetailPage({ params }) {
+    const seed = getSeedById(decodeURIComponent(params.id));
 
     if (!seed) {
         return (
@@ -30,6 +22,9 @@ export default function SeedDetailPage() {
         );
     }
 
+    const editions = getSeedEditions(seed);
+    const preferredEdition = getPreferredSeedEdition(seed);
+    const selectedEdition = preferredEdition || { edition: 'java', version: '26.1.2' };
     const category = CATEGORIES[seed.category] || {
         name: seed.category,
         icon: '',
@@ -39,15 +34,7 @@ export default function SeedDetailPage() {
     };
     const confidence = getConfidenceLevel(seed.confidence);
     const submittedToWebsite = isWebsiteSubmission(seed);
-
-    const handleCopy = async () => {
-        try {
-            await navigator.clipboard.writeText(seed.seed);
-        } catch (err) {
-            console.error('Failed to copy:', err);
-        }
-    };
-    const searchHref = `/search?edition=${selectedEdition?.edition || 'java'}&version=${encodeURIComponent(selectedEdition?.version || '26.1.2')}&start=${encodeURIComponent(seed.seed)}&count=900`;
+    const searchHref = `/search?edition=${selectedEdition.edition}&version=${encodeURIComponent(selectedEdition.version)}&start=${encodeURIComponent(seed.seed)}&count=900`;
 
     return (
         <div className="seed-detail">
@@ -86,57 +73,22 @@ export default function SeedDetailPage() {
                 <div className="seed-detail-seed">
                     <span style={{ fontWeight: 600 }}>Seed:</span>
                     <span style={{ wordBreak: 'break-all' }}>{seed.seed}</span>
-                    <button
-                        onClick={handleCopy}
+                    <CopySeedButton
+                        seed={seed.seed}
                         className="submit-btn"
                         style={{ padding: '8px 16px', fontSize: '0.9rem', marginLeft: 'auto', whiteSpace: 'nowrap' }}
-                    >
-                        Copy
-                    </button>
+                    />
                     <Link href={searchHref} className="search-inline-btn seed-search-link">
                         Search Similar
                     </Link>
                 </div>
             </div>
 
-            <section className="seed-detail-section">
-                <h2>Version Compatibility</h2>
-                <div className="version-tags" style={{ fontSize: '1rem' }}>
-                    {seed.version.java && (
-                        <span className="version-tag version-java" style={{ padding: '6px 12px' }}>
-                            Java Edition {seed.version.java}
-                        </span>
-                    )}
-                    {seed.version.bedrock && (
-                        <span className="version-tag version-bedrock" style={{ padding: '6px 12px' }}>
-                            Bedrock Edition {seed.version.bedrock}
-                        </span>
-                    )}
-                    {!seed.version.java && !seed.version.bedrock && (
-                        <span style={{ color: 'var(--text-muted)' }}>Version information not available</span>
-                    )}
-                </div>
-                {editions.length > 1 && (
-                    <div className="edition-switcher" aria-label="Map edition">
-                        <span>Render map as:</span>
-                        {editions.map(entry => (
-                            <button
-                                key={entry.edition}
-                                type="button"
-                                className={`edition-switch ${selectedEdition?.edition === entry.edition ? 'active' : ''}`}
-                                onClick={() => setSelectedEditionKey(entry.edition)}
-                            >
-                                {entry.edition === 'java' ? 'Java' : 'Bedrock'} {entry.version}
-                            </button>
-                        ))}
-                    </div>
-                )}
-            </section>
-
-            <DeferredSeedVisualizer
-                seed={seed.seed}
-                version={selectedEdition?.version || '26.1.2'}
-                edition={selectedEdition?.edition || 'java'}
+            <SeedDetailMapSection
+                seedValue={seed.seed}
+                seedVersion={seed.version}
+                editions={editions}
+                preferredEdition={preferredEdition}
                 coordinates={seed.coordinates}
             />
 

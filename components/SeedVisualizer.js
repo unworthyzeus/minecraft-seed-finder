@@ -939,142 +939,169 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
         const worldCenterX = -offset.x;
         const worldCenterZ = -offset.z;
 
-        // Render biomes
+        let legacyArea = null;
+        let frameId = null;
+        let cancelled = false;
+
         if (generator.getArea) {
-            // Batch rendering (optimized for Legacy)
             const minWorldX = Math.floor((-centerX) / zoom + worldCenterX);
             const minWorldZ = Math.floor((-centerZ) / zoom + worldCenterZ);
             const maxWorldX = Math.floor((width - centerX) / zoom + worldCenterX);
             const maxWorldZ = Math.floor((height - centerZ) / zoom + worldCenterZ);
-            const w = maxWorldX - minWorldX + blockSize; // buffer
+            const w = maxWorldX - minWorldX + blockSize;
             const h = maxWorldZ - minWorldZ + blockSize;
 
-            // Legacy gen works best at 1:4 resolution
-            const area = generator.getArea(minWorldX, minWorldZ, w, h, 4);
-            const { data, width: areaW } = area;
+            legacyArea = generator.getArea(minWorldX, minWorldZ, w, h, 4);
+        }
 
-            // Render from buffer
-            for (let sy = 0; sy < height; sy += blockSize) {
-                for (let sx = 0; sx < width; sx += blockSize) {
-                    const worldX = Math.floor((sx - centerX) / zoom + worldCenterX);
-                    const worldZ = Math.floor((sy - centerZ) / zoom + worldCenterZ);
+        const drawBiomeBlock = (sx, sy) => {
+            const worldX = Math.floor((sx - centerX) / zoom + worldCenterX);
+            const worldZ = Math.floor((sy - centerZ) / zoom + worldCenterZ);
+            let biomeId = null;
 
-                    // Map to buffer index (buffer is scaled 1:4)
-                    const bx = Math.floor(worldX / 4) - area.startX;
-                    const bz = Math.floor(worldZ / 4) - area.startZ;
+            if (legacyArea) {
+                const bx = Math.floor(worldX / 4) - legacyArea.startX;
+                const bz = Math.floor(worldZ / 4) - legacyArea.startZ;
+                if (bx < 0 || bx >= legacyArea.width || bz < 0 || bz >= legacyArea.height) return;
+                biomeId = legacyArea.data[bx + bz * legacyArea.width];
+            } else {
+                biomeId = generator.getBiome(worldX, worldZ);
+            }
 
-                    if (bx >= 0 && bx < area.width && bz >= 0 && bz < area.height) {
-                        const biomeId = data[bx + bz * areaW];
-                        const biome = getBiomeInfo(biomeId);
-                        ctx.fillStyle = biome.color;
-                        ctx.fillRect(sx, sy, blockSize + 1, blockSize + 1);
+            const biome = getBiomeInfo(biomeId);
+            ctx.fillStyle = biome.color;
+            ctx.fillRect(sx, sy, blockSize + 1, blockSize + 1);
+        };
+
+        const drawOverlays = () => {
+            if (cancelled) return;
+
+            // Grid
+            if (showGrid) {
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+                ctx.lineWidth = 1;
+                const gridSpacing = 512;
+
+                const startX = Math.floor((worldCenterX - width / zoom / 2) / gridSpacing) * gridSpacing;
+                const endX = worldCenterX + width / zoom / 2;
+                const startZ = Math.floor((worldCenterZ - height / zoom / 2) / gridSpacing) * gridSpacing;
+                const endZ = worldCenterZ + height / zoom / 2;
+
+                for (let gx = startX; gx <= endX; gx += gridSpacing) {
+                    const screenX = centerX + (gx - worldCenterX) * zoom;
+                    ctx.beginPath();
+                    ctx.moveTo(screenX, 0);
+                    ctx.lineTo(screenX, height);
+                    ctx.stroke();
+                }
+                for (let gz = startZ; gz <= endZ; gz += gridSpacing) {
+                    const screenZ = centerZ + (gz - worldCenterZ) * zoom;
+                    ctx.beginPath();
+                    ctx.moveTo(0, screenZ);
+                    ctx.lineTo(width, screenZ);
+                    ctx.stroke();
+                }
+
+                // Origin crosshair
+                const originX = centerX + (0 - worldCenterX) * zoom;
+                const originZ = centerZ + (0 - worldCenterZ) * zoom;
+                if (originX >= 0 && originX <= width && originZ >= 0 && originZ <= height) {
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(originX - 15, originZ);
+                    ctx.lineTo(originX + 15, originZ);
+                    ctx.moveTo(originX, originZ - 15);
+                    ctx.lineTo(originX, originZ + 15);
+                    ctx.stroke();
+                }
+            }
+
+            // Structures
+            if (showStructures && generatorRef.current) {
+                const focusX = coordinates?.x ?? worldCenterX;
+                const focusZ = coordinates?.z ?? worldCenterZ;
+                const maxVisible = getStructureDisplayLimit(zoom, canvasSize);
+                const minGap = getStructureCollisionRadius(zoom);
+                const placed = [];
+                let drawn = 0;
+
+                const visibleStructures = structuresRef.current.map(s => {
+                    const sx = centerX + (s.x - worldCenterX) * zoom;
+                    const sz = centerZ + (s.z - worldCenterZ) * zoom;
+                    const isPOIMatch = coordinates && Math.abs(s.x - coordinates.x) < 48 && Math.abs(s.z - coordinates.z) < 48;
+                    const distanceToFocus = Math.hypot(s.x - focusX, s.z - focusZ);
+
+                    return { structure: s, sx, sz, isPOIMatch, distanceToFocus };
+                }).filter(({ structure, sx, sz, isPOIMatch }) => {
+                    if (sx < -50 || sx > width + 50 || sz < -50 || sz > height + 50) return false;
+                    if (structure.status === 'biome-mismatch') return false;
+                    if (!showCandidateStructures && isCandidateStatus(structure.status) && !isPOIMatch) return false;
+                    if (!showCommonStructures && COMMON_STRUCTURE_KEYS.has(structure.key) && !isPOIMatch) return false;
+                    return true;
+                }).sort((a, b) => {
+                    if (a.isPOIMatch !== b.isPOIMatch) return a.isPOIMatch ? -1 : 1;
+                    const priorityDelta = getStructurePriority(b.structure) - getStructurePriority(a.structure);
+                    if (priorityDelta !== 0) return priorityDelta;
+                    return a.distanceToFocus - b.distanceToFocus;
+                });
+
+                for (const entry of visibleStructures) {
+                    if (drawn >= maxVisible && !entry.isPOIMatch) break;
+                    if (!entry.isPOIMatch && placed.some(p => Math.hypot(p.x - entry.sx, p.y - entry.sz) < minGap)) {
+                        continue;
                     }
+
+                    drawStructureMarker(ctx, entry.structure, entry.sx, entry.sz, zoom, entry.isPOIMatch);
+                    placed.push({ x: entry.sx, y: entry.sz });
+                    drawn++;
                 }
             }
-        } else {
-            // Per-pixel rendering (Modern)
-            for (let sy = 0; sy < height; sy += blockSize) {
-                for (let sx = 0; sx < width; sx += blockSize) {
-                    const worldX = Math.floor((sx - centerX) / zoom + worldCenterX);
-                    const worldZ = Math.floor((sy - centerZ) / zoom + worldCenterZ);
 
-                    // Sample biome
-                    const biomeId = generator.getBiome(worldX, worldZ);
-                    const biome = getBiomeInfo(biomeId);
-                    ctx.fillStyle = biome.color;
-                    ctx.fillRect(sx, sy, blockSize + 1, blockSize + 1);
-                }
+            // POI marker is drawn last so structures never cover it.
+            if (coordinates) {
+                const poiX = centerX + (coordinates.x - worldCenterX) * zoom;
+                const poiZ = centerZ + (coordinates.z - worldCenterZ) * zoom;
+                drawTargetMarker(ctx, poiX, poiZ);
             }
-        }
+        };
 
-        // Grid
-        if (showGrid) {
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-            ctx.lineWidth = 1;
-            const gridSpacing = 512;
+        const columns = Math.ceil(width / blockSize);
+        const rows = Math.ceil(height / blockSize);
+        const totalCells = columns * rows;
+        const cellsPerFrame = Math.max(240, Math.min(1400, Math.floor(totalCells / 10)));
+        let cellIndex = 0;
 
-            const startX = Math.floor((worldCenterX - width / zoom / 2) / gridSpacing) * gridSpacing;
-            const endX = worldCenterX + width / zoom / 2;
-            const startZ = Math.floor((worldCenterZ - height / zoom / 2) / gridSpacing) * gridSpacing;
-            const endZ = worldCenterZ + height / zoom / 2;
+        const renderBiomeRows = () => {
+            if (cancelled) return;
 
-            for (let gx = startX; gx <= endX; gx += gridSpacing) {
-                const screenX = centerX + (gx - worldCenterX) * zoom;
-                ctx.beginPath();
-                ctx.moveTo(screenX, 0);
-                ctx.lineTo(screenX, height);
-                ctx.stroke();
-            }
-            for (let gz = startZ; gz <= endZ; gz += gridSpacing) {
-                const screenZ = centerZ + (gz - worldCenterZ) * zoom;
-                ctx.beginPath();
-                ctx.moveTo(0, screenZ);
-                ctx.lineTo(width, screenZ);
-                ctx.stroke();
+            const frameEndsAt = performance.now() + 8;
+            let drawnCells = 0;
+            while (
+                cellIndex < totalCells
+                && drawnCells < cellsPerFrame
+                && performance.now() < frameEndsAt
+            ) {
+                const sx = (cellIndex % columns) * blockSize;
+                const sy = Math.floor(cellIndex / columns) * blockSize;
+                drawBiomeBlock(sx, sy);
+                cellIndex++;
+                drawnCells++;
             }
 
-            // Origin crosshair
-            const originX = centerX + (0 - worldCenterX) * zoom;
-            const originZ = centerZ + (0 - worldCenterZ) * zoom;
-            if (originX >= 0 && originX <= width && originZ >= 0 && originZ <= height) {
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.moveTo(originX - 15, originZ);
-                ctx.lineTo(originX + 15, originZ);
-                ctx.moveTo(originX, originZ - 15);
-                ctx.lineTo(originX, originZ + 15);
-                ctx.stroke();
+            if (cellIndex < totalCells) {
+                frameId = window.requestAnimationFrame(renderBiomeRows);
+            } else {
+                drawOverlays();
             }
-        }
+        };
 
-        // Structures
-        if (showStructures && generatorRef.current) {
-            const focusX = coordinates?.x ?? worldCenterX;
-            const focusZ = coordinates?.z ?? worldCenterZ;
-            const maxVisible = getStructureDisplayLimit(zoom, canvasSize);
-            const minGap = getStructureCollisionRadius(zoom);
-            const placed = [];
-            let drawn = 0;
+        frameId = window.requestAnimationFrame(renderBiomeRows);
 
-            const visibleStructures = structuresRef.current.map(s => {
-                const sx = centerX + (s.x - worldCenterX) * zoom;
-                const sz = centerZ + (s.z - worldCenterZ) * zoom;
-                const isPOIMatch = coordinates && Math.abs(s.x - coordinates.x) < 48 && Math.abs(s.z - coordinates.z) < 48;
-                const distanceToFocus = Math.hypot(s.x - focusX, s.z - focusZ);
-
-                return { structure: s, sx, sz, isPOIMatch, distanceToFocus };
-            }).filter(({ structure, sx, sz, isPOIMatch }) => {
-                if (sx < -50 || sx > width + 50 || sz < -50 || sz > height + 50) return false;
-                if (structure.status === 'biome-mismatch') return false;
-                if (!showCandidateStructures && isCandidateStatus(structure.status) && !isPOIMatch) return false;
-                if (!showCommonStructures && COMMON_STRUCTURE_KEYS.has(structure.key) && !isPOIMatch) return false;
-                return true;
-            }).sort((a, b) => {
-                if (a.isPOIMatch !== b.isPOIMatch) return a.isPOIMatch ? -1 : 1;
-                const priorityDelta = getStructurePriority(b.structure) - getStructurePriority(a.structure);
-                if (priorityDelta !== 0) return priorityDelta;
-                return a.distanceToFocus - b.distanceToFocus;
-            });
-
-            for (const entry of visibleStructures) {
-                if (drawn >= maxVisible && !entry.isPOIMatch) break;
-                if (!entry.isPOIMatch && placed.some(p => Math.hypot(p.x - entry.sx, p.y - entry.sz) < minGap)) {
-                    continue;
-                }
-
-                drawStructureMarker(ctx, entry.structure, entry.sx, entry.sz, zoom, entry.isPOIMatch);
-                placed.push({ x: entry.sx, y: entry.sz });
-                drawn++;
-            }
-        }
-
-        // POI marker is drawn last so structures never cover it.
-        if (coordinates) {
-            const poiX = centerX + (coordinates.x - worldCenterX) * zoom;
-            const poiZ = centerZ + (coordinates.z - worldCenterZ) * zoom;
-            drawTargetMarker(ctx, poiX, poiZ);
-        }
+        return () => {
+            cancelled = true;
+            if (frameId != null) window.cancelAnimationFrame(frameId);
+        };
     }, [seed, version, edition, zoom, offset, showStructures, showCommonStructures, showCandidateStructures, showGrid, coordinates, canvasSize]);
 
     // Mouse handlers
