@@ -41,7 +41,10 @@ const javaVillage = firstCandidate({
     generator: plainsGenerator,
     structureKeys: ['village'],
 });
-assert.equal(javaVillage.status, 'placement-candidate');
+assert.equal(javaVillage.status, 'cubiomes-match');
+assert.equal(javaVillage.statusLabel, 'Cubiomes match');
+assert.equal(javaVillage.requiresTerrainCheck, false);
+assert.ok(!javaVillage.status.endsWith('candidate'), 'Java structures with placement + biome parity should not be drawn as candidates');
 assert.equal(javaVillage.finalVerified, false);
 
 const javaAncientCity = firstCandidate({

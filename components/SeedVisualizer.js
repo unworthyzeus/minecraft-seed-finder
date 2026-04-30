@@ -1293,7 +1293,7 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
                 {showStructures && (
                     <div className="legend-item candidate-key">
                         <span className="candidate-ring"></span>
-                        Candidate, not final in-game proof
+                        Candidate / needs terrain proof
                     </div>
                 )}
             </div>
@@ -1301,7 +1301,7 @@ export default function SeedVisualizer({ seed, version = '1.21', edition = 'java
             {/* Footer */}
             <div className="viz-footer">
                 <span>
-                    Biome algorithms by <a href="https://github.com/Cubitect/cubiomes" target="_blank" rel="noopener noreferrer">Cubiomes</a> and Bedrock profiles from <a href="https://github.com/FragrantResult186/cubiomes-bedrock" target="_blank" rel="noopener noreferrer">cubiomes-bedrock</a> (MIT License). Structure overlays are candidates unless marked by BDS: Java uses Cubiomes-style placement/biome checks; Bedrock uses the cubiomes-bedrock JS port with final proof still requiring Minecraft/BDS verification.
+                    Biome algorithms by <a href="https://github.com/Cubitect/cubiomes" target="_blank" rel="noopener noreferrer">Cubiomes</a> and Bedrock profiles from <a href="https://github.com/FragrantResult186/cubiomes-bedrock" target="_blank" rel="noopener noreferrer">cubiomes-bedrock</a> (MIT License). Java overlays without dashed rings are Cubiomes placement + biome matches; dashed Java overlays still need terrain/start proof, and Bedrock overlays remain candidates unless verified by BDS.
                 </span>
             </div>
 
