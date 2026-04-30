@@ -7,7 +7,7 @@ import { getSeedById } from '@/lib/seeds-database';
 import { CATEGORIES, getConfidenceLevel } from '@/lib/categories';
 import { isWebsiteSubmission } from '@/lib/source-utils';
 import { getPreferredSeedEdition, getSeedEditions } from '@/lib/version-utils';
-import SeedVisualizer from '@/components/SeedVisualizer';
+import DeferredSeedVisualizer from '@/components/DeferredSeedVisualizer';
 
 export default function SeedDetailPage() {
     const params = useParams();
@@ -133,7 +133,7 @@ export default function SeedDetailPage() {
                 )}
             </section>
 
-            <SeedVisualizer
+            <DeferredSeedVisualizer
                 seed={seed.seed}
                 version={selectedEdition?.version || '26.1.2'}
                 edition={selectedEdition?.edition || 'java'}

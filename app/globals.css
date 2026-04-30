@@ -839,6 +839,65 @@ a:hover {
   text-transform: uppercase;
 }
 
+.seed-visualizer-shell {
+  background: var(--bg-card);
+  border: 4px solid var(--border-color);
+  margin: 24px 0;
+  box-shadow:
+    inset -3px -3px 0 var(--dark-stone),
+    inset 3px 3px 0 var(--border-light);
+}
+
+.seed-visualizer-shell-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 3px solid var(--border-color);
+  background: var(--obsidian);
+}
+
+.seed-visualizer-shell-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 32px;
+  padding: 0 8px;
+  background: var(--dark-grass);
+  border: 2px solid var(--border-color);
+  color: var(--emerald-green);
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+}
+
+.seed-visualizer-shell h3 {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  color: var(--gold-yellow);
+}
+
+.seed-visualizer-shell p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.seed-visualizer-shell-canvas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    var(--obsidian);
+  background-size: 32px 32px;
+  color: var(--text-muted);
+  font-family: 'VT323', monospace;
+  font-size: 1.2rem;
+}
+
 .coordinates {
   display: flex;
   gap: 20px;
