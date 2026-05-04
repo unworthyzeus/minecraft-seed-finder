@@ -200640,23 +200640,5 @@
     "sourceType": "website_submission",
     "submittedToWebsite": true,
     "isGenerated": false
-  },
-  {
-    "id": "web-2026-05-04-867731610273-12-eye-end-portal",
-    "seed": "867731610273",
-    "title": "Submitted Bedrock 12-Eye End Portal",
-    "category": "end_portal_12eye",
-    "version": {
-      "java": null,
-      "bedrock": "26.13"
-    },
-    "confidence": 0.3,
-    "discoveredBy": "Mohammed Mohdi (web submission)",
-    "discoveredDate": "2026-05-04",
-    "description": "Website submission for Bedrock 26.13. The submitter listed this as a 12-eye End Portal seed, but no coordinates or verification details were provided, so it remains unverified until manually checked in Bedrock.",
-    "source": "Submitted to this website",
-    "sourceType": "website_submission",
-    "submittedToWebsite": true,
-    "isGenerated": false
   }
 ]

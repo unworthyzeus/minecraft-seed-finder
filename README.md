@@ -10,7 +10,7 @@ The fun part: this is also a JavaScript/TypeScript port of Minecraft seed genera
 
 - **Search & Filter** - Find seeds by name, category, version, edition, and confidence level
 - **Procedural Search Lab** - Search for new seeds with biome, structure, and cluster-distance filters
-- **7,954+ Seeds** - Curated database of verified and community-reported seeds
+- **7,953+ Seeds** - Curated database of verified and community-reported seeds
 - **Browser Worldgen** - JavaScript/TypeScript seed-generation code runs client-side for portable seed discovery
 - **Seed Visualizer** - In-browser biome and structure previews for seed inspection
 - **Responsive Design** - Works on desktop and mobile devices
