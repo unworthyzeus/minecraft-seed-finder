@@ -13,12 +13,13 @@ const expectedSeeds = new Set([
     'BE AMAZED',
     '5004260924615097095',
     '-1432473694351278491',
+    '867731610273',
 ]);
 
 const submissions = data.filter(isWebsiteSubmission);
 const actualSeeds = new Set(submissions.map(seed => seed.seed));
 
-assert.equal(submissions.length, expectedSeeds.size, 'expected exactly three website submissions');
+assert.equal(submissions.length, expectedSeeds.size, 'expected exactly four website submissions');
 
 for (const expectedSeed of expectedSeeds) {
     assert.ok(actualSeeds.has(expectedSeed), `missing website submission ${expectedSeed}`);
@@ -35,7 +36,7 @@ for (const seed of submissions) {
 assert.equal(
     data.filter(seed => seedMatchesSourceFilter(seed, WEBSITE_SUBMISSION_SOURCE)).length,
     expectedSeeds.size,
-    'source filter should return the three website submissions'
+    'source filter should return the four website submissions'
 );
 
 assert.equal(
