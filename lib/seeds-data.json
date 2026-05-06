@@ -200640,5 +200640,29 @@
     "sourceType": "website_submission",
     "submittedToWebsite": true,
     "isGenerated": false
+  },
+  {
+    "id": "gh-issue-3-neg2801317721269292678-spikey-mountain",
+    "seed": "-2801317721269292678",
+    "title": "Weird Looking Spikey Mountain",
+    "category": "shape_anomaly",
+    "version": {
+      "java": "26.1.2",
+      "bedrock": null
+    },
+    "confidence": 0.7,
+    "coordinates": {
+      "x": -208,
+      "y": 100,
+      "z": 272
+    },
+    "discoveredBy": "clykiddoyt (GitHub issue #3)",
+    "discoveredDate": "2026-05-05",
+    "description": "Community submission from GitHub issue #3 for Java 26.1.2. Reported as an unusual looking spikey mountain in the swamps at X=-208, Y=100, Z=272; visual terrain shape still needs manual in-game confirmation.",
+    "source": "Submitted to this website",
+    "sourceType": "website_submission",
+    "submittedToWebsite": true,
+    "sourceUrl": "https://github.com/unworthyzeus/minecraft-seed-finder/issues/3",
+    "isGenerated": false
   }
 ]
