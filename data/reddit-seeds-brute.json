@@ -12645,7 +12645,7 @@
     "discoveredBy": "u/Inside-Board-5740",
     "discoveredDate": "2026-01-15",
     "version": {
-      "java": "1.88"
+      "java": "26.1.2"
     },
     "confidence": 0.9,
     "isGenerated": false,
@@ -22067,7 +22067,7 @@
     "discoveredBy": "u/jaycs529",
     "discoveredDate": "2019-09-22",
     "version": {
-      "bedrock": "1.95"
+      "bedrock": "1.11.0"
     },
     "confidence": 0.9,
     "isGenerated": false,
@@ -38155,8 +38155,8 @@
     "discoveredBy": "u/NeodymiumDinosaur",
     "discoveredDate": "2017-05-12",
     "version": {
-      "java": "1.112",
-      "bedrock": "1.112"
+      "java": "1.11.2",
+      "bedrock": null
     },
     "confidence": 0.9,
     "isGenerated": false,
@@ -42320,7 +42320,7 @@
     "discoveredBy": "u/Astralum",
     "discoveredDate": "2019-08-04",
     "version": {
-      "java": "1.00000"
+      "java": "1.14.4"
     },
     "confidence": 0.9,
     "isGenerated": false,

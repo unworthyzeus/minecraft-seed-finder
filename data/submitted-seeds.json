@@ -1,0 +1,113 @@
+{
+  "seeds": [
+    {
+      "id": "gh-issue-1-be-amazed-ruined-portal",
+      "seed": "BE AMAZED",
+      "title": "Ruined Portal at Spawn Shore",
+      "category": "ruined_portal",
+      "version": {
+        "java": "1.20.1",
+        "bedrock": null
+      },
+      "confidence": 0.9,
+      "coordinates": {
+        "x": 4,
+        "y": 65,
+        "z": 76
+      },
+      "discoveredBy": "clykiddoyt (GitHub issue #1)",
+      "discoveredDate": "2026-04-06",
+      "description": "Community submission from GitHub issue #1. The reported Java 1.20.1 world spawns with a ruined portal visible near the shore and water; the local structure oracle confirms a ruined portal candidate at X=0, Z=80, 6 blocks from the submitted coordinates X=4, Y=65, Z=76.",
+      "source": "Submitted to this website",
+      "sourceType": "website_submission",
+      "submittedToWebsite": true,
+      "sourceUrl": "https://github.com/unworthyzeus/minecraft-seed-finder/issues/1"
+    },
+    {
+      "id": "gh-issue-2-5004260924615097095-spawners",
+      "seed": "5004260924615097095",
+      "title": "Spawner Cluster and Notch Apple Chest",
+      "category": "spawner_anomaly",
+      "version": {
+        "java": null,
+        "bedrock": "26.13"
+      },
+      "confidence": 0.7,
+      "coordinates": {
+        "x": 50,
+        "y": -46,
+        "z": 1355
+      },
+      "discoveredBy": "allisonwilkins3-sudo (GitHub issue #2)",
+      "discoveredDate": "2026-04-24",
+      "description": "Community submission from GitHub issue #2 for Bedrock 26.13. Reported as lots of spawners in close proximity plus two touching chests with a notch apple in one chest. The app verifies the seed/version parse and Snowy Taiga biome at the submitted coordinates; dungeon spawner and chest loot placement still need manual in-game confirmation.",
+      "source": "Submitted to this website",
+      "sourceType": "website_submission",
+      "submittedToWebsite": true,
+      "sourceUrl": "https://github.com/unworthyzeus/minecraft-seed-finder/issues/2"
+    },
+    {
+      "id": "mail-2026-02-21-education-1432473694351278491",
+      "seed": "-1432473694351278491",
+      "title": "Minecraft Education Desert Temple Village House",
+      "category": "village_anomaly",
+      "version": {
+        "java": null,
+        "bedrock": "1.21.132"
+      },
+      "confidence": 0.7,
+      "coordinates": {
+        "x": 170,
+        "y": 73,
+        "z": 1298
+      },
+      "discoveredBy": "Darsh Upadhyay (email submission)",
+      "discoveredDate": "2026-02-21",
+      "description": "Email submission for Minecraft Education. The 2/21/2026 Education client corresponds to Education 1.21.132; the local Bedrock-family generator confirms a desert biome at X=170, Y=73, Z=1298 and a nearby desert pyramid terrain candidate at X=128, Z=1152. The reported village house inside the desert temple still needs manual Education Edition verification.",
+      "source": "Submitted to this website",
+      "sourceType": "website_submission",
+      "submittedToWebsite": true
+    },
+    {
+      "id": "gh-issue-3-neg2801317721269292678-spikey-mountain",
+      "seed": "-2801317721269292678",
+      "title": "Weird Looking Spikey Mountain",
+      "category": "shape_anomaly",
+      "version": {
+        "java": "26.1.2",
+        "bedrock": null
+      },
+      "confidence": 0.7,
+      "coordinates": {
+        "x": -208,
+        "y": 100,
+        "z": 272
+      },
+      "discoveredBy": "clykiddoyt (GitHub issue #3)",
+      "discoveredDate": "2026-05-05",
+      "description": "Community submission from GitHub issue #3 for Java 26.1.2. Reported as an unusual looking spikey mountain in the swamps at X=-208, Y=100, Z=272; visual terrain shape still needs manual in-game confirmation.",
+      "source": "Submitted to this website",
+      "sourceType": "website_submission",
+      "submittedToWebsite": true,
+      "sourceUrl": "https://github.com/unworthyzeus/minecraft-seed-finder/issues/3"
+    },
+    {
+      "id": "gh-issue-5-3635422765-giant-sea-large-biomes",
+      "seed": "3635422765",
+      "title": "Giant Sea Large Biomes Spawn",
+      "category": "historic",
+      "version": {
+        "java": "1.6.4",
+        "bedrock": null
+      },
+      "confidence": 0.9,
+      "discoveredBy": "seggtepozar (GitHub issue #5)",
+      "discoveredDate": "2026-06-21",
+      "description": "Community submission from GitHub issue #5. Reported as spawning in the middle of a giant sea on small islands when set to Large Biomes, with total sea range around 400,000 blocks; reported to work from release 1.0 through 1.6.4.",
+      "source": "Submitted to this website",
+      "sourceType": "website_submission",
+      "submittedToWebsite": true,
+      "sourceUrl": "https://github.com/unworthyzeus/minecraft-seed-finder/issues/5"
+    }
+  ]
+}

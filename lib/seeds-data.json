@@ -200664,5 +200664,24 @@
     "submittedToWebsite": true,
     "sourceUrl": "https://github.com/unworthyzeus/minecraft-seed-finder/issues/3",
     "isGenerated": false
+  },
+  {
+    "id": "gh-issue-5-3635422765-giant-sea-large-biomes",
+    "seed": "3635422765",
+    "title": "Giant Sea Large Biomes Spawn",
+    "category": "historic",
+    "version": {
+      "java": "1.6.4",
+      "bedrock": null
+    },
+    "confidence": 0.9,
+    "discoveredBy": "seggtepozar (GitHub issue #5)",
+    "discoveredDate": "2026-06-21",
+    "description": "Community submission from GitHub issue #5. Reported as spawning in the middle of a giant sea on small islands when set to Large Biomes, with total sea range around 400,000 blocks; reported to work from release 1.0 through 1.6.4.",
+    "source": "Submitted to this website",
+    "sourceType": "website_submission",
+    "submittedToWebsite": true,
+    "sourceUrl": "https://github.com/unworthyzeus/minecraft-seed-finder/issues/5",
+    "isGenerated": false
   }
 ]

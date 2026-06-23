@@ -370,7 +370,7 @@
     "discoveredBy": "Community",
     "discoveredDate": "2022-01-01",
     "version": {
-      "bedrock": "Legacy"
+      "bedrock": "1.16+"
     },
     "coordinates": {
       "x": 0,
