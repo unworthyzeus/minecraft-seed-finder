@@ -46,13 +46,29 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 
 ### Optional Bedrock Dedicated Server verifier
 
-The Bedrock verifier is disabled by default. To enable local/self-hosted BDS checks, download Bedrock Dedicated Server from Mojang, extract it, and point the app at that folder:
+BDS means Bedrock Dedicated Server: Mojang/Microsoft's official headless Bedrock server for Windows and Linux. The Bedrock verifier is disabled by default because the server is external Minecraft software and must not be committed into this repo.
+
+To enable local/self-hosted BDS checks, download Bedrock Dedicated Server from the [official Minecraft Bedrock server page](https://www.minecraft.net/en-us/download/server/bedrock), extract it, and point the app at that folder:
 
 ```bash
 BEDROCK_BDS_ROOT=C:\path\to\bedrock-server
 # or
 BDS_ROOT=C:\path\to\bedrock-server
 ```
+
+The repo also includes a helper installer that downloads the current official BDS zip from Minecraft services, extracts it into `.local/bedrock-dedicated-server`, and writes `BEDROCK_BDS_ROOT` to `.env.local`. Run it only after reviewing and accepting the Minecraft EULA and Microsoft Privacy Statement:
+
+```bash
+# PowerShell
+$env:MINECRAFT_EULA_ACCEPTED="true"; npm run bds:install
+
+# Bash
+MINECRAFT_EULA_ACCEPTED=true npm run bds:install
+```
+
+Use `npm run bds:status` to check whether the local verifier can see `bedrock_server.exe`/`bedrock_server`. Restart the dev server after installation so Next.js reloads `.env.local`.
+
+The installer tracks the current public BDS release. For exact historical Bedrock proof, point `BEDROCK_BDS_ROOT` at a matching BDS version if you keep one locally; otherwise treat the result as a strong current-version check rather than a guaranteed old-patch confirmation.
 
 When configured, the Search Lab calls `/api/bedrock/verify` only for Bedrock seeds that already survived the fast JS prefilter. When not configured, the UI keeps those results as Bedrock candidates and skips the survivor POST calls. The API creates a temporary BDS world for that seed, runs `/locate biome` and `/locate structure`, and marks the result `BDS confirmed` only if the requested radius and cluster constraints match.
 

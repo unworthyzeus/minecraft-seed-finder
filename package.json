@@ -9,6 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "bds:install": "node scripts/install-bedrock-bds.mjs",
+    "bds:status": "node scripts/check-bedrock-bds.mjs",
     "test:catalog": "node tests/validate_seed_versions.mjs && node tests/validate_website_submissions.mjs && node tests/test_home_seed_randomization.mjs",
     "test:java:cubiomes": "node tests/test_cubiomes_groundtruth.mjs && node tests/test_java_port_parity.mjs",
     "test:worldgen:local": "node tests/test_java_port_parity.mjs && node tests/test_bedrock_cubiomes_port.mjs && node tests/test_bedrock_bds_oracle.mjs && node tests/test_bedrock_structure_placement.mjs && node tests/test_structure_candidate_status.mjs && node tests/test_bedrock_generation.mjs && node tests/test_home_bedrock_visibility.mjs && node tests/test_home_seed_randomization.mjs && node tests/test_search_query_hydration.mjs && node tests/test_bedrock_verifier_gating.mjs && node tests/test_seed_card_navigation_markup.mjs && node tests/test_seed_detail_visualizer_island.mjs && node tests/test_seed_visualizer_nonblocking_render.mjs",

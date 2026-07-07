@@ -15,12 +15,14 @@ const expectedSeeds = new Set([
     '-1432473694351278491',
     '-2801317721269292678',
     '3635422765',
+    '-711098259',
+    '-6985226424210014278',
 ]);
 
 const submissions = data.filter(isWebsiteSubmission);
 const actualSeeds = new Set(submissions.map(seed => seed.seed));
 
-assert.equal(submissions.length, expectedSeeds.size, 'expected exactly five website submissions');
+assert.equal(submissions.length, expectedSeeds.size, 'expected exactly seven website submissions');
 
 for (const expectedSeed of expectedSeeds) {
     assert.ok(actualSeeds.has(expectedSeed), `missing website submission ${expectedSeed}`);
@@ -37,7 +39,7 @@ for (const seed of submissions) {
 assert.equal(
     data.filter(seed => seedMatchesSourceFilter(seed, WEBSITE_SUBMISSION_SOURCE)).length,
     expectedSeeds.size,
-    'source filter should return the five website submissions'
+    'source filter should return the seven website submissions'
 );
 
 assert.equal(
@@ -77,7 +79,7 @@ const visibleWebsiteSubmissions = applyEditionFilter(
 assert.equal(
     visibleWebsiteSubmissions.length,
     expectedSeeds.size,
-    'normalized website submission filters should show all five submitted seeds'
+    'normalized website submission filters should show all seven submitted seeds'
 );
 
 console.log(`Website submissions audit: ${submissions.length} submitted seeds`);

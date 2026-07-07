@@ -108,6 +108,51 @@
       "sourceType": "website_submission",
       "submittedToWebsite": true,
       "sourceUrl": "https://github.com/unworthyzeus/minecraft-seed-finder/issues/5"
+    },
+    {
+      "id": "gh-issue-6-neg711098259-buried-shipwreck-village",
+      "seed": "-711098259",
+      "title": "Buried Shipwreck Inside Plains Village",
+      "category": "structure_combo",
+      "version": {
+        "java": "26.1.2",
+        "bedrock": null
+      },
+      "confidence": 0.9,
+      "coordinates": {
+        "x": 590,
+        "y": 63,
+        "z": -208
+      },
+      "discoveredBy": "clykiddoyt (GitHub issue #6)",
+      "discoveredDate": "2026-06-26",
+      "description": "Community submission from GitHub issue #6 for Java 26.1.2. Reported as a shipwreck buried in sand inside a plains village at X=590, Y=63, Z=-208. The original C cubiomes oracle confirms a viable shipwreck at X=592, Z=-224 (Beach, 16 blocks from the submitted coordinates) and a viable village at X=624, Z=-256 (Plains, 59 blocks away); final terrain burial/overlap still needs in-game confirmation.",
+      "source": "Submitted to this website",
+      "sourceType": "website_submission",
+      "submittedToWebsite": true,
+      "sourceUrl": "https://github.com/unworthyzeus/minecraft-seed-finder/issues/6"
+    },
+    {
+      "id": "mail-2026-07-07-neg6985226424210014278-bedrock-structure-cluster",
+      "seed": "-6985226424210014278",
+      "title": "Bedrock Trial Chamber Village Mansion Cluster",
+      "category": "structure_combo",
+      "version": {
+        "java": null,
+        "bedrock": "26.13"
+      },
+      "confidence": 0.7,
+      "coordinates": {
+        "x": 136,
+        "y": 64,
+        "z": 120
+      },
+      "discoveredBy": "Nathaniel Quammen (email submission)",
+      "discoveredDate": "2026-07-07",
+      "description": "Email submission for Bedrock 26.13 found with Search Lab. Required structures were Trial Chambers, Village, and Mansion with any biome and a reported cluster distance of 597 blocks. An exhaustive local Bedrock placement scan finds the best viable triple at trial chamber X=136, Z=120, plains village X=-248, Z=312, and dark forest mansion X=344, Z=392; max pair distance is 597.4 blocks. Bedrock terrain/feature generation still needs BDS or in-game verification.",
+      "source": "Submitted to this website",
+      "sourceType": "website_submission",
+      "submittedToWebsite": true
     }
   ]
 }
