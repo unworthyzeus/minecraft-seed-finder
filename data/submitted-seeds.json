@@ -153,6 +153,51 @@
       "source": "Submitted to this website",
       "sourceType": "website_submission",
       "submittedToWebsite": true
+    },
+    {
+      "id": "gh-issue-7-12480984122590-landlocked-beach-shipwreck",
+      "seed": "12480984122590",
+      "title": "Landlocked Shipwreck on Beach",
+      "category": "shipwreck_anomaly",
+      "version": {
+        "java": null,
+        "bedrock": "26.13"
+      },
+      "confidence": 0.7,
+      "coordinates": {
+        "x": -687,
+        "y": 67,
+        "z": 655
+      },
+      "discoveredBy": "jenmr999-wq (GitHub issue #7)",
+      "discoveredDate": "2026-07-27",
+      "description": "Community submission from GitHub issue #7 for Bedrock 26.13. Reported as a shipwreck generated entirely on land without touching water in a beach biome at X=-687, Y=67, Z=655. The local cubiomes-bedrock profile confirms Beach at the submitted coordinates, but 26.13 currently maps to the nearest available 26.20 family profile; exact shipwreck placement and landlocked terrain still need Bedrock Dedicated Server or in-game confirmation.",
+      "source": "Submitted to this website",
+      "sourceType": "website_submission",
+      "submittedToWebsite": true,
+      "sourceUrl": "https://github.com/unworthyzeus/minecraft-seed-finder/issues/7"
+    },
+    {
+      "id": "mail-2026-08-07-852004724143610746-dungeon-mineshaft-double-chest",
+      "seed": "852004724143610746",
+      "title": "Dungeon Mineshaft Double Chest Collision",
+      "category": "structure_combo",
+      "version": {
+        "java": "1.12.2",
+        "bedrock": null
+      },
+      "confidence": 0.7,
+      "coordinates": {
+        "x": 784,
+        "y": 32,
+        "z": 1058
+      },
+      "discoveredBy": "Тарас Бегаль (email submission)",
+      "discoveredDate": "2026-08-07",
+      "description": "Email submission for Java 1.12.2. Reported as a dungeon colliding with an abandoned mineshaft, placing two single chests directly beside each other as an unusually generated double chest inside the dungeon at X=784, Y=32, Z=1058. The original C Cubiomes oracle confirms a viable mineshaft start at X=784, Z=992, 66 blocks from the submitted coordinates, and an Ocean biome at the submitted point. Dungeon placement, the collision, chest adjacency, and loot still need manual in-game or Java server confirmation.",
+      "source": "Submitted to this website",
+      "sourceType": "website_submission",
+      "submittedToWebsite": true
     }
   ]
 }
