@@ -109,7 +109,7 @@ export default function SeedDetailPage({ params }) {
                         </div>
                         <div className="coordinate">
                             <div className="coordinate-label">Y</div>
-                            <div className="coordinate-value">{seed.coordinates.y}</div>
+                            <div className="coordinate-value">{seed.coordinates.y ?? '?'}</div>
                         </div>
                         <div className="coordinate">
                             <div className="coordinate-label">Z</div>

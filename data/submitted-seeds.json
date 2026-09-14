@@ -198,6 +198,50 @@
       "source": "Submitted to this website",
       "sourceType": "website_submission",
       "submittedToWebsite": true
+    },
+    {
+      "id": "mail-neg6458449459515783334-remote-mushroom-island",
+      "seed": "-6458449459515783334",
+      "title": "Remote Mushroom Island with Caves and Ruined Portals",
+      "category": "rare_biome",
+      "version": {
+        "java": null,
+        "bedrock": "26.13"
+      },
+      "confidence": 0.7,
+      "coordinates": {
+        "x": -222361,
+        "y": null,
+        "z": -1158044
+      },
+      "discoveredBy": "Nathan Narvaez (email submission)",
+      "discoveredDate": "Unknown",
+      "description": "Email submission for Bedrock 26.13 reporting a massive mushroom island far from spawn, with two ruined portals, a giant ruined portal, mineshafts, and trial chambers. The author's follow-up reports a cave reaching bedrock and connecting several mineshafts near the giant portal in a lush cave. The submitted notation (-222,361)(-1,158,044) is interpreted as X=-222361, Z=-1158044; Y was not supplied. An independent check with the original C cubiomes-bedrock library returns Mushroom Fields at Y=64 and at 205 of 289 points sampled every 64 blocks in a 1024 by 1024 block square centered there. Within 768 blocks along each horizontal axis, it finds two biome-viable ruined portal candidates at X=-222360, Z=-1158040 and X=-221800, Z=-1158024, five biome-viable trial chamber candidates, and eleven mineshaft candidates beneath Mushroom Fields. The C portal positions differ from this website's current map predictions. These checks use the approximate 26.20 profile for Bedrock 26.13; the exact structures, giant portal variant, full island extent, and cave connections still need BDS or in-game confirmation. Listed as a rare biome because the author explicitly says it is not near spawn.",
+      "source": "Submitted to this website",
+      "sourceType": "website_submission",
+      "submittedToWebsite": true
+    },
+    {
+      "id": "mail-neg397911369891213378-floating-island",
+      "seed": "-397911369891213378",
+      "title": "Floating Island at Y204 with Lava and Water Below",
+      "category": "spawn_oddity",
+      "version": {
+        "java": null,
+        "bedrock": "26.13"
+      },
+      "confidence": 0.7,
+      "coordinates": {
+        "x": -173,
+        "y": 204,
+        "z": 268
+      },
+      "discoveredBy": "三好大惺 (email submission)",
+      "discoveredDate": "Unknown",
+      "description": "Email submission for Bedrock 26.13, submitted under Spawn Oddities. The Japanese description reports a floating island at height Y=204, with lava and water beneath the mountain, at X=-173, Y=204, Z=268. Both the local generator and an independent check with the original C cubiomes-bedrock library return Forest at the submitted coordinates. These checks use the approximate 26.20 profile for Bedrock 26.13; biome sampling does not verify solid terrain or fluids. The floating island, its height, lava and water, and relationship to the actual world spawn still need BDS or in-game confirmation.",
+      "source": "Submitted to this website",
+      "sourceType": "website_submission",
+      "submittedToWebsite": true
     }
   ]
 }
