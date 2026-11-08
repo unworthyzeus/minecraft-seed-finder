@@ -1,6 +1,7 @@
 import { strict as assert } from 'assert';
 
 import data from '../lib/seeds-data.json' with { type: 'json' };
+import wellEvidence from '../docs/VERIFIED_DESERT_WELLS_112.json' with { type: 'json' };
 import * as sourceUtils from '../lib/source-utils.js';
 
 const {
@@ -39,7 +40,15 @@ for (const seed of submissions) {
     assert.equal(seed.sourceType, 'website_submission', `${seed.id} should use the website submission source type`);
     assert.equal(seed.submittedToWebsite, true, `${seed.id} should be flagged as submitted to the website`);
     assert.equal(seed.isGenerated, false, `${seed.id} should not be treated as generated`);
-    assert.ok(seed.confidence < 1, `${seed.id} should stay below fully verified confidence`);
+    if (seed.confidence >= 1) {
+        assert.equal(seed.verification?.method, 'vanilla-worldgen', `${seed.id} needs direct generation evidence`);
+        assert.equal(seed.verification?.status, 'confirmed');
+        assert.equal(seed.seed, wellEvidence.seed);
+        assert.equal(seed.version.java, wellEvidence.version);
+        assert.equal(wellEvidence.result, 'confirmed');
+        assert.equal(seed.verification.blockChecks, wellEvidence.totalBlockChecks);
+        assert.equal(wellEvidence.wells.length, 3);
+    }
 }
 
 const submissionBySeed = new Map(submissions.map(seed => [seed.seed, seed]));
