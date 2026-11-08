@@ -242,6 +242,46 @@
       "source": "Submitted to this website",
       "sourceType": "website_submission",
       "submittedToWebsite": true
+    },
+    {
+      "id": "mail-873956122367342323-triple-desert-wells",
+      "seed": "873956122367342323",
+      "title": "Reported Triple Desert Well Cluster",
+      "category": "structure_combo",
+      "version": {
+        "java": "1.12.2",
+        "bedrock": null
+      },
+      "confidence": 0.7,
+      "coordinates": {
+        "x": 92,
+        "y": 71,
+        "z": 8320
+      },
+      "discoveredBy": "Neil Destartiom (email submission)",
+      "discoveredDate": "Unknown",
+      "description": "Email submission for Java 1.12.2 reporting three desert wells close together at X=66, Y=65, Z=8322; X=77, Y=62, Z=8270; and X=67, Y=62, Z=8268. The submitted reference point is X=92, Y=71, Z=8320. Both the original C Cubiomes library and the local Java generator return Desert at all four horizontal positions. The three reported wells fit within a maximum horizontal pair distance of 55 blocks. Cubiomes does not support desert well placement for Java 1.12.2, so the existence and heights of the wells still need in-game or vanilla world generation confirmation. This submission is only partially checked.",
+      "source": "Submitted to this website",
+      "sourceType": "website_submission",
+      "submittedToWebsite": true
+    },
+    {
+      "id": "gh-issue-8-165605352-mansion-spawn",
+      "seed": "165605352",
+      "title": "Reported Spawn on a Woodland Mansion",
+      "category": "spawn_oddity",
+      "version": {
+        "java": null,
+        "bedrock": "1.19"
+      },
+      "confidence": 0.7,
+      "discoveredBy": "kardampoornima5-cpu (GitHub issue #8)",
+      "discoveredDate": "2026-10-18",
+      "description": "Community submission from GitHub issue #8 for Bedrock 1.19 reporting a spawn on top of a woodland mansion. No coordinates were supplied. The original C cubiomes-bedrock library, using its Bedrock 1.19 profile, finds a biome-viable mansion candidate at X=8, Z=72 in Dark Forest and estimates spawn at X=0, Z=32, about 41 blocks away. The website map currently misses this C reference mansion candidate. Cubiomes spawn estimates depend on terrain assumptions and do not establish the actual player spawn or roof height. The mansion generation and rooftop spawn still need BDS or in-game confirmation. Categorized as Spawn Oddities because the report concerns a mansion spawn, not an ocean monument.",
+      "source": "Submitted to this website",
+      "sourceType": "website_submission",
+      "submittedToWebsite": true,
+      "sourceUrl": "https://github.com/unworthyzeus/minecraft-seed-finder/issues/8"
     }
   ]
 }

@@ -21,12 +21,14 @@ const expectedSeeds = new Set([
     '852004724143610746',
     '-6458449459515783334',
     '-397911369891213378',
+    '873956122367342323',
+    '165605352',
 ]);
 
 const submissions = data.filter(isWebsiteSubmission);
 const actualSeeds = new Set(submissions.map(seed => seed.seed));
 
-assert.equal(submissions.length, expectedSeeds.size, 'expected exactly eleven website submissions');
+assert.equal(submissions.length, expectedSeeds.size, 'expected exactly thirteen website submissions');
 
 for (const expectedSeed of expectedSeeds) {
     assert.ok(actualSeeds.has(expectedSeed), `missing website submission ${expectedSeed}`);
@@ -56,7 +58,7 @@ assert.match(dungeonMineshaft.description, /mineshaft start at X=784, Z=992.*man
 assert.equal(
     data.filter(seed => seedMatchesSourceFilter(seed, WEBSITE_SUBMISSION_SOURCE)).length,
     expectedSeeds.size,
-    'source filter should return the eleven website submissions'
+    'source filter should return the thirteen website submissions'
 );
 
 assert.equal(
@@ -96,7 +98,7 @@ const visibleWebsiteSubmissions = applyEditionFilter(
 assert.equal(
     visibleWebsiteSubmissions.length,
     expectedSeeds.size,
-    'normalized website submission filters should show all eleven submitted seeds'
+    'normalized website submission filters should show all thirteen submitted seeds'
 );
 
 console.log(`Website submissions audit: ${submissions.length} submitted seeds`);
